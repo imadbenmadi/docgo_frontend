@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap");
+
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+/* Arabic Font - Applied when dir="rtl" */
+[dir="rtl"] {
+  font-family: "Cairo", "Almarai", "Arabic Typesetting", sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-family: "Cairo", "Almarai", "Arabic Typesetting", sans-serif;
+  font-weight: 700;
+}
+
+[dir="rtl"] button,
+[dir="rtl"] label,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  font-family: "Cairo", "Almarai", "Arabic Typesetting", sans-serif;
+}
+
+.input-box-shadow {
+  filter: drop-shadow(-4px -4px 44px rgba(0, 0, 0, 0.08));
+}
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+  font-size: 40px;
+}
+.slick-next:before {
+  margin-left: -25px;
+}
+.slick-prev {
+  z-index: 9999;
+}
+.category:hover,
+.icon {
+  fill: #1a9068;
+}
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #1a9068;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.small-loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #464646; /* Adjust border size as needed */
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.pdf-viewer {
+  width: 100%;
+  max-width: 800px; /* adjust as necessary */
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.pdf-controls button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pdf-controls span {
+  align-self: center;
+}
+
+.input-box-shadow {
+  filter: drop-shadow(-4px -4px 44px rgba(0, 0, 0, 0.08));
+}
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+  font-size: 40px;
+}
+.slick-next:before {
+  margin-left: -25px;
+}
+.slick-prev {
+  z-index: 9999;
+}
+.category:hover,
+.icon {
+  fill: #1a9068;
+}
+/* Add to your global CSS file */
+.scrollable-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.scrollable-options::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scrollable-options::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Custom scrollbar for validation panel */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}

@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+/* Arabic Font - Applied when dir="rtl" */
+[dir="rtl"] {
+  font-family: "Cairo", "Almarai", "Arabic Typesetting", sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-family: "Cairo", "Almarai", "Arabic Typesetting", sans-serif;
+  font-weight: 700;
+}
+
+[dir="rtl"] button,
+[dir="rtl"] label,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  font-family: "Cairo", "Almarai", "Arabic Typesetting", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Prevent layout breakage from very long unbroken strings (titles, tags, etc.) */
+:where(h1, h2, h3, h4, h5, h6, p, span, a, li, td, th) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Ensure Tailwind line-clamp content can still wrap long tokens */
+:where([class*="line-clamp-"]) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* ==== loading  ===  */
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #1709ad;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.small-loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #464646; /* Adjust border size as needed */
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.pdf-viewer {
+  width: 100%;
+  max-width: 800px; /* adjust as necessary */
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==== Creative Background Animations ==== */
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* SweetAlert2: allow scrolling inside popup on small screens */
+.swal2-popup {
+  max-height: 90vh !important;
+  overflow: auto !important;
+}
