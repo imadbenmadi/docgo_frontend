@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Reveal from "./components/Reveal";
 import HelpSection from "./LandingPage/Layout/Helpsection";
 import Footer from "./LandingPage/Layout/Footer";
-import Navigation from "./LandingPage/Layout/Navbar/Navigation";
+import Navigation from "./components/Navbar/Navigation";
 
 function Default() {
     return (

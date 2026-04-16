@@ -26,8 +26,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Check (lint + build)
+        run: npm run check
 
       - name: Deploy dist/ to cPanel (FTP/FTPS)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

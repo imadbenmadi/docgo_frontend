@@ -1,6 +1,6 @@
 import DarkColorButton from "../../components/Buttons/DarkColorButton";
 import Select from "../../components/Select";
-import girlImg from "../../assets/ girl.png";
+import girlImg from "../../assets/girl.png";
 
 function StudySection() {
     return (

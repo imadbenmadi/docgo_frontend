@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import img from "../../../src/assets/Image.png"; // Adjust the path as necessary
+import img from "../../assets/image.png";
 import CardCourse from "../../components/CardCourse";
 import Container from "../../components/Container";
 

@@ -15,7 +15,7 @@ import {
 import { TbTargetArrow } from "react-icons/tb";
 import RichTextDisplay from "../../Common/RichTextEditor/RichTextDisplay";
 import CourseInfo from "./CourseInfo";
-import ZipCourseBrowser from "../../Courses/ZipCourseBrowser";
+import ZipCourseBrowser from "../../courses/ZipCourseBrowser";
 
 /* ────────── helpers ────────── */
 const ITEM_META = {
