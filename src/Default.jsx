@@ -5,16 +5,16 @@ import Footer from "./LandingPage/Layout/Footer";
 import Navigation from "./components/Navbar/Navigation";
 
 function Default() {
-    return (
-        <div>
-            {/* <Navigation />  */}
-            <Outlet />
-            {/* <HelpSection />
+  return (
+    <div>
+      {/* <Navigation />  */}
+      <Outlet />
+      {/* <HelpSection />
             <Reveal>
                 <Footer />
             </Reveal> */}
-        </div>
-    );
+    </div>
+  );
 }
 
 export default Default;

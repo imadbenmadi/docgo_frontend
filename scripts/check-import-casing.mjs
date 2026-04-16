@@ -149,7 +149,11 @@ function extractModuleSpecifiers(code) {
 
     // keyword detection
     const isBoundaryBefore = i === 0 || !isIdentifierChar(code[i - 1]);
-    if (isBoundaryBefore && code.startsWith("import", i) && !isIdentifierChar(code[i + 6] || "")) {
+    if (
+      isBoundaryBefore &&
+      code.startsWith("import", i) &&
+      !isIdentifierChar(code[i + 6] || "")
+    ) {
       let j = i + 6;
       j = skipWhitespace(code, j);
 
@@ -167,7 +171,7 @@ function extractModuleSpecifiers(code) {
       if (code[j] === "'" || code[j] === '"') {
         const str = readStringLiteral(code, j);
         if (str) specs.push({ spec: str.value, index: i });
-        i = (str?.end ?? j + 1);
+        i = str?.end ?? j + 1;
         continue;
       }
 
@@ -191,7 +195,11 @@ function extractModuleSpecifiers(code) {
         }
 
         const boundary = !isIdentifierChar(code[k - 1] || "");
-        if (boundary && code.startsWith("from", k) && !isIdentifierChar(code[k + 4] || "")) {
+        if (
+          boundary &&
+          code.startsWith("from", k) &&
+          !isIdentifierChar(code[k + 4] || "")
+        ) {
           let m = k + 4;
           m = skipWhitespace(code, m);
           const str = readStringLiteral(code, m);
@@ -206,7 +214,11 @@ function extractModuleSpecifiers(code) {
     }
 
     const isBoundaryBeforeExport = i === 0 || !isIdentifierChar(code[i - 1]);
-    if (isBoundaryBeforeExport && code.startsWith("export", i) && !isIdentifierChar(code[i + 6] || "")) {
+    if (
+      isBoundaryBeforeExport &&
+      code.startsWith("export", i) &&
+      !isIdentifierChar(code[i + 6] || "")
+    ) {
       // export ... from "...";
       let j = i + 6;
       j = skipWhitespace(code, j);
@@ -227,7 +239,11 @@ function extractModuleSpecifiers(code) {
           continue;
         }
         const boundary = !isIdentifierChar(code[k - 1] || "");
-        if (boundary && code.startsWith("from", k) && !isIdentifierChar(code[k + 4] || "")) {
+        if (
+          boundary &&
+          code.startsWith("from", k) &&
+          !isIdentifierChar(code[k + 4] || "")
+        ) {
           let m = k + 4;
           m = skipWhitespace(code, m);
           const str = readStringLiteral(code, m);
@@ -253,7 +269,8 @@ function walkDir(dir) {
     const full = path.join(dir, e.name);
     if (e.isDirectory()) {
       // ignore node_modules just in case
-      if (e.name === "node_modules" || e.name === ".git" || e.name === "dist") continue;
+      if (e.name === "node_modules" || e.name === ".git" || e.name === "dist")
+        continue;
       out.push(...walkDir(full));
     } else if (e.isFile()) {
       if (CODE_EXTS.includes(path.extname(e.name))) out.push(full);
@@ -305,13 +322,19 @@ function findCaseMismatchPath(absPath) {
       return mismatches;
     }
 
-    const found = entries.find((e) => e.name.toLowerCase() === part.toLowerCase());
+    const found = entries.find(
+      (e) => e.name.toLowerCase() === part.toLowerCase(),
+    );
     if (!found) {
       // path segment doesn't exist (shouldn't happen if resolved)
       return mismatches;
     }
     if (found.name !== part) {
-      mismatches.push({ expected: found.name, actual: part, at: path.join(cur, part) });
+      mismatches.push({
+        expected: found.name,
+        actual: part,
+        at: path.join(cur, part),
+      });
     }
     cur = path.join(cur, found.name);
   }
@@ -320,7 +343,12 @@ function findCaseMismatchPath(absPath) {
 }
 
 function isRelativeImport(spec) {
-  return spec.startsWith("./") || spec.startsWith("../") || spec === "." || spec === "..";
+  return (
+    spec.startsWith("./") ||
+    spec.startsWith("../") ||
+    spec === "." ||
+    spec === ".."
+  );
 }
 
 function normalizeImportForResolve(spec) {
@@ -349,7 +377,7 @@ for (const file of files) {
       errorCount++;
       const relFile = path.relative(projectRoot, file).replace(/\\/g, "/");
       console.error(
-        `\n[import-resolve] ${relFile}: cannot resolve relative import ${JSON.stringify(rawSpec)}`
+        `\n[import-resolve] ${relFile}: cannot resolve relative import ${JSON.stringify(rawSpec)}`,
       );
       continue;
     }
@@ -360,10 +388,14 @@ for (const file of files) {
     // If the mismatch is only in the resolved path but not in the import path,
     // that usually indicates weird FS issues; still report.
     const relFile = path.relative(projectRoot, file).replace(/\\/g, "/");
-    const relResolved = path.relative(projectRoot, resolved).replace(/\\/g, "/");
+    const relResolved = path
+      .relative(projectRoot, resolved)
+      .replace(/\\/g, "/");
 
     errorCount++;
-    console.error(`\n[import-case] ${relFile}: wrong casing in import ${JSON.stringify(rawSpec)}`);
+    console.error(
+      `\n[import-case] ${relFile}: wrong casing in import ${JSON.stringify(rawSpec)}`,
+    );
     console.error(`  resolves to: ${relResolved}`);
 
     // print first mismatch only (keeps output readable)
@@ -374,7 +406,9 @@ for (const file of files) {
 }
 
 if (errorCount > 0) {
-  console.error(`\nFound ${errorCount} import path issue(s). Fix the import path casing to match the filesystem.`);
+  console.error(
+    `\nFound ${errorCount} import path issue(s). Fix the import path casing to match the filesystem.`,
+  );
   process.exit(1);
 }
 
