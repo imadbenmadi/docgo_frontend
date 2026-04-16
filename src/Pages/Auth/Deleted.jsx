@@ -37,7 +37,7 @@ const Deleted = () => {
     } finally {
       setChecking(false);
     }
-  }, [API_URL, navigate, checking]);
+  }, [navigate, checking]);
 
   useEffect(() => {
     const tick = setInterval(() => {

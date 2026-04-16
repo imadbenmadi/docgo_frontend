@@ -27,6 +27,7 @@ import MainLoading from "../MainLoading";
 import { useAppContext } from "../AppContext";
 import apiClient from "../services/apiClient";
 import RichTextDisplay from "../components/Common/RichTextEditor/RichTextDisplay";
+import { buildApiUrl } from "../utils/apiBaseUrl";
 
 const statusBadgeClass = (status) => {
   const base =
@@ -375,7 +376,9 @@ export default function ProgramApplicationStatus() {
                   </div>
                   <div className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video max-h-96">
                     <img
-                      src={`${process.env.REACT_APP_API_BASE_URL || ""}/media/stream/pdf/${application.screenShot}`}
+                      src={buildApiUrl(
+                        `/media/stream/pdf/${application.screenShot}`,
+                      )}
                       alt={t(
                         "enrolledProgram.paymentReceipt",
                         "Payment Receipt",
@@ -393,7 +396,9 @@ export default function ProgramApplicationStatus() {
                     )}
                   </div>
                   <a
-                    href={`${process.env.REACT_APP_API_BASE_URL || ""}/payment-history/screenshot/${application.paymentId || application.id}/download`}
+                    href={buildApiUrl(
+                      `/payment-history/screenshot/${application.paymentId || application.id}/download`,
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"

@@ -988,6 +988,8 @@ export function CourseSections() {
     hasData,
   } = useCourse(courseId);
 
+  useScrollLock(sidebarOpen);
+
   // Redirect only when the user cannot access the content.
   useEffect(() => {
     if (hasData && !canAccessContent) {
@@ -1594,8 +1596,6 @@ export function CourseSections() {
   const canFinishCourse =
     allQuizItems.length === 0 ||
     allQuizItems.every((qi) => completedItems.has(String(qi.id)));
-
-  useScrollLock(sidebarOpen);
 
   return (
     <div className="w-full flex-col bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">

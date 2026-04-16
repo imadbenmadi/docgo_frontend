@@ -370,7 +370,7 @@ export default function Certificate() {
           `/enrollment/courses/${courseId}/certificate/image`,
           fd,
         );
-        if (json.success) {
+        if (res.data?.success) {
           setCertImageUrl(
             `/enrollment/certificates/${dbCertificate.certificateId}/image`,
           );
