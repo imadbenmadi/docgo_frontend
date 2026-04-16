@@ -138,6 +138,10 @@ const AdvancedSearchHero = ({ cms }) => {
     );
   const programSearcherPlaceholder =
     c("programSearcherPlaceholder") || t("selectCountry", "Select Country");
+  const countryPlaceholder =
+    programSearcherPlaceholder?.length > 28
+      ? t("selectCountry", "Select Country")
+      : programSearcherPlaceholder;
   const searchButtonText =
     c("programSearcherButtonText") || t("searchPrograms", "Search Programs");
 
@@ -197,7 +201,7 @@ const AdvancedSearchHero = ({ cms }) => {
                   value={selectedCountry}
                   onChange={setSelectedCountry}
                   countries={options.countries}
-                  placeholder={programSearcherPlaceholder}
+                  placeholder={countryPlaceholder}
                   disabled={loading}
                 />
               </div>

@@ -128,7 +128,7 @@ function LandingPage() {
                   <OurServices statistics={homeData?.statistics} cms={cms} />
                 </Reveal>
               )}
-              {show("showFeaturedCourses") && (
+              {/* {show("showFeaturedCourses") && (
                 <CoursesSection
                   featuredCourses={homeData?.featuredCourses}
                   latestCourses={homeData?.latestCourses}
@@ -142,7 +142,7 @@ function LandingPage() {
                     latestPrograms={homeData?.latestPrograms}
                   />
                 </Reveal>
-              )}
+              )} */}
               {show("showFAQSection") && (
                 <Reveal>
                   <FrequentlyAskedQuestions faqs={homeData?.faqs} />
