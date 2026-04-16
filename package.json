@@ -3,11 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/check-import-casing.mjs && vite build",
+    "check:imports": "node scripts/check-import-casing.mjs",
+    "build": "npm run check:imports && vite build",
     "lint": "eslint .",
-    "check": "npm run lint && npm run build",
+    "check": "npm run build",
+    "check:all": "npm run lint && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
