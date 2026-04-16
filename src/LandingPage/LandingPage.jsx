@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import FeaturedPrograms from "../components/Programs/FeaturedPrograms";
+import FeaturedPrograms from "../components/programs/FeaturedPrograms";
 import Reveal from "../components/Reveal";
 import MainLoading from "../MainLoading";
 import homeService from "../services/homeService";
