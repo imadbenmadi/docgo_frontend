@@ -32,7 +32,7 @@ import CourseVideos from "./Pages/CourseVideos";
 import CourseSections from "./Pages/CourseSections";
 import CourseExploreZip from "./Pages/CourseExploreZip";
 import UserDashboard from "./Pages/Dashboard/UserDashboard";
-import NotFound from "./pages/NotFound";
+import NotFound from "./Pages/NotFound";
 import EditProfile from "./Pages/Profile/EditProfile";
 import Profile from "./Pages/Profile/Profile";
 import QuizContent from "./Pages/QuizContent";
