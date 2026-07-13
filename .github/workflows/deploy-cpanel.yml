@@ -29,16 +29,38 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy dist/ to cPanel (FTP/FTPS)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.CPANEL_FTP_SERVER }}
-          username: ${{ secrets.CPANEL_FTP_USERNAME }}
-          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: dist/
-          server-dir: ${{ secrets.CPANEL_FTP_SERVER_DIR }}
-          # If (and only if) this directory contains ONLY the built site, you can
-          # enable the next line to delete removed/old files (prevents hash buildup).
-          # dangerous-clean-slate: true
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy dist/ to cPanel (FTPS) via lftp
+        env:
+          FTP_SERVER: ${{ secrets.CPANEL_FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.CPANEL_FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.CPANEL_FTP_SERVER_DIR }}
+        run: |
+          set -euo pipefail
+          REMOTE_DIR="${FTP_SERVER_DIR:-.}"
+          if [ "$REMOTE_DIR" = "/" ]; then REMOTE_DIR="."; fi
+          REMOTE_DIR="${REMOTE_DIR#/}"  # '/public_html' -> 'public_html'
+          if [ -z "$REMOTE_DIR" ]; then REMOTE_DIR="."; fi
+
+          if [ "$REMOTE_DIR" = "." ]; then
+            MKDIR_CMD=""
+          else
+            MKDIR_CMD="mkdir -p $REMOTE_DIR;"
+          fi
+
+          lftp -e "
+            set cmd:fail-exit true;
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ftp:passive-mode true;
+            set ssl:verify-certificate yes;
+            set net:max-retries 2;
+            set net:timeout 20;
+            open -p 21 -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" $FTP_SERVER;
+            $MKDIR_CMD
+            mirror -R --verbose --only-newer --parallel=2 dist/ $REMOTE_DIR;
+            bye;
+          "
