@@ -1,4 +1,55 @@
-﻿{
+{
+  "auth": {
+    "authRequiredTitle": "Authentication Required",
+    "authRequiredText": "You must log in to access this resource.",
+    "goToLogin": "Go to Login",
+    "successTitle": "Login Successful",
+    "successText": "You are now logged in.",
+    "registrationSuccessTitle": "Registration Successful",
+    "registrationSuccessText": "You are now registered. You can log in.",
+    "logoutSuccessTitle": "Logged Out Successfully!",
+    "logoutSuccessText": "You have been logged out successfully.",
+    "login": "Sign In",
+    "loginSubtitle": "Welcome to HealthPathGlobal. Sign in to your account to continue.",
+    "email": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign In",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up now",
+    "register": "Create Account",
+    "registerSubtitle": "Join HealthPathGlobal and start your learning journey today.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "continue": "Continue",
+    "passwordHint": "Must be at least 8 characters",
+    "haveAccount": "Already have an account?",
+    "guest": "Guest",
+    "welcomeBack": "Welcome Back",
+    "profile": "Profile",
+    "home": "Home",
+    "myApplications": "My Applications",
+    "logout": "Logout",
+    "error": "Error",
+    "step2": "Complete Your Profile",
+    "country": "Country",
+    "studyDomain": "Study Domain",
+    "phoneNumber": "Phone Number",
+    "university": "University",
+    "professionalStatus": "Professional Status",
+    "academicStatus": "Academic Status",
+    "selectAnOption": "Select an option",
+    "studyDomainsNotConfigured": "Study domains are not yet configured. Please check back later.",
+    "countriesNotConfigured": "Countries are not yet configured. Please check back later.",
+    "processing": "Processing...",
+    "validation_failed": "Validation failed",
+    "fillAllFields": "Please fill all required fields",
+    "signingIn": "Signing in...",
+    "loginError": "An error occurred during login",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "••••••••"
+  },
+
   "contact": {
     "supportTitle": "Support",
     "supportDesc": "Available 7 days a week to answer your questions",
@@ -379,7 +430,9 @@
     "linkCopied": "Link copied to clipboard!",
     "linkCopyFailed": "Failed to copy link.",
     "addedToFavorites": "Added to favorites",
-    "removedFromFavorites": "Removed from favorites"
+    "removedFromFavorites": "Removed from favorites",
+    "search": "Search...",
+    "noOptionsFound": "No options found"
   },
 
   "Courses": "Courses",
@@ -976,7 +1029,9 @@
       "validation_failed": "Validation failed",
       "fillAllFields": "Please fill all required fields",
       "signingIn": "Signing in...",
-      "loginError": "An error occurred during login"
+      "loginError": "An error occurred during login",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "••••••••"
     },
     "messages": {
       "sentTitle": "Message Sent",

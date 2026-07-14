@@ -63,6 +63,7 @@
 // };
 // export default AnimatedSelect;
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const AnimatedSelect = ({
     options,
@@ -72,6 +73,7 @@ const AnimatedSelect = ({
     maxHeight = "250px", // Default max height
     className = "",
 }) => {
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const selectRef = useRef(null);
@@ -136,7 +138,7 @@ const AnimatedSelect = ({
                     <input
                         type="text"
                         className="w-full p-2 border-b"
-                        placeholder="Search..."
+                        placeholder={t("common.search")}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onClick={(e) => e.stopPropagation()}
@@ -157,7 +159,7 @@ const AnimatedSelect = ({
                             ))
                         ) : (
                             <div className="p-2 text-gray-500">
-                                No options found
+                                {t("common.noOptionsFound")}
                             </div>
                         )}
                     </div>

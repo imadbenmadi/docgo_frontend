@@ -179,7 +179,7 @@ const Login = () => {
               <input
                 type="email"
                 name="email"
-                placeholder="you@example.com"
+                placeholder={t("auth.emailPlaceholder", "you@example.com")}
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
@@ -203,7 +203,7 @@ const Login = () => {
               <input
                 type="password"
                 name="password"
-                placeholder="••••••••"
+                placeholder={t("auth.passwordPlaceholder", "••••••••")}
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
