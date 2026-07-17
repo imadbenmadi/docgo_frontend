@@ -30,8 +30,7 @@ function UserMessages_new() {
   const isRTL = i18n.language === "ar";
 
   // Branding helpers (same pattern as Footer)
-  const apiBase =
-    import.meta.env.VITE_API_URL || "https://backend.healthpathglobal.com";
+  const apiBase = import.meta.env.VITE_API_URL || "http://localhost:3000";
   const brandName = siteSettings?.brandName || "";
   const brandLogoSrc = (() => {
     const logoUrl = siteSettings?.logoUrl;

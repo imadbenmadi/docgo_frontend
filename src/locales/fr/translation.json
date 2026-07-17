@@ -412,7 +412,10 @@
     "addedToFavorites": "Ajouté aux favoris",
     "removedFromFavorites": "Retiré des favoris",
     "search": "Rechercher...",
-    "noOptionsFound": "Aucune option trouvée"
+    "noOptionsFound": "Aucune option trouvée",
+    "error": "Erreur",
+    "filter": "Filtre",
+    "sort": "Trier"
   },
   "Courses": "Cours",
   "Programs": "Programmes",

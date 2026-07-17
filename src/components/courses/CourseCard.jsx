@@ -25,7 +25,7 @@ export function CourseCard({
   hasImage = true,
 }) {
   const defaultThumbnail =
-    "https://backend.healthpathglobal.com/Courses_Pictures/default-course-thumbnail.jpeg";
+    "http://localhost:3000/Courses_Pictures/default-course-thumbnail.jpeg";
 
   const {
     isFavorited,

@@ -1,6 +1,6 @@
 export const getApiBaseUrl = () => {
-  // return "https://backend.healthpathglobal.com";
-  return "https://backend.healthpathglobal.com";
+  // return "http://localhost:3000";
+  return "http://localhost:3000";
 };
 
 export const buildApiUrl = (path) => {

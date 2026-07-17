@@ -114,7 +114,7 @@ const Register_Sterp_2 = ({
 
       {error && (
         <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg text-sm sm:text-base">
-          <div className="font-semibold mb-1">Error</div>
+          <div className="font-semibold mb-1">{t("common.error")}</div>
           <div>{error}</div>
         </div>
       )}

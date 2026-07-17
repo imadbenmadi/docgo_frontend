@@ -432,7 +432,10 @@
     "addedToFavorites": "Added to favorites",
     "removedFromFavorites": "Removed from favorites",
     "search": "Search...",
-    "noOptionsFound": "No options found"
+    "noOptionsFound": "No options found",
+    "error": "Error",
+    "filter": "Filter",
+    "sort": "Sort"
   },
 
   "Courses": "Courses",

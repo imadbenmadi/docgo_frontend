@@ -48,8 +48,7 @@ const EditProfile = () => {
     currentJobTitle: "",
     profile_pic_link: "",
   });
-  const API_URL =
-    import.meta.env.VITE_API_URL || "https://backend.healthpathglobal.com";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   // Function to get country name based on current language
   const getCountryDisplayName = (countryString) => {

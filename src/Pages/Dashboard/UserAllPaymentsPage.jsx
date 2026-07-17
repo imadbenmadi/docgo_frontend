@@ -21,9 +21,11 @@ import {
   BookOpen,
   GraduationCap,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import apiClient from "../../utils/apiClient";
 
 const UserAllPaymentsPage = () => {
+  const { t } = useTranslation();
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -293,7 +295,7 @@ const UserAllPaymentsPage = () => {
         <div className="bg-white rounded-lg shadow p-4 mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Filter className="w-5 h-5 text-gray-600" />
-            <span className="font-semibold text-gray-900">Filter</span>
+            <span className="font-semibold text-gray-900">{t("common.filter")}</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

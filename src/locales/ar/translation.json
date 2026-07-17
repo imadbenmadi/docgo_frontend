@@ -384,7 +384,10 @@
     "addedToFavorites": "أضيف إلى المفضلات",
     "removedFromFavorites": "تم إزالته من المفضلات",
     "search": "بحث...",
-    "noOptionsFound": "لم تُعثر على خيارات"
+    "noOptionsFound": "لم تُعثر على خيارات",
+    "error": "خطأ",
+    "filter": "تصفية",
+    "sort": "ترتيب"
   },
   "Programs": "  البرامج المتاحة",
   "Courses": "الدورات",

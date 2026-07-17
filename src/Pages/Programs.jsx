@@ -1028,7 +1028,7 @@ export function Programs() {
                       <span className="hidden sm:inline">
                         {t("Sort by", "Sort by") || "Sort by"}
                       </span>
-                      <span className="sm:hidden">Sort</span>
+                      <span className="sm:hidden">{t("common.sort")}</span>
                       <ChevronDown className="w-3 sm:w-4 h-3 sm:h-4" />
                     </button>
 
