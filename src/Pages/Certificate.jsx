@@ -431,7 +431,9 @@ export default function Certificate() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement du certificat...</p>
+          <p className="text-gray-600">
+            {t("certificateView.loading", "Loading certificate...")}
+          </p>
         </div>
       </div>
     );
@@ -545,10 +547,13 @@ export default function Certificate() {
               </div>
               <h1 className="text-xl md:text-4xl font-bold mb-1 md:mb-2">
                 {" "}
-                Félicitations Exceptionnelles!
+                {t("certificateView.congratsTitle", "Exceptional Congratulations!")}
               </h1>
               <p className="text-sm md:text-xl mb-2 md:mb-4">
-                Vous avez brillamment terminé votre formation
+                {t(
+                  "certificateView.congratsSubtitle",
+                  "You have brilliantly completed your training",
+                )}
               </p>
               <h2 className="text-lg md:text-2xl font-semibold mb-2 md:mb-4 text-yellow-200">
                 {certificateData.courseName}
@@ -556,7 +561,9 @@ export default function Certificate() {
               <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4 text-sm md:text-lg">
                 <div className="flex items-center gap-1 md:gap-2">
                   <Star className="w-4 h-4 md:w-5 md:h-5 text-yellow-300" />
-                  <span>Mention: {certificateData.grade}</span>
+                  <span>
+                    {t("certificateView.mention", "Grade")}: {certificateData.grade}
+                  </span>
                 </div>
                 <div className="flex items-center gap-1 md:gap-2">
                   <Calendar className="w-4 h-4 md:w-5 md:h-5 text-blue-200" />
@@ -579,7 +586,7 @@ export default function Certificate() {
               <div className="flex justify-center overflow-auto py-2">
                 <img
                   src={certImageUrl}
-                  alt="Certificat"
+                  alt={t("certificateView.altCertificate", "Certificate")}
                   style={{ maxWidth: "100%", display: "block" }}
                 />
               </div>
@@ -626,11 +633,11 @@ export default function Certificate() {
                 {/* Header */}
                 <div className="mb-4 md:mb-8">
                   <h1 className="text-xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-1 md:mb-2">
-                    CERTIFICAT D'EXCELLENCE
+                    {t("certificateView.excellenceTitle", "CERTIFICATE OF EXCELLENCE")}
                   </h1>
                   <div className="w-16 h-0.5 md:w-32 md:h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-2 md:mb-4"></div>
                   <p className="text-sm md:text-xl text-gray-600 font-medium">
-                    est décerné à
+                    {t("certificateView.awardedTo", "is awarded to")}
                   </p>
                 </div>
 
@@ -645,7 +652,10 @@ export default function Certificate() {
                 {/* Course Description */}
                 <div className="mb-4 md:mb-8">
                   <p className="text-xs md:text-lg text-gray-700 mb-2 md:mb-4">
-                    pour avoir terminé avec succès le programme de formation
+                    {t(
+                      "certificateView.forCompleting",
+                      "for successfully completing the training program",
+                    )}
                   </p>
                   <h2 className="text-lg md:text-3xl font-bold text-gray-800 leading-tight">
                     {certificateData.courseName}
@@ -659,7 +669,7 @@ export default function Certificate() {
                       {quizScore}% - {certificateData.grade}
                     </div>
                     <div className="text-xs md:text-base text-gray-600 font-medium">
-                      Résultat Obtenu
+                      {t("certificateView.resultObtained", "Result Obtained")}
                     </div>
                   </div>
                   <div className="bg-white/80 backdrop-blur-sm p-2 md:p-4 rounded-lg md:rounded-xl shadow-md md:shadow-lg">
@@ -669,7 +679,7 @@ export default function Certificate() {
                       ).toLocaleDateString("fr-FR")}
                     </div>
                     <div className="text-xs md:text-base text-gray-600 font-medium">
-                      Date d'Obtention
+                      {t("certificateView.dateObtained", "Date Obtained")}
                     </div>
                   </div>
                 </div>
@@ -682,7 +692,7 @@ export default function Certificate() {
                       {certificateData.instructor}
                     </div>
                     <div className="text-xs md:text-sm text-gray-600">
-                      Instructeur Certifié
+                      {t("certificateView.certifiedInstructor", "Certified Instructor")}
                     </div>
                   </div>
                   <div className="text-center">
@@ -691,7 +701,7 @@ export default function Certificate() {
                       {certificateData.institution}
                     </div>
                     <div className="text-xs md:text-sm text-gray-600">
-                      Institution
+                      {t("certificateView.institution", "Institution")}
                     </div>
                   </div>
                 </div>
@@ -708,7 +718,7 @@ export default function Certificate() {
                           className="border border-gray-200 rounded p-0.5"
                         />
                         <span className="text-xs text-gray-400">
-                          Scan to verify
+                          {t("certificateView.scanToVerify", "Scan to verify")}
                         </span>
                       </>
                     ) : (
@@ -762,12 +772,14 @@ export default function Certificate() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  <span>Génération en cours...</span>
+                  <span>{t("certificateView.generating", "Generating...")}</span>
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4 md:w-5 md:h-5" />
-                  <span>Télécharger le Certificat PDF</span>
+                  <span>
+                    {t("certificateView.downloadPdf", "Download PDF Certificate")}
+                  </span>
                 </>
               )}
             </button>
@@ -780,8 +792,8 @@ export default function Certificate() {
               <Eye className="w-4 h-4 md:w-5 md:h-5" />
               <span>
                 {showCertificate
-                  ? "Masquer les Détails"
-                  : "Voir les Détails du Certificat"}
+                  ? t("certificateView.hideDetails", "Hide Details")
+                  : t("certificateView.viewDetails", "View Certificate Details")}
               </span>
             </button>
 
@@ -792,7 +804,7 @@ export default function Certificate() {
                   navigator.clipboard.writeText(dbCertificate.verificationUrl);
                   Swal.fire({
                     icon: "success",
-                    title: "Lien copié !",
+                    title: t("certificateView.linkCopied", "Link copied!"),
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,
@@ -803,14 +815,16 @@ export default function Certificate() {
                 className="flex gap-2 md:gap-3 justify-center items-center px-4 py-2 md:px-8 md:py-3 text-green-600 hover:text-green-700 underline font-semibold transition-colors duration-300 text-sm md:text-base"
               >
                 <LinkIcon className="w-4 h-4 md:w-5 md:h-5" />
-                <span>Copier le lien de vérification</span>
+                <span>
+                  {t("certificateView.copyVerifyLink", "Copy verification link")}
+                </span>
               </button>
             )}
 
             {/* Certificate issuance status */}
             {isIssuingCertificate && (
               <p className="text-center text-sm text-gray-400 animate-pulse">
-                Enregistrement du certificat...
+                {t("certificateView.saving", "Saving certificate...")}
               </p>
             )}
             {certError && (
@@ -824,13 +838,13 @@ export default function Certificate() {
           <div className="bg-white rounded-lg md:rounded-2xl shadow-md md:shadow-lg p-4 md:p-6 mb-4 md:mb-8 border border-gray-100">
             <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-3 md:mb-6 flex items-center gap-2 md:gap-3">
               <User className="w-4 h-4 md:w-6 md:h-6 text-blue-600" />
-              Détails Complets du Certificat
+              {t("certificateView.fullDetails", "Complete Certificate Details")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <div className="space-y-2 md:space-y-4">
                 <div>
                   <label className="font-semibold text-gray-700 text-sm md:text-base">
-                    Bénéficiaire:
+                    {t("certificateView.beneficiary", "Beneficiary:")}
                   </label>
                   <p className="text-gray-600 text-sm md:text-base">
                     {certificateData.studentName}
@@ -838,7 +852,7 @@ export default function Certificate() {
                 </div>
                 <div>
                   <label className="font-semibold text-gray-700 text-sm md:text-base">
-                    Formation:
+                    {t("certificateView.formationLabel", "Training:")}
                   </label>
                   <p className="text-gray-600 text-sm md:text-base">
                     {certificateData.courseName}
@@ -846,7 +860,7 @@ export default function Certificate() {
                 </div>
                 <div>
                   <label className="font-semibold text-gray-700 text-sm md:text-base">
-                    Institution:
+                    {t("certificateView.institutionLabel", "Institution:")}
                   </label>
                   <p className="text-gray-600 text-sm md:text-base">
                     {certificateData.institution}
@@ -856,7 +870,7 @@ export default function Certificate() {
               <div className="space-y-2 md:space-y-4">
                 <div>
                   <label className="font-semibold text-gray-700 text-sm md:text-base">
-                    Date d'obtention:
+                    {t("certificateView.dateObtainedLabel", "Date obtained:")}
                   </label>
                   <p className="text-gray-600 text-sm md:text-base">
                     {new Date(
@@ -866,7 +880,7 @@ export default function Certificate() {
                 </div>
                 <div>
                   <label className="font-semibold text-gray-700 text-sm md:text-base">
-                    Mention:
+                    {t("certificateView.mentionLabel", "Grade:")}
                   </label>
                   <p className="text-gray-600 text-sm md:text-base">
                     {certificateData.grade}
@@ -874,7 +888,7 @@ export default function Certificate() {
                 </div>
                 <div>
                   <label className="font-semibold text-gray-700 text-sm md:text-base">
-                    Instructeur:
+                    {t("certificateView.instructorLabel", "Instructor:")}
                   </label>
                   <p className="text-gray-600 text-sm md:text-base">
                     {certificateData.instructor}

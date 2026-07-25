@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import ServicePaymentForm from "../../components/OtherServices/ServicePaymentForm";
 
 export default function CVService() {
   const navigate = useNavigate();
@@ -404,6 +405,51 @@ export default function CVService() {
                 "Applications are temporarily disabled.",
               ) || "Applications are temporarily disabled."}
             </p>
+          ) : parseFloat(cvService?.applicationFee || 0) > 0 &&
+            currentApp?.status !== "accepted" ? (
+            !isAuth ? (
+              <div className="p-4 bg-blue-50 rounded-xl text-blue-900">
+                <p className="mb-3">
+                  {t(
+                    "cvServicePage.loginToPay",
+                    "Please log in to pay and submit your CV application.",
+                  ) ||
+                    "Please log in to pay and submit your CV application."}
+                </p>
+                <button
+                  onClick={() =>
+                    navigate(`/login?next=${encodeURIComponent(cvSelfPath)}`)
+                  }
+                  className="px-6 py-2 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition"
+                >
+                  {t("cvServicePage.login", "Log in") || "Log in"}
+                </button>
+              </div>
+            ) : (
+              <ServicePaymentForm
+                serviceType="cv"
+                amount={parseFloat(cvService.applicationFee)}
+                currency={cvService.feeCurrency || "DZD"}
+                contentLabel={
+                  t("cvServicePage.yourInfo", "Your Information") ||
+                  "Your Information"
+                }
+                defaultContent={content}
+                onSuccess={async () => {
+                  await Swal.fire({
+                    icon: "success",
+                    title: t("cvServicePage.success", "Success") || "Success",
+                    text:
+                      t(
+                        "cvServicePage.paymentSubmitted",
+                        "Your payment was submitted. We will verify it and process your CV application.",
+                      ) ||
+                      "Your payment was submitted. We will verify it and process your CV application.",
+                  });
+                  await fetchData();
+                }}
+              />
+            )
           ) : (
             <>
               <label className="block font-semibold mb-2">

@@ -258,7 +258,7 @@ const Register = () => {
           <input
             type="password"
             name="password"
-            placeholder="At least 8 characters"
+            placeholder={t("register.passwordPlaceholder", "At least 8 characters")}
             value={formData.password}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
@@ -278,7 +278,8 @@ const Register = () => {
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
-              <InlineLoading borderColor="white" /> Processing...
+              <InlineLoading borderColor="white" />{" "}
+              {t("register.processing", "Processing...")}
             </span>
           ) : (
             t("auth.continue", "Continue")
@@ -322,7 +323,7 @@ const Register = () => {
           <div className="mb-8">
             <img
               src={backgroundImage}
-              alt="Register Visual"
+              alt={t("register.visualAlt", "Register Visual")}
               className="w-full h-auto max-h-96 object-contain rounded-2xl "
             />
           </div>

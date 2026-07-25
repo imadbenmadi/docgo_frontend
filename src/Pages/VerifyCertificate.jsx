@@ -10,11 +10,13 @@ import {
   Mail,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams, Link } from "react-router-dom";
 import { EnrollmentAPI } from "../API/Enrollment";
 import { getApiBaseUrl } from "../utils/apiBaseUrl";
 
 export default function VerifyCertificate() {
+  const { t } = useTranslation("", { keyPrefix: "verifyCertificate" });
   const { certificateId } = useParams();
   const [status, setStatus] = useState("loading"); // "loading" | "valid" | "revoked" | "invalid" | "error"
   const [certificate, setCertificate] = useState(null);
@@ -53,7 +55,7 @@ export default function VerifyCertificate() {
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100 mb-4">
             <Award className="w-5 h-5 text-purple-600" />
             <span className="text-sm font-semibold text-gray-700">
-              healthpathglobal Certificate Verification
+              healthpathglobal {t("badge", "Certificate Verification")}
             </span>
           </div>
         </div>
@@ -62,7 +64,9 @@ export default function VerifyCertificate() {
         {status === "loading" && (
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
             <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-gray-500">Verifying certificate...</p>
+            <p className="text-gray-500">
+              {t("verifying", "Verifying certificate...")}
+            </p>
           </div>
         )}
 
@@ -72,9 +76,14 @@ export default function VerifyCertificate() {
             {/* Green top banner */}
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white text-center">
               <CheckCircle className="w-12 h-12 mx-auto mb-2" />
-              <h1 className="text-2xl font-bold">Certificate Valid</h1>
+              <h1 className="text-2xl font-bold">
+                {t("validTitle", "Certificate Valid")}
+              </h1>
               <p className="text-green-100 text-sm mt-1">
-                This certificate is authentic and has been verified.
+                {t(
+                  "validDesc",
+                  "This certificate is authentic and has been verified.",
+                )}
               </p>
             </div>
 
@@ -83,7 +92,7 @@ export default function VerifyCertificate() {
               <div className="px-6 pt-6">
                 <img
                   src={`${getApiBaseUrl()}/verify/certificate/${certificate.certificateId}/image`}
-                  alt="Certificate"
+                  alt={t("altCertificate", "Certificate")}
                   className="w-full rounded-xl shadow-md border border-gray-100"
                   loading="lazy"
                 />
@@ -96,7 +105,7 @@ export default function VerifyCertificate() {
                 <User className="w-5 h-5 text-purple-500 mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
-                    Student
+                    {t("student", "Student")}
                   </p>
                   <p className="text-gray-800 font-semibold">
                     {certificate.studentName}
@@ -114,7 +123,7 @@ export default function VerifyCertificate() {
                 <BookOpen className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">
-                    Course
+                    {t("course", "Course")}
                   </p>
                   <p className="text-gray-800 font-semibold">
                     {certificate.courseTitle}
@@ -133,7 +142,7 @@ export default function VerifyCertificate() {
                   <Calendar className="w-4 h-4 text-orange-500 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-xs text-gray-400 uppercase tracking-wide">
-                      Issued
+                      {t("issued", "Issued")}
                     </p>
                     <p className="text-gray-700 text-sm font-medium">
                       {new Date(certificate.issueDate).toLocaleDateString(
@@ -152,7 +161,7 @@ export default function VerifyCertificate() {
                     <Clock className="w-4 h-4 text-teal-500 mt-0.5 shrink-0" />
                     <div>
                       <p className="text-xs text-gray-400 uppercase tracking-wide">
-                        Duration
+                        {t("duration", "Duration")}
                       </p>
                       <p className="text-gray-700 text-sm font-medium">
                         {certificate.courseDuration}h
@@ -165,7 +174,7 @@ export default function VerifyCertificate() {
               {certificate.averageQuizScore != null && (
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-xl">
                   <span className="text-sm text-purple-700 font-medium">
-                    Assessment Score
+                    {t("assessmentScore", "Assessment Score")}
                   </span>
                   <span className="text-xl font-bold text-purple-700">
                     {Math.round(certificate.averageQuizScore)}%
@@ -175,7 +184,9 @@ export default function VerifyCertificate() {
 
               {/* Certificate ID */}
               <div className="border-t border-dashed border-gray-200 pt-4 text-center">
-                <p className="text-xs text-gray-400">Certificate ID</p>
+                <p className="text-xs text-gray-400">
+                  {t("certificateId", "Certificate ID")}
+                </p>
                 <p className="text-xs font-mono text-gray-500 break-all mt-0.5">
                   {certificate.certificateId}
                 </p>
@@ -189,14 +200,22 @@ export default function VerifyCertificate() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="bg-gradient-to-r from-red-500 to-rose-600 p-6 text-white text-center">
               <XCircle className="w-12 h-12 mx-auto mb-2" />
-              <h1 className="text-2xl font-bold">Certificate Revoked</h1>
+              <h1 className="text-2xl font-bold">
+                {t("revokedTitle", "Certificate Revoked")}
+              </h1>
               <p className="text-red-100 text-sm mt-1">
-                This certificate has been revoked and is no longer valid.
+                {t(
+                  "revokedDesc",
+                  "This certificate has been revoked and is no longer valid.",
+                )}
               </p>
             </div>
             <div className="p-6 text-center">
               <p className="text-gray-500 text-sm">
-                If you believe this is an error, please contact support.
+                {t(
+                  "revokedContact",
+                  "If you believe this is an error, please contact support.",
+                )}
               </p>
             </div>
           </div>
@@ -207,15 +226,19 @@ export default function VerifyCertificate() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="bg-gradient-to-r from-amber-400 to-orange-500 p-6 text-white text-center">
               <AlertTriangle className="w-12 h-12 mx-auto mb-2" />
-              <h1 className="text-2xl font-bold">Certificate Not Found</h1>
+              <h1 className="text-2xl font-bold">
+                {t("notFoundTitle", "Certificate Not Found")}
+              </h1>
               <p className="text-amber-100 text-sm mt-1">
-                We could not find a certificate with this ID.
+                {t("notFoundDesc", "We could not find a certificate with this ID.")}
               </p>
             </div>
             <div className="p-6 text-center space-y-2">
               <p className="text-gray-500 text-sm">
-                Make sure you are using the correct verification link from the
-                certificate.
+                {t(
+                  "notFoundHint",
+                  "Make sure you are using the correct verification link from the certificate.",
+                )}
               </p>
               <p className="text-xs font-mono text-gray-400 break-all">
                 {certificateId}
@@ -230,7 +253,7 @@ export default function VerifyCertificate() {
             to="/"
             className="text-sm text-gray-400 hover:text-gray-600 underline"
           >
-            Return to healthpathglobal
+            {t("returnHome", "Return to healthpathglobal")}
           </Link>
         </div>
       </div>

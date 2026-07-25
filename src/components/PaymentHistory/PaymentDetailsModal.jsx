@@ -7,6 +7,7 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   X,
   Download,
@@ -25,6 +26,7 @@ const PaymentDetailsModal = ({
   onClose,
   isAdmin = false,
 }) => {
+  const { t } = useTranslation("", { keyPrefix: "paymentHistory" });
   const [payment, setPayment] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -52,7 +54,8 @@ const PaymentDetailsModal = ({
       }
     } catch (err) {
       setError(
-        err.response?.data?.message || "Failed to fetch payment details",
+        err.response?.data?.message ||
+          t("fetchError", "Failed to fetch payment details"),
       );
     } finally {
       setLoading(false);
@@ -80,18 +83,22 @@ const PaymentDetailsModal = ({
       window.URL.revokeObjectURL(url);
       document.body.removeChild(link);
     } catch {
-      alert("Failed to download screenshot");
+      alert(t("downloadError", "Failed to download screenshot"));
     }
   };
 
   if (!isOpen) return null;
+
+  const statusLabel = (s) => t(s, s.charAt(0).toUpperCase() + s.slice(1));
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-gray-900">Payment Details</h2>
+          <h2 className="text-xl font-bold text-gray-900">
+            {t("title", "Payment Details")}
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600"
@@ -114,7 +121,9 @@ const PaymentDetailsModal = ({
           {loading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading payment details...</p>
+              <p className="text-gray-600">
+                {t("loading", "Loading payment details...")}
+              </p>
             </div>
           ) : payment ? (
             <div className="space-y-6">
@@ -146,8 +155,7 @@ const PaymentDetailsModal = ({
                             : "text-yellow-900"
                       }`}
                     >
-                      {payment.status.charAt(0).toUpperCase() +
-                        payment.status.slice(1)}
+                      {statusLabel(payment.status)}
                     </p>
                     {payment.verificationDate && (
                       <p
@@ -160,8 +168,18 @@ const PaymentDetailsModal = ({
                         }
                       >
                         {payment.status === "pending"
-                          ? "Waiting for verification"
-                          : `${payment.status === "approved" ? "Approved" : "Rejected"} on ${new Date(payment.verificationDate).toLocaleDateString()}`}
+                          ? t("waitingVerification", "Waiting for verification")
+                          : payment.status === "approved"
+                            ? t("approvedOn", "Approved on {{date}}", {
+                                date: new Date(
+                                  payment.verificationDate,
+                                ).toLocaleDateString(),
+                              })
+                            : t("rejectedOn", "Rejected on {{date}}", {
+                                date: new Date(
+                                  payment.verificationDate,
+                                ).toLocaleDateString(),
+                              })}
                       </p>
                     )}
                   </div>
@@ -171,14 +189,17 @@ const PaymentDetailsModal = ({
               {/* Item Information */}
               <div>
                 <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase">
-                  Item Information
+                  {t("itemInformation", "Item Information")}
                 </h3>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex gap-4">
                     <Package className="w-5 h-5 text-gray-400 flex-shrink-0" />
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">
-                        {payment.item?.title || "Deleted " + payment.itemType}
+                        {payment.item?.title ||
+                          t("deletedItem", "Deleted {{type}}", {
+                            type: payment.itemType,
+                          })}
                       </p>
                       <p className="text-sm text-gray-600 capitalize">
                         {payment.itemType}
@@ -196,7 +217,7 @@ const PaymentDetailsModal = ({
               {/* Payment Amount */}
               <div>
                 <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase">
-                  Payment Amount
+                  {t("paymentAmount", "Payment Amount")}
                 </h3>
                 <div className="bg-blue-50 rounded-lg p-4">
                   <div className="flex items-baseline gap-2">
@@ -214,12 +235,14 @@ const PaymentDetailsModal = ({
               {/* Payment Method */}
               <div>
                 <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase">
-                  Payment Method
+                  {t("paymentMethod", "Payment Method")}
                 </h3>
                 <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                   {payment.ccpNumber && (
                     <div>
-                      <p className="text-sm text-gray-600">CCP Number</p>
+                      <p className="text-sm text-gray-600">
+                        {t("ccpNumber", "CCP Number")}
+                      </p>
                       <p className="font-mono text-gray-900">
                         {payment.ccpNumber}
                       </p>
@@ -227,7 +250,9 @@ const PaymentDetailsModal = ({
                   )}
                   {payment.phoneNumber && (
                     <div>
-                      <p className="text-sm text-gray-600">Phone Number</p>
+                      <p className="text-sm text-gray-600">
+                        {t("phoneNumber", "Phone Number")}
+                      </p>
                       <p className="font-mono text-gray-900">
                         {payment.phoneNumber}
                       </p>
@@ -235,7 +260,9 @@ const PaymentDetailsModal = ({
                   )}
                   {payment.transactionId && (
                     <div>
-                      <p className="text-sm text-gray-600">Transaction ID</p>
+                      <p className="text-sm text-gray-600">
+                        {t("transactionId", "Transaction ID")}
+                      </p>
                       <p className="font-mono text-sm text-gray-900 break-all">
                         {payment.transactionId}
                       </p>
@@ -248,7 +275,7 @@ const PaymentDetailsModal = ({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="text-sm font-semibold text-gray-700 mb-2 uppercase">
-                    Upload Date
+                    {t("uploadDate", "Upload Date")}
                   </h3>
                   <div className="bg-gray-50 rounded-lg p-3 flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-gray-400" />
@@ -260,7 +287,7 @@ const PaymentDetailsModal = ({
                 {payment.verificationDate && (
                   <div>
                     <h3 className="text-sm font-semibold text-gray-700 mb-2 uppercase">
-                      Verification Date
+                      {t("verificationDate", "Verification Date")}
                     </h3>
                     <div className="bg-gray-50 rounded-lg p-3 flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-gray-400" />
@@ -278,7 +305,7 @@ const PaymentDetailsModal = ({
               {isAdmin && payment.rejectionReason && (
                 <div>
                   <h3 className="text-sm font-semibold text-red-700 mb-3 uppercase">
-                    Rejection Reason
+                    {t("rejectionReason", "Rejection Reason")}
                   </h3>
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                     <p className="text-red-800">{payment.rejectionReason}</p>
@@ -290,7 +317,7 @@ const PaymentDetailsModal = ({
               {isAdmin && payment.adminNotes && (
                 <div>
                   <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase">
-                    Admin Notes
+                    {t("adminNotes", "Admin Notes")}
                   </h3>
                   <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                     <p className="text-gray-800">{payment.adminNotes}</p>
@@ -302,7 +329,7 @@ const PaymentDetailsModal = ({
               {isAdmin && payment.verifiedBy && (
                 <div>
                   <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase">
-                    Verified By
+                    {t("verifiedBy", "Verified By")}
                   </h3>
                   <div className="bg-gray-50 rounded-lg p-4">
                     <p className="font-mono text-gray-900">
@@ -316,17 +343,21 @@ const PaymentDetailsModal = ({
               {isAdmin && payment.user && (
                 <div>
                   <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase">
-                    User Information
+                    {t("userInformation", "User Information")}
                   </h3>
                   <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                     <div>
-                      <p className="text-sm text-gray-600">Name</p>
+                      <p className="text-sm text-gray-600">
+                        {t("name", "Name")}
+                      </p>
                       <p className="font-medium text-gray-900">
                         {payment.user.firstName} {payment.user.lastName}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600">Email</p>
+                      <p className="text-sm text-gray-600">
+                        {t("email", "Email")}
+                      </p>
                       <p className="font-medium text-gray-900">
                         {payment.user.email}
                       </p>
@@ -343,7 +374,7 @@ const PaymentDetailsModal = ({
                     className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
                   >
                     <Download className="w-5 h-5" />
-                    Download Payment Screenshot
+                    {t("downloadScreenshot", "Download Payment Screenshot")}
                   </button>
                 </div>
               )}

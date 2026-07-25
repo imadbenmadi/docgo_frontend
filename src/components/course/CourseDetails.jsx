@@ -65,24 +65,27 @@ export const CourseDetails = () => {
           <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 max-w-md w-full text-center">
             <div className="text-red-500 text-4xl sm:text-5xl mb-4"></div>
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-              Unable to Load Course
+              {t("courseDetails.unableToLoad", "Unable to Load Course")}
             </h2>
             <p className="text-sm sm:text-base text-gray-600 mb-6">
               {error ||
-                "Something went wrong while loading the course details."}
+                t(
+                  "courseDetails.loadError",
+                  "Something went wrong while loading the course details.",
+                )}
             </p>
             <button
               onClick={retry}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 flex items-center justify-center mx-auto text-sm sm:text-base"
             >
               <IoMdRefresh className="mr-2 w-4 h-4" />
-              Try Again
+              {t("courseDetails.tryAgain", "Try Again")}
             </button>
             <Link
               to="/Courses"
               className="inline-block mt-4 text-blue-600 hover:text-blue-700 text-xs sm:text-sm"
             >
-              Back to Courses
+              {t("courseDetails.backToCourses", "Back to Courses")}
             </Link>
           </div>
         </div>
@@ -105,17 +108,19 @@ export const CourseDetails = () => {
           <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 max-w-md w-full text-center">
             <div className="text-gray-400 text-4xl sm:text-5xl mb-4"></div>
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-              Course Not Found
+              {t("courseDetails.notFound", "Course Not Found")}
             </h2>
             <p className="text-sm sm:text-base text-gray-600 mb-6">
-              The course you&apos;re looking for doesn&apos;t exist or has been
-              removed.
+              {t(
+                "courseDetails.notFoundDesc",
+                "The course you're looking for doesn't exist or has been removed.",
+              )}
             </p>
             <Link
               to="/Courses"
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 inline-block text-sm sm:text-base"
             >
-              Browse Courses
+              {t("courseDetails.browseCourses", "Browse Courses")}
             </Link>
           </div>
         </div>

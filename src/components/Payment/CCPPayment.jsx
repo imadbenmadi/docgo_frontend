@@ -328,28 +328,28 @@ const CCPPayment = ({
     const statusConfig = {
       pending: {
         icon: FaClock,
-        text: "Pending Verification",
+        text: t("paymentPage.ccpPaymentForm.pendingVerification", "Pending Verification"),
         bgColor: "bg-yellow-100",
         textColor: "text-yellow-800",
         borderColor: "border-yellow-200",
       },
       approved: {
         icon: FaCheckCircle,
-        text: "Approved",
+        text: t("paymentPage.ccpPaymentForm.approved", "Approved"),
         bgColor: "bg-green-100",
         textColor: "text-green-800",
         borderColor: "border-green-200",
       },
       rejected: {
         icon: FaTimesCircle,
-        text: "Rejected",
+        text: t("paymentPage.ccpPaymentForm.rejected", "Rejected"),
         bgColor: "bg-red-100",
         textColor: "text-red-800",
         borderColor: "border-red-200",
       },
       cancelled: {
         icon: FaTimesCircle,
-        text: "Cancelled",
+        text: t("paymentPage.ccpPaymentForm.cancelled", "Cancelled"),
         bgColor: "bg-gray-100",
         textColor: "text-gray-800",
         borderColor: "border-gray-200",
@@ -384,7 +384,9 @@ const CCPPayment = ({
     return (
       <div className="flex items-center justify-center py-8">
         <FaSpinner className="animate-spin text-3xl text-green-600" />
-        <span className="ml-3 text-gray-600">Checking payment status...</span>
+        <span className="ml-3 text-gray-600">
+          {t("paymentPage.ccpPaymentForm.checkingStatus", "Checking payment status...")}
+        </span>
       </div>
     );
   }
@@ -403,7 +405,7 @@ const CCPPayment = ({
             <span className="text-white font-bold text-sm">C</span>
           </div>
           <h3 className="text-lg font-medium text-gray-900">
-            Algeria CCP Payment
+            {t("paymentPage.ccpPaymentForm.algeriaCcp", "Algeria CCP Payment")}
           </h3>
         </div>
 
@@ -413,7 +415,7 @@ const CCPPayment = ({
             <FaInfoCircle className="text-blue-600 text-2xl mt-1" />
             <div className="flex-1">
               <h4 className="font-semibold text-blue-900 text-lg mb-3">
-                Payment Application Already Submitted
+                {t("paymentPage.ccpPaymentForm.alreadySubmitted", "Payment Application Already Submitted")}
               </h4>
               <p className="text-blue-800 mb-4">
                 You have already submitted a payment application for this item.
@@ -423,19 +425,25 @@ const CCPPayment = ({
 
               <div className="bg-white rounded-lg p-4 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600 font-medium">Status:</span>
+                  <span className="text-gray-600 font-medium">
+                    {t("paymentPage.ccpPaymentForm.labelStatus", "Status:")}
+                  </span>
                   {getStatusBadge(app.status)}
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-gray-600 font-medium">Amount:</span>
+                  <span className="text-gray-600 font-medium">
+                    {t("paymentPage.ccpPaymentForm.labelAmount", "Amount:")}
+                  </span>
                   <span className="font-bold text-gray-900">
                     {app.amount} {app.currency}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-gray-600 font-medium">CCP Number:</span>
+                  <span className="text-gray-600 font-medium">
+                    {t("paymentPage.ccpPaymentForm.labelCcpNumber", "CCP Number:")}
+                  </span>
                   <span className="font-mono text-gray-900">
                     {app.ccpNumber}
                   </span>
@@ -443,7 +451,7 @@ const CCPPayment = ({
 
                 <div className="flex justify-between">
                   <span className="text-gray-600 font-medium">
-                    Transaction ID:
+                    {t("paymentPage.ccpPaymentForm.labelTransactionId", "Transaction ID:")}
                   </span>
                   <span className="font-mono text-gray-900">
                     {app.transactionId}
@@ -451,7 +459,9 @@ const CCPPayment = ({
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-gray-600 font-medium">Submitted:</span>
+                  <span className="text-gray-600 font-medium">
+                    {t("paymentPage.ccpPaymentForm.labelSubmitted", "Submitted:")}
+                  </span>
                   <span className="text-gray-900">
                     {formatDate(app.createdAt)}
                   </span>
@@ -475,7 +485,7 @@ const CCPPayment = ({
                       <FaExclamationTriangle className="text-red-600 mt-0.5" />
                       <div>
                         <p className="text-red-800 font-medium text-sm mb-1">
-                          Rejection Reason:
+                          {t("paymentPage.ccpPaymentForm.labelRejectionReason", "Rejection Reason:")}
                         </p>
                         <p className="text-red-700 text-sm">
                           {app.rejectionReason}
@@ -499,7 +509,7 @@ const CCPPayment = ({
         errors={panelErrors}
         isVisible={showPanel}
         onClose={hidePanel}
-        title="Please fix the payment form"
+        title={t("paymentPage.ccpPaymentForm.fixFormTitle", "Please fix the payment form")}
       />
       <div className="flex items-center gap-3 mb-6">
         <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
@@ -634,7 +644,7 @@ const CCPPayment = ({
       <div className="bg-white border-2 border-gray-200 rounded-lg p-5 shadow-sm">
         <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
           <FaTag className="text-green-600" />
-          Code promo (optionnel)
+          {t("paymentPage.ccpPaymentForm.couponOptional", "Coupon code (optional)")}
         </h4>
         {couponResult ? (
           <div className="flex items-center gap-3 bg-green-50 border border-green-300 rounded-lg px-4 py-3">
@@ -655,7 +665,7 @@ const CCPPayment = ({
               onClick={removeCoupon}
               className="text-gray-400 hover:text-red-500 text-sm underline"
             >
-              Retirer
+              {t("paymentPage.ccpPaymentForm.removeCoupon", "Remove")}
             </button>
           </div>
         ) : (
@@ -672,7 +682,7 @@ const CCPPayment = ({
                   e.key === "Enter" &&
                   (e.preventDefault(), handleValidateCoupon())
                 }
-                placeholder="Ex. XXXX-XXXX"
+                placeholder={t("paymentPage.ccpPaymentForm.couponPlaceholder", "e.g. XXXX-XXXX")}
                 className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               />
               <button

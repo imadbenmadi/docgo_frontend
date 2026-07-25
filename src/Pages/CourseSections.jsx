@@ -689,7 +689,7 @@ function CourseReviewWidget({ courseId, courseData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!rateValue) {
-      toast.error("Please select a rating.");
+      toast.error(t("reviews.selectRating", "Please select a rating."));
       return;
     }
     try {
@@ -710,14 +710,17 @@ function CourseReviewWidget({ courseId, courseData }) {
 
   const handleDelete = async () => {
     const result = await Swal.fire({
-      title: "Delete Review?",
-      text: "Are you sure you want to delete your review permanently?",
+      title: t("reviews.deleteTitle", "Delete Review?"),
+      text: t(
+        "reviews.deleteConfirm",
+        "Are you sure you want to delete your review permanently?",
+      ),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#ef4444",
       cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t("reviews.yesDelete", "Yes, delete"),
+      cancelButtonText: t("reviews.cancel", "Cancel"),
     });
     if (!result.isConfirmed) return;
     try {
@@ -727,16 +730,16 @@ function CourseReviewWidget({ courseId, courseData }) {
       setRateValue(0);
       setComment("");
       await Swal.fire({
-        title: "Success!",
-        text: "Review deleted.",
+        title: t("reviews.success", "Success!"),
+        text: t("reviews.deleted", "Review deleted."),
         icon: "success",
         timer: 2000,
         showConfirmButton: false,
       });
-      toast.success("Review deleted.");
+      toast.success(t("reviews.deleted", "Review deleted."));
     } catch (err) {
       await Swal.fire({
-        title: "Error!",
+        title: t("reviews.error", "Error!"),
         text: err?.response?.data?.message || "Failed to delete review.",
         icon: "error",
       });
@@ -783,7 +786,7 @@ function CourseReviewWidget({ courseId, courseData }) {
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label className="block text-sm text-gray-600 mb-1">
-                Rating <span className="text-red-500">*</span>
+                {t("reviews.rating", "Rating")} <span className="text-red-500">*</span>
               </label>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -804,14 +807,14 @@ function CourseReviewWidget({ courseId, courseData }) {
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">
-                Comment (optional)
+                {t("reviews.commentOptional", "Comment (optional)")}
               </label>
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 rows={3}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
-                placeholder="Share your experience..."
+                placeholder={t("reviews.shareExperience", "Share your experience...")}
               />
             </div>
             <div className="flex gap-2">
@@ -820,7 +823,9 @@ function CourseReviewWidget({ courseId, courseData }) {
                 disabled={submitting}
                 className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60 transition-colors"
               >
-                {submitting ? "Saving..." : "Submit Review"}
+                {submitting
+                  ? t("reviews.saving", "Saving...")
+                  : t("reviews.submitReview", "Submit Review")}
               </button>
               {editMode && (
                 <button
@@ -882,7 +887,9 @@ function CourseSupportWidget({ courseId, currentItem, user }) {
         setMessage("");
         setTimeout(() => setSent(false), 4000);
       } else {
-        toast.error("Failed to send report. Please try again.");
+        toast.error(
+          t("reviews.reportFailed", "Failed to send report. Please try again."),
+        );
       }
     } catch {
       toast.error("Failed to send report. Please try again.");
@@ -1036,7 +1043,7 @@ export function CourseSections() {
           ? [
               {
                 id: "legacy",
-                title: "Course Content",
+                title: t("reviews.courseContent", "Course Content"),
                 items: legVids.map((v) => ({
                   id: v.id,
                   title: v.title,
@@ -1080,7 +1087,7 @@ export function CourseSections() {
           ? [
               {
                 id: "legacy",
-                title: "Course Content",
+                title: t("reviews.courseContent", "Course Content"),
                 items: legVids.map((v) => ({
                   id: v.id,
                   title: v.title,
@@ -1604,7 +1611,7 @@ export function CourseSections() {
         <button
           onClick={() => setSidebarOpen(true)}
           className="p-2 rounded-lg text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all"
-          aria-label="Open menu"
+          aria-label={t("reviews.openMenu", "Open menu")}
         >
           <svg
             className="w-5 h-5"

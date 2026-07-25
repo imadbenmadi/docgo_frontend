@@ -10,6 +10,7 @@ import {
     XCircle,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * ValidationErrorPanel - frontend version
@@ -20,8 +21,10 @@ export default function ValidationErrorPanel({
     warnings = [],
     isVisible = false,
     onClose,
-    title = "Please fix the following issues",
+    title,
 }) {
+    const { t } = useTranslation("", { keyPrefix: "validation" });
+    const panelTitle = title || t("defaultTitle", "Please fix the following issues");
     const [isExpanded, setIsExpanded] = useState(true);
     const [dismissed, setDismissed] = useState(new Set());
     const panelRef = useRef(null);
@@ -122,7 +125,7 @@ export default function ValidationErrorPanel({
                                                 : "text-yellow-800"
                                         }`}
                                     >
-                                        {title}
+                                        {panelTitle}
                                     </span>
                                     <span
                                         className={`flex-shrink-0 text-xs font-bold px-2 py-0.5 rounded-full ${
@@ -136,8 +139,8 @@ export default function ValidationErrorPanel({
                                 </div>
                                 <p className="text-xs text-gray-500 mt-0.5">
                                     {visibleErrors.length > 0
-                                        ? `${visibleErrors.length} field${visibleErrors.length > 1 ? "s" : ""} need${visibleErrors.length === 1 ? "s" : ""} attention`
-                                        : `${visibleWarnings.length} warning${visibleWarnings.length > 1 ? "s" : ""}`}
+                                        ? t("fieldsNeedAttention", "{{count}} field(s) need attention", { count: visibleErrors.length })
+                                        : t("warningsCount", "{{count}} warning(s)", { count: visibleWarnings.length })}
                                 </p>
                             </div>
 
@@ -212,7 +215,7 @@ export default function ValidationErrorPanel({
                                     </div>
                                     <div className="px-4 py-2.5 border-t border-gray-100 bg-gray-50/50">
                                         <p className="text-xs text-gray-400 text-center">
-                                            Click an item to jump to that field
+                                            {t("clickToJump", "Click an item to jump to that field")}
                                         </p>
                                     </div>
                                 </motion.div>
@@ -342,7 +345,7 @@ export function FileUploadZone({
     onFileSelect,
     accept = "image/*",
     maxSizeMB = 5,
-    label = "Upload file",
+    label,
     hint,
     currentFile = null,
     currentFileName = null,
@@ -350,6 +353,8 @@ export function FileUploadZone({
     className = "",
     icon: Icon = null,
 }) {
+    const { t } = useTranslation("", { keyPrefix: "validation" });
+    const uploadLabel = label || t("uploadFile", "Upload file");
     const [dragOver, setDragOver] = useState(false);
     const [preview, setPreview] = useState(null);
     const inputRef = useRef(null);
@@ -375,10 +380,10 @@ export function FileUploadZone({
                 .replace(/video\//g, "")
                 .replace(/application\//g, "")
                 .toUpperCase();
-            return `Invalid file type. Accepted: ${friendly}`;
+            return t("invalidFileType", "Invalid file type. Accepted: {{types}}", { types: friendly });
         }
         if (file.size > maxSizeMB * 1024 * 1024) {
-            return `File too large. Max size: ${maxSizeMB}MB`;
+            return t("fileTooLarge", "File too large. Max size: {{max}}MB", { max: maxSizeMB });
         }
         return null; // valid
     };
@@ -441,15 +446,15 @@ export function FileUploadZone({
                         <>
                             <CheckCircle2 className="w-10 h-10 text-emerald-500" />
                             <p className="text-sm font-semibold text-emerald-700">
-                                File selected
+                                {t("fileSelected", "File selected")}
                             </p>
                             <p className="text-xs text-emerald-600 max-w-[200px] truncate">
                                 {currentFile?.name ||
                                     currentFileName ||
-                                    "File ready"}
+                                    t("fileReady", "File ready")}
                             </p>
                             <p className="text-xs text-gray-500">
-                                Click to change
+                                {t("clickToChange", "Click to change")}
                             </p>
                         </>
                     ) : error ? (
@@ -459,7 +464,7 @@ export function FileUploadZone({
                                 {error}
                             </p>
                             <p className="text-xs text-gray-500">
-                                Click to try again
+                                {t("clickToTryAgain", "Click to try again")}
                             </p>
                         </>
                     ) : (
@@ -471,13 +476,13 @@ export function FileUploadZone({
                                     </div>
                             )}
                             <p className="text-sm font-semibold text-gray-700">
-                                {label}
+                                {uploadLabel}
                             </p>
                             {hint && (
                                 <p className="text-xs text-gray-500">{hint}</p>
                             )}
                             <p className="text-xs text-gray-400">
-                                Max {maxSizeMB}MB
+                                {t("maxSize", "Max {{max}}MB", { max: maxSizeMB })}
                             </p>
                         </>
                     )}

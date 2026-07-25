@@ -48,11 +48,11 @@ const MyApplications = () => {
         setApplications(response.data.data.applications || []);
       } else {
         throw new Error(
-          response.data.message || "Failed to fetch applications",
+          response.data.message || t("loadError", "Failed to load applications"),
         );
       }
     } catch (error) {
-      toast.error("Failed to load applications");
+      toast.error(t("loadError", "Failed to load applications"));
     } finally {
       setLoading(false);
     }
@@ -123,17 +123,22 @@ const MyApplications = () => {
       title:
         item?.title ||
         item?.Title ||
-        (itemType === "course" ? "Course" : "Program"),
+        (itemType === "course" ? t("course", "Course") : t("program", "Program")),
       itemType,
     });
   };
+
+  const statusLabel = (status) =>
+    t(status, status.charAt(0).toUpperCase() + status.slice(1));
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <FaSpinner className="animate-spin text-4xl text-blue-600 mx-auto mb-4" />
-          <p className="text-gray-600">Loading your applications...</p>
+          <p className="text-gray-600">
+            {t("loading", "Loading your applications...")}
+          </p>
         </div>
       </div>
     );
@@ -147,10 +152,10 @@ const MyApplications = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                My Applications
+                {t("title", "My Applications")}
               </h1>
               <p className="text-gray-600 mt-1">
-                Track your course and program applications
+                {t("subtitle", "Track your course and program applications")}
               </p>
             </div>
             <button
@@ -158,7 +163,7 @@ const MyApplications = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
             >
               <FaSpinner className="text-sm" />
-              Refresh
+              {t("refresh", "Refresh")}
             </button>
           </div>
         </div>
@@ -171,7 +176,7 @@ const MyApplications = () => {
             <div className="flex items-center gap-2">
               <FaFilter className="text-gray-400" />
               <span className="text-sm font-medium text-gray-700">
-                Filter by:
+                {t("filterBy", "Filter by:")}
               </span>
             </div>
 
@@ -181,10 +186,10 @@ const MyApplications = () => {
               onChange={(e) => setFilter(e.target.value)}
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
+              <option value="all">{t("allStatus", "All Status")}</option>
+              <option value="pending">{t("pending", "Pending")}</option>
+              <option value="approved">{t("approved", "Approved")}</option>
+              <option value="rejected">{t("rejected", "Rejected")}</option>
             </select>
 
             {/* Type Filter */}
@@ -193,14 +198,16 @@ const MyApplications = () => {
               onChange={(e) => setTypeFilter(e.target.value)}
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="all">All Types</option>
-              <option value="course">Courses</option>
-              <option value="program">Programs</option>
+              <option value="all">{t("allTypes", "All Types")}</option>
+              <option value="course">{t("courses", "Courses")}</option>
+              <option value="program">{t("programs", "Programs")}</option>
             </select>
 
             <div className="ml-auto text-sm text-gray-600">
-              {filteredApplications.length} of {applications.length}{" "}
-              applications
+              {t("applicationsCount", "{{shown}} of {{total}} applications", {
+                shown: filteredApplications.length,
+                total: applications.length,
+              })}
             </div>
           </div>
         </div>
@@ -210,18 +217,21 @@ const MyApplications = () => {
           <div className="bg-white rounded-lg shadow-sm p-12 text-center">
             <FaGraduationCap className="text-6xl text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No Applications Found
+              {t("noApplications", "No Applications Found")}
             </h3>
             <p className="text-gray-600 mb-6">
               {applications.length === 0
-                ? "You haven't applied to any courses or programs yet."
-                : "No applications match your current filters."}
+                ? t(
+                    "noApplicationsText",
+                    "You haven't applied to any courses or programs yet.",
+                  )
+                : t("noMatchFilters", "No applications match your current filters.")}
             </p>
             <button
               onClick={() => navigate("/courses")}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium"
             >
-              Browse Courses
+              {t("browseCourses", "Browse Courses")}
             </button>
           </div>
         ) : (
@@ -258,7 +268,9 @@ const MyApplications = () => {
                               {itemTitle}
                             </h3>
                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 capitalize">
-                              {itemType}
+                              {itemType === "course"
+                                ? t("course", "Course")
+                                : t("program", "Program")}
                             </span>
                           </div>
 
@@ -266,13 +278,14 @@ const MyApplications = () => {
                             <div className="flex items-center gap-1">
                               {getStatusIcon(application.status)}
                               <span>
-                                Applied: {formatDate(application.createdAt)}
+                                {t("applied", "Applied")}:{" "}
+                                {formatDate(application.createdAt)}
                               </span>
                             </div>
 
                             {application.paymentType && (
                               <div>
-                                Payment:{" "}
+                                {t("payment", "Payment")}:{" "}
                                 <span className="capitalize">
                                   {application.paymentType}
                                 </span>
@@ -281,7 +294,8 @@ const MyApplications = () => {
 
                             {application.enrollDate && (
                               <div className="text-green-600">
-                                Enrolled: {formatDate(application.enrollDate)}
+                                {t("enrolled", "Enrolled")}:{" "}
+                                {formatDate(application.enrollDate)}
                               </div>
                             )}
                           </div>
@@ -297,14 +311,13 @@ const MyApplications = () => {
                       {/* Status and Actions */}
                       <div className="flex items-center gap-3">
                         <span className={getStatusBadge(application.status)}>
-                          {application.status.charAt(0).toUpperCase() +
-                            application.status.slice(1)}
+                          {statusLabel(application.status)}
                         </span>
 
                         <button
                           onClick={() => handleViewItem(application)}
                           className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-                          title={`View ${itemType}`}
+                          title={t("view", "View")}
                         >
                           <FaEye />
                         </button>
@@ -312,7 +325,7 @@ const MyApplications = () => {
                         <button
                           onClick={() => openContactSupport(application)}
                           className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200"
-                          title="Contact Support"
+                          title={t("contactSupport", "Contact Support")}
                         >
                           <FaCommentAlt />
                         </button>
@@ -338,7 +351,7 @@ const MyApplications = () => {
           >
             <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b">
               <h3 className="text-lg font-semibold text-gray-900">
-                Contacter le support
+                {t("contactSupport", "Contact Support")}
               </h3>
               <button
                 onClick={() => setContactModalData(null)}
@@ -349,13 +362,16 @@ const MyApplications = () => {
             </div>
             <div className="px-6 pb-6 pt-4">
               <p className="text-sm text-gray-500 mb-1">
-                Concernant votre candidature :{" "}
+                {t("aboutApplication", "Regarding your application")}:{" "}
                 <span className="font-medium text-gray-800">
                   {contactModalData.title}
                 </span>
               </p>
               <p className="text-xs text-gray-400 mb-4">
-                Ce message sera marqué comme support candidature.
+                {t(
+                  "applicationSupportNote",
+                  "This message will be tagged as application support.",
+                )}
               </p>
               <ContactForm
                 context="application"

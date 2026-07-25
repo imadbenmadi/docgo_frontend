@@ -528,23 +528,28 @@ const PaymentPage = () => {
 
             {/* Error Title */}
             <h2 className="text-2xl font-bold text-gray-900 mb-3">
-              Payment Page Unavailable
+              {t("paymentPage.unavailableTitle", "Payment Page Unavailable")}
             </h2>
 
             {/* Error Description */}
             <p className="text-gray-600 mb-2 leading-relaxed">
-              We&apos;re experiencing technical difficulties loading the payment
-              page.
+              {t(
+                "paymentPage.unavailableDesc1",
+                "We're experiencing technical difficulties loading the payment page.",
+              )}
             </p>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Please try again later or contact our support team for assistance.
+              {t(
+                "paymentPage.unavailableDesc2",
+                "Please try again later or contact our support team for assistance.",
+              )}
             </p>
 
             {/* Error Details (if available) */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-red-700 font-medium">
-                  Error Details:
+                  {t("paymentPage.errorDetails", "Error Details:")}
                 </p>
                 <p className="text-sm text-red-600 mt-1">{error}</p>
               </div>
@@ -556,20 +561,23 @@ const PaymentPage = () => {
                 onClick={() => window.location.reload()}
                 className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
               >
-                Try Again
+                {t("paymentPage.tryAgain", "Try Again")}
               </button>
               <button
                 onClick={handleGoBack}
                 className="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-200 transition-colors duration-200 border border-gray-200"
               >
-                Go Back
+                {t("paymentPage.goBack", "Go Back")}
               </button>
             </div>
 
             {/* Support Contact */}
             <div className="mt-6 pt-6 border-t border-gray-100">
               <p className="text-sm text-gray-500">
-                Need help? Contact our support team on the footer of this page
+                {t(
+                  "paymentPage.needHelp",
+                  "Need help? Contact our support team on the footer of this page",
+                )}
               </p>
             </div>
           </div>
@@ -637,15 +645,15 @@ const PaymentPage = () => {
                             )}
                         </p>
                         <p className="text-red-600">
-                          <strong>Transaction ID:</strong>{" "}
+                          <strong>{t("paymentPage.labelTransactionId", "Transaction ID:")}</strong>{" "}
                           {existingPayment.transactionId}
                         </p>
                         <p className="text-red-600">
-                          <strong>Amount:</strong> {existingPayment.amount}{" "}
+                          <strong>{t("paymentPage.labelAmount", "Amount:")}</strong> {existingPayment.amount}{" "}
                           {existingPayment.currency}
                         </p>
                         <p className="text-red-600">
-                          <strong>Submitted:</strong>{" "}
+                          <strong>{t("paymentPage.labelSubmitted", "Submitted:")}</strong>{" "}
                           {new Date(
                             existingPayment.createdAt,
                           ).toLocaleDateString("en-US", {
@@ -659,9 +667,11 @@ const PaymentPage = () => {
                       </div>
                       <div className="mt-4 p-3 bg-red-100 rounded-lg">
                         <p className="text-sm text-red-800">
-                          <strong>Tip:</strong> Please make sure to upload a
-                          clear screenshot of your payment receipt with the
-                          correct transaction details.
+                          <strong>{t("paymentPage.tipLabel", "Tip:")}</strong>{" "}
+                          {t(
+                            "paymentPage.tipText",
+                            "Please make sure to upload a clear screenshot of your payment receipt with the correct transaction details.",
+                          )}
                         </p>
                       </div>
                     </div>
@@ -693,20 +703,20 @@ const PaymentPage = () => {
                         <div className="space-y-2 text-sm">
                           {existingPayment.rejectionReason && (
                             <p className="text-gray-700">
-                              <strong>Reason:</strong>{" "}
+                              <strong>{t("paymentPage.reasonLabel", "Reason:")}</strong>{" "}
                               {existingPayment.rejectionReason}
                             </p>
                           )}
                           <p className="text-gray-600">
-                            <strong>Transaction ID:</strong>{" "}
+                            <strong>{t("paymentPage.labelTransactionId", "Transaction ID:")}</strong>{" "}
                             {existingPayment.transactionId}
                           </p>
                           <p className="text-gray-600">
-                            <strong>Amount:</strong> {existingPayment.amount}{" "}
+                            <strong>{t("paymentPage.labelAmount", "Amount:")}</strong> {existingPayment.amount}{" "}
                             {existingPayment.currency}
                           </p>
                           <p className="text-gray-600">
-                            <strong>Submitted:</strong>{" "}
+                            <strong>{t("paymentPage.labelSubmitted", "Submitted:")}</strong>{" "}
                             {new Date(
                               existingPayment.createdAt,
                             ).toLocaleDateString("en-US", {
@@ -720,7 +730,7 @@ const PaymentPage = () => {
                         </div>
                         <div className="mt-4 p-3 bg-gray-100 rounded-lg">
                           <p className="text-sm text-gray-800">
-                            <strong>Note:</strong> Your previous payment was
+                            <strong>{t("paymentPage.noteLabel", "Note:")}</strong> Your previous payment was
                             {existingPayment.status === "cancelled"
                               ? t(
                                   "paymentPage.cancelNotice.text",

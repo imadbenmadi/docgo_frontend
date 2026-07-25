@@ -7,10 +7,12 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Download, X, AlertCircle, Clock, Check } from "lucide-react";
 import apiClient from "../../utils/apiClient";
 
 const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
+  const { t } = useTranslation("", { keyPrefix: "paymentHistory" });
   const [isOpen, setIsOpen] = useState(false);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -45,7 +47,9 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
         [paymentId]: {
           url: null,
           loading: false,
-          error: err?.response?.data?.message || "Failed to load screenshot",
+          error:
+            err?.response?.data?.message ||
+            t("loadScreenshotError", "Failed to load screenshot"),
         },
       }));
     }
@@ -94,7 +98,8 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
       }
     } catch (err) {
       setError(
-        err.response?.data?.message || "Failed to fetch your payment history",
+        err.response?.data?.message ||
+          t("fetchHistoryError", "Failed to fetch your payment history"),
       );
     } finally {
       setLoading(false);
@@ -119,31 +124,16 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(link);
     } catch {
-      alert("Failed to download screenshot");
+      alert(t("downloadError", "Failed to download screenshot"));
     }
   };
 
   // Get status badge
   const getStatusBadge = (status) => {
     const config = {
-      approved: {
-        bg: "bg-green-100",
-        text: "text-green-800",
-        icon: Check,
-        label: "Approved",
-      },
-      rejected: {
-        bg: "bg-red-100",
-        text: "text-red-800",
-        icon: X,
-        label: "Rejected",
-      },
-      pending: {
-        bg: "bg-yellow-100",
-        text: "text-yellow-800",
-        icon: Clock,
-        label: "Pending",
-      },
+      approved: { bg: "bg-green-100", text: "text-green-800", icon: Check },
+      rejected: { bg: "bg-red-100", text: "text-red-800", icon: X },
+      pending: { bg: "bg-yellow-100", text: "text-yellow-800", icon: Clock },
     };
 
     const statusConfig = config[status] || config.pending;
@@ -154,7 +144,7 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
         className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${statusConfig.bg} ${statusConfig.text}`}
       >
         <Icon className="w-4 h-4" />
-        {statusConfig.label}
+        {t(status, status.charAt(0).toUpperCase() + status.slice(1))}
       </div>
     );
   };
@@ -184,12 +174,12 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
         {loading ? (
           <>
             <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-            Loading...
+            {t("loadingBtn", "Loading...")}
           </>
         ) : (
           <>
             <Download className="w-4 h-4" />
-            View Your Payments
+            {t("viewYourPayments", "View Your Payments")}
           </>
         )}
       </button>
@@ -202,7 +192,7 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
             <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">
-                  Payment History
+                  {t("historyTitle", "Payment History")}
                 </h2>
                 <p className="text-sm text-gray-600">{itemTitle}</p>
               </div>
@@ -228,11 +218,13 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
               {loading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Loading payments...</p>
+                  <p className="text-gray-600">
+                    {t("loadingPayments", "Loading payments...")}
+                  </p>
                 </div>
               ) : payments.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
-                  <p>No payments found for this item</p>
+                  <p>{t("noPaymentsForItem", "No payments found for this item")}</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -272,14 +264,25 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                             {/* Status Info */}
                             <div className="bg-gray-50 rounded p-3">
                               <p className="text-xs font-medium text-gray-600 uppercase mb-1">
-                                Status Details
+                                {t("statusDetails", "Status Details")}
                               </p>
                               <p className="text-sm text-gray-800">
                                 {payment.status === "approved"
-                                  ? `Approved on ${new Date(payment.verificationDate).toLocaleDateString()}`
+                                  ? t("approvedOn", "Approved on {{date}}", {
+                                      date: new Date(
+                                        payment.verificationDate,
+                                      ).toLocaleDateString(),
+                                    })
                                   : payment.status === "rejected"
-                                    ? `Rejected on ${new Date(payment.verificationDate).toLocaleDateString()}`
-                                    : "Waiting for verification"}
+                                    ? t("rejectedOn", "Rejected on {{date}}", {
+                                        date: new Date(
+                                          payment.verificationDate,
+                                        ).toLocaleDateString(),
+                                      })
+                                    : t(
+                                        "waitingVerification",
+                                        "Waiting for verification",
+                                      )}
                               </p>
                             </div>
 
@@ -287,10 +290,12 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                             <div className="bg-white border border-gray-200 rounded-xl p-3">
                               <div className="flex items-center justify-between mb-2">
                                 <p className="text-xs font-semibold text-gray-900 uppercase">
-                                  Screenshot Preview
+                                  {t("screenshotPreview", "Screenshot Preview")}
                                 </p>
                                 <span className="text-xs text-gray-500">
-                                  {payment.hasScreenshot ? "Available" : "None"}
+                                  {payment.hasScreenshot
+                                    ? t("available", "Available")
+                                    : t("none", "None")}
                                 </span>
                               </div>
                               {payment.hasScreenshot ? (
@@ -299,19 +304,22 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                                     <div className="text-center">
                                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
                                       <p className="text-xs text-gray-500">
-                                        Loading preview...
+                                        {t("loadingPreview", "Loading preview...")}
                                       </p>
                                     </div>
                                   ) : screenshotPreviews[payment.id]?.url ? (
                                     <img
                                       src={screenshotPreviews[payment.id].url}
-                                      alt="Payment proof"
+                                      alt={t("altProof", "Payment proof")}
                                       className="w-full h-full object-contain"
                                     />
                                   ) : (
                                     <div className="text-center px-3">
                                       <p className="text-xs text-gray-500">
-                                        Preview unavailable
+                                        {t(
+                                          "previewUnavailable",
+                                          "Preview unavailable",
+                                        )}
                                       </p>
                                       {screenshotPreviews[payment.id]?.error ? (
                                         <p className="text-[11px] text-gray-400 mt-1">
@@ -324,7 +332,10 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                               ) : (
                                 <div className="w-full aspect-[5/3] rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
                                   <p className="text-xs text-gray-500">
-                                    No screenshot available.
+                                    {t(
+                                      "noScreenshotShort",
+                                      "No screenshot available.",
+                                    )}
                                   </p>
                                 </div>
                               )}
@@ -334,7 +345,7 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                             {payment.rejectionReason && (
                               <div className="bg-red-50 border border-red-200 rounded p-3">
                                 <p className="text-xs font-medium text-red-700 uppercase mb-1">
-                                  Rejection Reason
+                                  {t("rejectionReason", "Rejection Reason")}
                                 </p>
                                 <p className="text-sm text-red-800">
                                   {payment.rejectionReason}
@@ -346,7 +357,7 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                             <div className="grid grid-cols-2 gap-3">
                               <div>
                                 <p className="text-xs font-medium text-gray-500 uppercase mb-1">
-                                  Upload Date
+                                  {t("uploadDate", "Upload Date")}
                                 </p>
                                 <p className="text-sm text-gray-700">
                                   {new Date(
@@ -357,7 +368,7 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                               {payment.transactionId && (
                                 <div>
                                   <p className="text-xs font-medium text-gray-500 uppercase mb-1">
-                                    Transaction ID
+                                    {t("transactionId", "Transaction ID")}
                                   </p>
                                   <p className="text-sm text-gray-700 font-mono truncate">
                                     {payment.transactionId}
@@ -373,7 +384,7 @@ const CoursePaymentButton = ({ itemId, itemType = "course", itemTitle }) => {
                                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded hover:bg-blue-100 transition"
                               >
                                 <Download className="w-4 h-4" />
-                                Download Screenshot
+                                {t("downloadScreenshotShort", "Download Screenshot")}
                               </button>
                             )}
                           </div>

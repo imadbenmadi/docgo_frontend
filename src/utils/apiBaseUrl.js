@@ -1,6 +1,5 @@
 export const getApiBaseUrl = () => {
-  // return "https://backend.healthpathglobal.com";
-  return "https://backend.healthpathglobal.com";
+  return import.meta.env.VITE_API_URL || "https://backend.healthpathglobal.com";
 };
 
 export const buildApiUrl = (path) => {

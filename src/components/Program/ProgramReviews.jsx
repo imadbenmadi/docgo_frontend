@@ -1,4 +1,5 @@
 import { FaStar, FaRegStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -37,6 +38,7 @@ const ProgramReviews = ({
   isEnrolled,
   userReview: initialUserReview,
 }) => {
+  const { t } = useTranslation();
   const reviews = initialReviews || [];
   const totalReviews = reviews.length;
   const averageRating =
@@ -83,7 +85,7 @@ const ProgramReviews = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!rateValue) {
-      toast.error("Please select a rating.");
+      toast.error(t("reviews.selectRating", "Please select a rating."));
       return;
     }
     try {
@@ -94,9 +96,12 @@ const ProgramReviews = ({
       });
       setUserReview(res.data.review);
       setEditMode(false);
-      toast.success(res.data.message || "Review submitted!");
+      toast.success(res.data.message || t("reviews.submitted", "Review submitted!"));
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Failed to submit review.");
+      toast.error(
+        err?.response?.data?.message ||
+          t("reviews.submitFailed", "Failed to submit review."),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -104,14 +109,17 @@ const ProgramReviews = ({
 
   const handleDelete = async () => {
     const result = await Swal.fire({
-      title: "Delete Review?",
-      text: "Are you sure you want to delete your review permanently?",
+      title: t("reviews.deleteTitle", "Delete Review?"),
+      text: t(
+        "reviews.deleteConfirm",
+        "Are you sure you want to delete your review permanently?",
+      ),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#ef4444",
       cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, delete",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t("reviews.yesDelete", "Yes, delete"),
+      cancelButtonText: t("reviews.cancel", "Cancel"),
     });
     if (!result.isConfirmed) return;
     try {
@@ -121,20 +129,25 @@ const ProgramReviews = ({
       setRateValue(0);
       setComment("");
       await Swal.fire({
-        title: "Success!",
-        text: "Review deleted.",
+        title: t("reviews.success", "Success!"),
+        text: t("reviews.deleted", "Review deleted."),
         icon: "success",
         timer: 2000,
         showConfirmButton: false,
       });
-      toast.success("Review deleted.");
+      toast.success(t("reviews.deleted", "Review deleted."));
     } catch (err) {
       await Swal.fire({
-        title: "Error!",
-        text: err?.response?.data?.message || "Failed to delete review.",
+        title: t("reviews.error", "Error!"),
+        text:
+          err?.response?.data?.message ||
+          t("reviews.deleteFailed", "Failed to delete review."),
         icon: "error",
       });
-      toast.error(err?.response?.data?.message || "Failed to delete review.");
+      toast.error(
+        err?.response?.data?.message ||
+          t("reviews.deleteFailed", "Failed to delete review."),
+      );
     } finally {
       setDeleting(false);
     }
@@ -188,24 +201,29 @@ const ProgramReviews = ({
       className="bg-blue-50 rounded-xl p-5 border border-blue-100 mt-4"
     >
       <h4 className="font-semibold text-gray-800 mb-3">
-        {userReview ? "Edit your review" : "Write a review"}
+        {userReview
+          ? t("reviews.editYourReview", "Edit your review")
+          : t("reviews.writeReview", "Write a review")}
       </h4>
       <div className="mb-3">
         <label className="block text-sm text-gray-600 mb-1">
-          Rating <span className="text-red-500">*</span>
+          {t("reviews.rating", "Rating")} <span className="text-red-500">*</span>
         </label>
         <StarPicker value={rateValue} onChange={setRateValue} />
       </div>
       <div className="mb-4">
         <label className="block text-sm text-gray-600 mb-1">
-          Comment (optional)
+          {t("reviews.commentOptional", "Comment (optional)")}
         </label>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={3}
           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
-          placeholder="Share your experience with this program..."
+          placeholder={t(
+            "reviews.shareExperienceProgram",
+            "Share your experience with this program...",
+          )}
         />
       </div>
       <div className="flex gap-2">
@@ -214,7 +232,9 @@ const ProgramReviews = ({
           disabled={submitting}
           className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60 transition-colors"
         >
-          {submitting ? "Saving..." : "Submit Review"}
+          {submitting
+            ? t("reviews.saving", "Saving...")
+            : t("reviews.submitReview", "Submit Review")}
         </button>
         {userReview && (
           <button
@@ -231,7 +251,9 @@ const ProgramReviews = ({
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-      <h3 className="text-xl font-bold text-gray-900 mb-6">Student Reviews</h3>
+      <h3 className="text-xl font-bold text-gray-900 mb-6">
+        {t("reviews.studentReviews", "Student Reviews")}
+      </h3>
 
       {totalReviews > 0 ? (
         <>
@@ -286,8 +308,10 @@ const ProgramReviews = ({
       ) : (
         <div className="text-center py-8 text-gray-400">
           <FaRegStar className="text-4xl mx-auto mb-3" />
-          <p className="text-gray-500">No reviews yet</p>
-          <p className="text-sm">Be the first to review this program!</p>
+          <p className="text-gray-500">{t("reviews.noReviews", "No reviews yet")}</p>
+          <p className="text-sm">
+            {t("reviews.beFirstProgram", "Be the first to review this program!")}
+          </p>
         </div>
       )}
 
@@ -296,7 +320,9 @@ const ProgramReviews = ({
         <div className="mt-8 border-t border-gray-100 pt-6">
           {userReview && !editMode ? (
             <div>
-              <h4 className="font-semibold text-gray-800 mb-3">Your Review</h4>
+              <h4 className="font-semibold text-gray-800 mb-3">
+                {t("reviews.yourReview", "Your Review")}
+              </h4>
               <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-4">
                 {renderStars(userReview.Rate, "text-base mb-2")}
                 {userReview.Comment && (
@@ -318,7 +344,9 @@ const ProgramReviews = ({
                     disabled={deleting}
                     className="px-3 py-1.5 text-xs font-medium bg-red-50 border border-red-200 text-red-600 rounded-lg hover:bg-red-100 disabled:opacity-60 transition-colors"
                   >
-                    {deleting ? "Deleting..." : "Delete"}
+                    {deleting
+                      ? t("reviews.deleting", "Deleting...")
+                      : t("reviews.delete", "Delete")}
                   </button>
                 </div>
               </div>

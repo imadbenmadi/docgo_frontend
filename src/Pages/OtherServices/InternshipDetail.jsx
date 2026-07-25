@@ -6,6 +6,7 @@ import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { useTranslation } from "react-i18next";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import ServicePaymentForm from "../../components/OtherServices/ServicePaymentForm";
 
 export default function InternshipDetail() {
   const navigate = useNavigate();
@@ -410,6 +411,57 @@ export default function InternshipDetail() {
                 "Tell us why you're interested in this opportunity and why you'd be a great fit."}
             </p>
 
+            {parseFloat(internship?.applicationFee || 0) > 0 ? (
+              !isAuth ? (
+                <div className="p-4 bg-blue-50 rounded-lg text-blue-900">
+                  <p className="mb-3">
+                    {t(
+                      "internshipDetailPage.loginToPay",
+                      "Please log in to pay and apply for this internship.",
+                    ) || "Please log in to pay and apply for this internship."}
+                  </p>
+                  <button
+                    onClick={() =>
+                      navigate(`/login?next=${encodeURIComponent(selfPath)}`)
+                    }
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                  >
+                    {t("internshipDetailPage.login", "Log in") || "Log in"}
+                  </button>
+                </div>
+              ) : (
+                <ServicePaymentForm
+                  serviceType="internship"
+                  internshipId={id}
+                  amount={parseFloat(internship.applicationFee)}
+                  currency={internship.feeCurrency || "DZD"}
+                  contentLabel={
+                    t(
+                      "internshipDetailPage.applicationLetter",
+                      "Application Letter / Motivation",
+                    ) || "Application Letter / Motivation"
+                  }
+                  defaultContent={content}
+                  onSuccess={async () => {
+                    await Swal.fire({
+                      icon: "success",
+                      title:
+                        t("internshipDetailPage.success", "Success") ||
+                        "Success",
+                      text:
+                        t(
+                          "internshipDetailPage.paymentSubmitted",
+                          "Your payment was submitted. We will verify it and process your application.",
+                        ) ||
+                        "Your payment was submitted. We will verify it and process your application.",
+                    });
+                    setHasApplied(true);
+                    setMyApplication({ status: "pending" });
+                  }}
+                />
+              )
+            ) : (
+              <>
             <label className="block font-semibold mb-2">
               {t(
                 "internshipDetailPage.applicationLetter",
@@ -448,6 +500,8 @@ export default function InternshipDetail() {
                     "Submit Application"}
               </button>
             </div>
+              </>
+            )}
           </div>
         ) : (
           <div

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Download,
   Share2,
@@ -17,6 +18,7 @@ import apiClient from "../../utils/apiClient";
  */
 
 const UserCertificatesList = ({ userId }) => {
+  const { t } = useTranslation("", { keyPrefix: "userCerts" });
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,7 +37,7 @@ const UserCertificatesList = ({ userId }) => {
       if (err.response?.status === 404) {
         setCertificates([]);
       } else {
-        setError("Failed to load your certificates");
+        setError(t("loadError", "Failed to load your certificates"));
       }
     } finally {
       setLoading(false);
@@ -61,7 +63,7 @@ const UserCertificatesList = ({ userId }) => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(link);
     } catch {
-      alert("Failed to download certificate");
+      alert(t("downloadError", "Failed to download certificate"));
     }
   };
 
@@ -69,18 +71,22 @@ const UserCertificatesList = ({ userId }) => {
     const verificationUrl =
       certificate.verificationUrl ||
       `${window.location.origin}/verify-certificate/${certificate.certificateId}`;
-    const text = `Check out my certificate for "${certificate.Course?.Title || "Course"}"`;
+    const text = t(
+      "shareText",
+      'Check out my certificate for "{{course}}"',
+      { course: certificate.Course?.Title || t("courseFallback", "Course") },
+    );
 
     if (navigator.share) {
       navigator.share({
-        title: "My Certificate",
+        title: t("shareTitle", "My Certificate"),
         text,
         url: verificationUrl,
       });
     } else {
       // Fallback: copy to clipboard
       navigator.clipboard.writeText(verificationUrl);
-      alert("Certificate link copied to clipboard!");
+      alert(t("linkCopied", "Certificate link copied to clipboard!"));
     }
   };
 
@@ -88,7 +94,9 @@ const UserCertificatesList = ({ userId }) => {
     return (
       <div className="flex items-center justify-center py-8">
         <Loader className="w-6 h-6 text-blue-600 animate-spin" />
-        <span className="ml-2 text-gray-600">Loading your certificates...</span>
+        <span className="ml-2 text-gray-600">
+          {t("loading", "Loading your certificates...")}
+        </span>
       </div>
     );
   }
@@ -107,10 +115,10 @@ const UserCertificatesList = ({ userId }) => {
       <div className="bg-gray-50 border border-gray-300 rounded-lg p-8 text-center">
         <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          No Certificates Yet
+          {t("noCerts", "No Certificates Yet")}
         </h3>
         <p className="text-gray-600">
-          Complete a course to earn your first certificate!
+          {t("noCertsDesc", "Complete a course to earn your first certificate!")}
         </p>
       </div>
     );
@@ -119,10 +127,11 @@ const UserCertificatesList = ({ userId }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">My Certificates</h2>
+        <h2 className="text-2xl font-bold text-gray-900">
+          {t("title", "My Certificates")}
+        </h2>
         <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
-          {certificates.length} Certificate
-          {certificates.length !== 1 ? "s" : ""}
+          {certificates.length} {t("certificatesWord", "Certificate(s)")}
         </span>
       </div>
 
@@ -135,18 +144,24 @@ const UserCertificatesList = ({ userId }) => {
             {/* Certificate Header */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
               <h3 className="text-lg font-semibold text-white">
-                {certificate.Course?.Title || "Certificate"}
+                {certificate.Course?.Title ||
+                  t("certificateFallback", "Certificate")}
               </h3>
               <p className="text-blue-100 text-sm mt-1">
-                Issued on{" "}
-                {new Date(certificate.issuedDate).toLocaleDateString()}
+                {t("issuedOn", "Issued on {{date}}", {
+                  date: new Date(
+                    certificate.issuedDate,
+                  ).toLocaleDateString(),
+                })}
               </p>
             </div>
 
             {/* Certificate Details */}
             <div className="px-6 py-4 space-y-3">
               <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                <span className="text-sm text-gray-600">Certificate ID:</span>
+                <span className="text-sm text-gray-600">
+                  {t("certificateIdLabel", "Certificate ID:")}
+                </span>
                 <span className="text-sm font-mono text-gray-900">
                   {certificate.certificateId.slice(0, 12)}...
                 </span>
@@ -154,7 +169,9 @@ const UserCertificatesList = ({ userId }) => {
 
               {certificate.Course?.Category && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Category:</span>
+                  <span className="text-sm text-gray-600">
+                    {t("categoryLabel", "Category:")}
+                  </span>
                   <span className="text-sm text-gray-900">
                     {certificate.Course.Category}
                   </span>
@@ -163,7 +180,9 @@ const UserCertificatesList = ({ userId }) => {
 
               {certificate.metadata?.completionScore && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Score:</span>
+                  <span className="text-sm text-gray-600">
+                    {t("scoreLabel", "Score:")}
+                  </span>
                   <span className="text-sm font-semibold text-green-600">
                     {certificate.metadata.completionScore}%
                   </span>
@@ -172,7 +191,7 @@ const UserCertificatesList = ({ userId }) => {
 
               {certificate.expiryDate && (
                 <div className="flex items-center justify-between text-sm text-gray-600">
-                  <span>Expires:</span>
+                  <span>{t("expiresLabel", "Expires:")}</span>
                   <span>
                     {new Date(certificate.expiryDate).toLocaleDateString()}
                   </span>
@@ -185,19 +204,19 @@ const UserCertificatesList = ({ userId }) => {
               <button
                 onClick={() => handleDownload(certificate.id)}
                 className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition flex items-center justify-center gap-2"
-                title="Download PDF"
+                title={t("downloadPdf", "Download PDF")}
               >
                 <Download className="w-4 h-4" />
-                Download
+                {t("download", "Download")}
               </button>
 
               <button
                 onClick={() => handleShare(certificate)}
                 className="flex-1 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-900 font-medium rounded-lg transition flex items-center justify-center gap-2"
-                title="Share certificate"
+                title={t("shareCertificate", "Share certificate")}
               >
                 <Share2 className="w-4 h-4" />
-                Share
+                {t("share", "Share")}
               </button>
 
               {certificate.verificationUrl && (
@@ -206,10 +225,10 @@ const UserCertificatesList = ({ userId }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 px-4 py-2 bg-green-100 hover:bg-green-200 text-green-700 font-medium rounded-lg transition flex items-center justify-center gap-2"
-                  title="Verify"
+                  title={t("verify", "Verify")}
                 >
                   <ExternalLink className="w-4 h-4" />
-                  Verify
+                  {t("verify", "Verify")}
                 </a>
               )}
             </div>
@@ -217,7 +236,7 @@ const UserCertificatesList = ({ userId }) => {
             {/* Status */}
             {certificate.revoked && (
               <div className="bg-red-50 px-6 py-2 text-red-700 text-sm font-medium border-t border-red-200">
-                ⚠️ This certificate has been revoked
+                {t("revoked", "⚠️ This certificate has been revoked")}
                 {certificate.revokeReason && ` - ${certificate.revokeReason}`}
               </div>
             )}

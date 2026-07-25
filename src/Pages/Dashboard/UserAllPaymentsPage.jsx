@@ -8,6 +8,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Download,
   Filter,
@@ -24,6 +25,7 @@ import {
 import apiClient from "../../utils/apiClient";
 
 const UserAllPaymentsPage = () => {
+  const { t } = useTranslation("", { keyPrefix: "userPayments" });
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,9 +52,9 @@ const UserAllPaymentsPage = () => {
 
   const getPaymentLabel = (payment) => {
     const type = String(payment?.itemType || "").toLowerCase();
-    if (type === "program") return "Program";
-    if (type === "course") return "Course";
-    return "Payment";
+    if (type === "program") return t("program", "Program");
+    if (type === "course") return t("course", "Course");
+    return t("payment", "Payment");
   };
 
   const getItemTypeIcon = (payment) => {
@@ -98,7 +100,9 @@ const UserAllPaymentsPage = () => {
         [paymentId]: {
           url: null,
           loading: false,
-          error: err?.response?.data?.message || "Failed to load screenshot",
+          error:
+            err?.response?.data?.message ||
+            t("loadScreenshotError", "Failed to load screenshot"),
         },
       }));
     }
@@ -155,7 +159,10 @@ const UserAllPaymentsPage = () => {
         }));
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch your payments");
+      setError(
+        err.response?.data?.message ||
+          t("fetchError", "Failed to fetch your payments"),
+      );
     } finally {
       setLoading(false);
     }
@@ -199,7 +206,7 @@ const UserAllPaymentsPage = () => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(link);
     } catch {
-      alert("Failed to download screenshot");
+      alert(t("downloadError", "Failed to download screenshot"));
     }
   };
 
@@ -231,7 +238,7 @@ const UserAllPaymentsPage = () => {
         className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${config.bg} ${config.text}`}
       >
         <Icon className="w-4 h-4" />
-        {status.charAt(0).toUpperCase() + status.slice(1)}
+        {t(status, status.charAt(0).toUpperCase() + status.slice(1))}
       </span>
     );
   };
@@ -244,7 +251,9 @@ const UserAllPaymentsPage = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your payments...</p>
+          <p className="text-gray-600">
+            {t("loading", "Loading your payments...")}
+          </p>
         </div>
       </div>
     );
@@ -255,34 +264,47 @@ const UserAllPaymentsPage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Payments</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            {t("title", "My Payments")}
+          </h1>
           <p className="text-gray-600">
-            View all your payment history and download payment receipts
+            {t(
+              "subtitle",
+              "View all your payment history and download payment receipts",
+            )}
           </p>
         </div>
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-600 mb-2">Total Payments</p>
+            <p className="text-sm text-gray-600 mb-2">
+              {t("totalPayments", "Total Payments")}
+            </p>
             <p className="text-3xl font-bold text-gray-900">
               {stats.total || 0}
             </p>
           </div>
           <div className="bg-green-50 rounded-lg shadow p-6">
-            <p className="text-sm text-green-600 mb-2">Approved</p>
+            <p className="text-sm text-green-600 mb-2">
+              {t("approved", "Approved")}
+            </p>
             <p className="text-3xl font-bold text-green-600">
               {stats.byStatus?.approved || 0}
             </p>
           </div>
           <div className="bg-yellow-50 rounded-lg shadow p-6">
-            <p className="text-sm text-yellow-600 mb-2">Pending</p>
+            <p className="text-sm text-yellow-600 mb-2">
+              {t("pending", "Pending")}
+            </p>
             <p className="text-3xl font-bold text-yellow-600">
               {stats.byStatus?.pending || 0}
             </p>
           </div>
           <div className="bg-red-50 rounded-lg shadow p-6">
-            <p className="text-sm text-red-600 mb-2">Rejected</p>
+            <p className="text-sm text-red-600 mb-2">
+              {t("rejected", "Rejected")}
+            </p>
             <p className="text-3xl font-bold text-red-600">
               {stats.byStatus?.rejected || 0}
             </p>
@@ -293,13 +315,15 @@ const UserAllPaymentsPage = () => {
         <div className="bg-white rounded-lg shadow p-4 mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Filter className="w-5 h-5 text-gray-600" />
-            <span className="font-semibold text-gray-900">Filter</span>
+            <span className="font-semibold text-gray-900">
+              {t("filter", "Filter")}
+            </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Payment Status
+                {t("paymentStatus", "Payment Status")}
               </label>
               <select
                 value={filters.status}
@@ -311,16 +335,16 @@ const UserAllPaymentsPage = () => {
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
-                <option value="all">All Statuses</option>
-                <option value="approved">Approved</option>
-                <option value="pending">Pending</option>
-                <option value="rejected">Rejected</option>
+                <option value="all">{t("allStatuses", "All Statuses")}</option>
+                <option value="approved">{t("approved", "Approved")}</option>
+                <option value="pending">{t("pending", "Pending")}</option>
+                <option value="rejected">{t("rejected", "Rejected")}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Item Type
+                {t("itemType", "Item Type")}
               </label>
               <select
                 value={filters.itemType}
@@ -332,9 +356,9 @@ const UserAllPaymentsPage = () => {
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
-                <option value="all">All Types</option>
-                <option value="course">Courses</option>
-                <option value="program">Programs</option>
+                <option value="all">{t("allTypes", "All Types")}</option>
+                <option value="course">{t("courses", "Courses")}</option>
+                <option value="program">{t("programs", "Programs")}</option>
               </select>
             </div>
           </div>
@@ -355,7 +379,7 @@ const UserAllPaymentsPage = () => {
           {payments.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
               <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>No payments found</p>
+              <p>{t("noPayments", "No payments found")}</p>
             </div>
           ) : (
             <>
@@ -364,19 +388,19 @@ const UserAllPaymentsPage = () => {
                   <thead className="bg-gray-50 border-b">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Item
+                        {t("item", "Item")}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Amount
+                        {t("amount", "Amount")}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Status
+                        {t("status", "Status")}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Date
+                        {t("date", "Date")}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Actions
+                        {t("actions", "Actions")}
                       </th>
                     </tr>
                   </thead>
@@ -396,7 +420,8 @@ const UserAllPaymentsPage = () => {
                               </div>
                               <div className="min-w-0">
                                 <p className="font-medium text-gray-900 truncate">
-                                  {payment?.item?.title || "Untitled"}
+                                  {payment?.item?.title ||
+                                    t("untitled", "Untitled")}
                                 </p>
                                 <div className="mt-1 flex items-center gap-2">
                                   <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
@@ -449,12 +474,12 @@ const UserAllPaymentsPage = () => {
                                   <div className="bg-white border border-gray-200 rounded-2xl p-4">
                                     <div className="flex items-center justify-between mb-3">
                                       <p className="text-sm font-semibold text-gray-900">
-                                        Payment Preview
+                                        {t("preview", "Payment Preview")}
                                       </p>
                                       <span className="text-xs text-gray-500">
                                         {payment.hasScreenshot
-                                          ? "Proof"
-                                          : "No proof"}
+                                          ? t("proof", "Proof")
+                                          : t("noProof", "No proof")}
                                       </span>
                                     </div>
 
@@ -466,7 +491,10 @@ const UserAllPaymentsPage = () => {
                                             <div className="text-center">
                                               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
                                               <p className="text-xs text-gray-500">
-                                                Loading preview...
+                                                {t(
+                                                  "loadingPreview",
+                                                  "Loading preview...",
+                                                )}
                                               </p>
                                             </div>
                                           ) : screenshotPreviews[payment.id]
@@ -476,14 +504,17 @@ const UserAllPaymentsPage = () => {
                                                 screenshotPreviews[payment.id]
                                                   .url
                                               }
-                                              alt="Payment proof"
+                                              alt={t("altProof", "Payment proof")}
                                               className="w-full h-full object-contain"
                                             />
                                           ) : (
                                             <div className="text-center px-4">
                                               <ImageIcon className="w-6 h-6 text-gray-400 mx-auto mb-2" />
                                               <p className="text-xs text-gray-500">
-                                                Preview unavailable
+                                                {t(
+                                                  "previewUnavailable",
+                                                  "Preview unavailable",
+                                                )}
                                               </p>
                                               {screenshotPreviews[payment.id]
                                                 ?.error ? (
@@ -506,7 +537,10 @@ const UserAllPaymentsPage = () => {
                                           className="mt-3 w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
                                         >
                                           <Download className="w-4 h-4" />
-                                          Download Screenshot
+                                          {t(
+                                            "downloadScreenshot",
+                                            "Download Screenshot",
+                                          )}
                                         </button>
                                       </div>
                                     ) : (
@@ -514,8 +548,10 @@ const UserAllPaymentsPage = () => {
                                         <div>
                                           <ImageIcon className="w-6 h-6 text-gray-400 mx-auto mb-2" />
                                           <p className="text-xs text-gray-500">
-                                            No screenshot available for this
-                                            payment.
+                                            {t(
+                                              "noScreenshot",
+                                              "No screenshot available for this payment.",
+                                            )}
                                           </p>
                                         </div>
                                       </div>
@@ -529,10 +565,11 @@ const UserAllPaymentsPage = () => {
                                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                                       <div className="min-w-0">
                                         <p className="text-xs font-medium text-gray-500 uppercase">
-                                          Item
+                                          {t("item", "Item")}
                                         </p>
                                         <p className="text-lg font-semibold text-gray-900 truncate">
-                                          {payment?.item?.title || "Untitled"}
+                                          {payment?.item?.title ||
+                                            t("untitled", "Untitled")}
                                         </p>
                                         {payment?.item?.description ? (
                                           <p className="text-sm text-gray-600 mt-1 line-clamp-2">
@@ -543,7 +580,7 @@ const UserAllPaymentsPage = () => {
                                       <div className="flex items-center gap-3">
                                         <div className="text-right">
                                           <p className="text-xs font-medium text-gray-500 uppercase">
-                                            Amount
+                                            {t("amount", "Amount")}
                                           </p>
                                           <p className="text-lg font-bold text-gray-900">
                                             {formatAmount(payment)}
@@ -557,7 +594,7 @@ const UserAllPaymentsPage = () => {
                                   {payment.rejectionReason ? (
                                     <div className="bg-red-50 border border-red-200 rounded-2xl p-4">
                                       <p className="text-xs font-medium text-red-700 uppercase mb-2">
-                                        Rejection Reason
+                                        {t("rejectionReason", "Rejection Reason")}
                                       </p>
                                       <p className="text-red-800">
                                         {payment.rejectionReason}
@@ -568,27 +605,31 @@ const UserAllPaymentsPage = () => {
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     <div className="bg-white border border-gray-200 rounded-2xl p-4">
                                       <p className="text-xs font-medium text-gray-500 uppercase mb-1">
-                                        Transaction ID
+                                        {t("transactionId", "Transaction ID")}
                                       </p>
                                       <p className="text-gray-900 font-mono text-sm break-all">
-                                        {payment.transactionId || "N/A"}
+                                        {payment.transactionId ||
+                                          t("na", "N/A")}
                                       </p>
                                     </div>
                                     <div className="bg-white border border-gray-200 rounded-2xl p-4">
                                       <p className="text-xs font-medium text-gray-500 uppercase mb-1">
-                                        Verification Date
+                                        {t(
+                                          "verificationDate",
+                                          "Verification Date",
+                                        )}
                                       </p>
                                       <p className="text-gray-900 text-sm">
                                         {payment.verificationDate
                                           ? new Date(
                                               payment.verificationDate,
                                             ).toLocaleDateString()
-                                          : "Pending"}
+                                          : t("pending", "Pending")}
                                       </p>
                                     </div>
                                     <div className="bg-white border border-gray-200 rounded-2xl p-4">
                                       <p className="text-xs font-medium text-gray-500 uppercase mb-1">
-                                        Upload Date
+                                        {t("uploadDate", "Upload Date")}
                                       </p>
                                       <p className="text-gray-900 text-sm">
                                         {new Date(
@@ -611,12 +652,14 @@ const UserAllPaymentsPage = () => {
               {/* Pagination */}
               <div className="px-6 py-4 border-t bg-gray-50 flex items-center justify-between">
                 <p className="text-sm text-gray-600">
-                  Showing {pagination.offset + 1} to{" "}
-                  {Math.min(
-                    pagination.offset + pagination.limit,
-                    pagination.total,
-                  )}{" "}
-                  of {pagination.total} payments
+                  {t("showing", "Showing {{from}} to {{to}} of {{total}} payments", {
+                    from: pagination.offset + 1,
+                    to: Math.min(
+                      pagination.offset + pagination.limit,
+                      pagination.total,
+                    ),
+                    total: pagination.total,
+                  })}
                 </p>
                 <div className="flex gap-2">
                   <button
@@ -629,10 +672,13 @@ const UserAllPaymentsPage = () => {
                     disabled={pagination.offset === 0}
                     className="px-4 py-2 bg-gray-200 text-gray-700 rounded disabled:opacity-50"
                   >
-                    Previous
+                    {t("previous", "Previous")}
                   </button>
                   <span className="px-4 py-2 text-gray-700">
-                    Page {currentPage} of {totalPages}
+                    {t("pageOf", "Page {{current}} of {{total}}", {
+                      current: currentPage,
+                      total: totalPages,
+                    })}
                   </span>
                   <button
                     onClick={() =>
@@ -644,7 +690,7 @@ const UserAllPaymentsPage = () => {
                     disabled={currentPage >= totalPages}
                     className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
                   >
-                    Next
+                    {t("next", "Next")}
                   </button>
                 </div>
               </div>

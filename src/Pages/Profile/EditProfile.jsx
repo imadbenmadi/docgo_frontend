@@ -82,9 +82,12 @@ const EditProfile = () => {
     if (!ProfilePic.type.startsWith("image/")) {
       validate([
         {
-          field: "Profile Picture",
-          message: "Please select a valid image file (JPG, PNG, etc.)",
-          section: "Profile Picture",
+          field: t("editProfile.fieldProfilePic", "Profile Picture"),
+          message: t(
+            "editProfile.vImageType",
+            "Please select a valid image file (JPG, PNG, etc.)",
+          ),
+          section: t("editProfile.secProfilePic", "Profile Picture"),
           scrollToId: "profile-pic-input",
           condition: true,
         },
@@ -96,9 +99,12 @@ const EditProfile = () => {
     if (ProfilePic.size > 5 * 1024 * 1024) {
       validate([
         {
-          field: "Profile Picture",
-          message: "Image size must be less than 5MB",
-          section: "Profile Picture",
+          field: t("editProfile.fieldProfilePic", "Profile Picture"),
+          message: t(
+            "editProfile.vImageSize",
+            "Image size must be less than 5MB",
+          ),
+          section: t("editProfile.secProfilePic", "Profile Picture"),
           scrollToId: "profile-pic-input",
           condition: true,
         },
@@ -152,34 +158,46 @@ const EditProfile = () => {
 
     const isValid = validate([
       {
-        field: "First Name",
-        message: "First Name is required (min 3 characters)",
-        section: "Personal Information",
+        field: t("editProfile.firstName", "First Name"),
+        message: t(
+          "editProfile.vFirstNameRequired",
+          "First Name is required (min 3 characters)",
+        ),
+        section: t("editProfile.secPersonal", "Personal Information"),
         scrollToId: "firstName",
         condition:
           !formData.firstName?.trim() || formData.firstName.trim().length < 3,
       },
       {
-        field: "Last Name",
-        message: "Last Name is required (min 3 characters)",
-        section: "Personal Information",
+        field: t("editProfile.lastName", "Last Name"),
+        message: t(
+          "editProfile.vLastNameRequired",
+          "Last Name is required (min 3 characters)",
+        ),
+        section: t("editProfile.secPersonal", "Personal Information"),
         scrollToId: "lastName",
         condition:
           !formData.lastName?.trim() || formData.lastName.trim().length < 3,
       },
       {
-        field: "Email",
-        message: "Please enter a valid email address",
-        section: "Personal Information",
+        field: t("editProfile.email", "Email address"),
+        message: t(
+          "editProfile.vEmailInvalid",
+          "Please enter a valid email address",
+        ),
+        section: t("editProfile.secPersonal", "Personal Information"),
         scrollToId: "email",
         condition:
           !formData.email?.trim() ||
           !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim()),
       },
       {
-        field: "Phone Number",
-        message: "Invalid phone number format",
-        section: "Personal Information",
+        field: t("editProfile.phoneNumber", "Phone number"),
+        message: t(
+          "editProfile.vPhoneInvalid",
+          "Invalid phone number format",
+        ),
+        section: t("editProfile.secPersonal", "Personal Information"),
         scrollToId: "phoneNumber",
         condition:
           !!formData.phoneNumber?.trim() &&
@@ -306,7 +324,7 @@ const EditProfile = () => {
         errors={validationErrors}
         isVisible={showPanel}
         onClose={hidePanel}
-        title="Please fix profile errors"
+        title={t("editProfile.fixErrorsTitle", "Please fix profile errors")}
       />
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-lg rounded-lg p-6">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { AlertCircle, CheckCircle, Loader, Download } from "lucide-react";
 import apiClient from "../../utils/apiClient";
 
@@ -11,6 +12,7 @@ import apiClient from "../../utils/apiClient";
  */
 
 const CertificateStatus = ({ courseId, isCompleted, userId }) => {
+  const { t } = useTranslation("", { keyPrefix: "certStatus" });
   const [status, setStatus] = useState("loading"); // loading, available, unavailable, error
   const [template, setTemplate] = useState(null);
   const [userCertificate, setUserCertificate] = useState(null);
@@ -33,7 +35,10 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
         setStatus("unavailable");
         setTemplate(null);
         setError(
-          "Certificate template not yet available. Please check back later.",
+          t(
+            "templateUnavailable",
+            "Certificate template not yet available. Please check back later.",
+          ),
         );
         return;
       }
@@ -56,7 +61,9 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
       }
     } catch (err) {
       setStatus("error");
-      setError(err.response?.data?.error || "Failed to load certificate");
+      setError(
+        err.response?.data?.error || t("loadError", "Failed to load certificate"),
+      );
     }
   };
 
@@ -64,7 +71,9 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
     return (
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center gap-3">
         <Loader className="w-5 h-5 text-blue-600 animate-spin" />
-        <span className="text-blue-700">Checking certificate status...</span>
+        <span className="text-blue-700">
+          {t("checking", "Checking certificate status...")}
+        </span>
       </div>
     );
   }
@@ -74,7 +83,7 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
       <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
         <AlertCircle className="w-5 h-5 text-red-600" />
         <div>
-          <p className="text-red-700 font-medium">Error</p>
+          <p className="text-red-700 font-medium">{t("error", "Error")}</p>
           <p className="text-red-600 text-sm">{error}</p>
         </div>
       </div>
@@ -87,11 +96,13 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
         <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
         <div>
           <p className="text-yellow-800 font-medium">
-            Certificate Not Yet Available
+            {t("notYetAvailable", "Certificate Not Yet Available")}
           </p>
           <p className="text-yellow-700 text-sm mt-1">
-            The instructor is still preparing the certificate template for this
-            course. Please check back later.
+            {t(
+              "notYetAvailableDesc",
+              "The instructor is still preparing the certificate template for this course. Please check back later.",
+            )}
           </p>
         </div>
       </div>
@@ -105,11 +116,13 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
         <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
         <div className="flex-1">
           <p className="text-green-800 font-medium mb-2">
-            Certificate Available
+            {t("available", "Certificate Available")}
           </p>
           <p className="text-green-700 text-sm mb-4">
-            Upon completion of this course, you will receive a certificate of
-            achievement.
+            {t(
+              "availableDesc",
+              "Upon completion of this course, you will receive a certificate of achievement.",
+            )}
           </p>
 
           {/* Show certificate if user completed it */}
@@ -117,16 +130,19 @@ const CertificateStatus = ({ courseId, isCompleted, userId }) => {
             <div className="flex items-center gap-2 mt-3 pt-3 border-t border-green-300">
               <CheckCircle className="w-4 h-4 text-green-600" />
               <span className="text-green-700 text-sm font-medium">
-                Your certificate has been issued!
+                {t("issued", "Your certificate has been issued!")}
               </span>
               <button className="ml-auto px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded transition flex items-center gap-1">
                 <Download className="w-4 h-4" />
-                Download
+                {t("download", "Download")}
               </button>
             </div>
           ) : isCompleted ? (
             <div className="bg-green-100 rounded p-2 text-sm text-green-800">
-              Your certificate is being prepared. Check back soon!
+              {t(
+                "beingPrepared",
+                "Your certificate is being prepared. Check back soon!",
+              )}
             </div>
           ) : null}
         </div>

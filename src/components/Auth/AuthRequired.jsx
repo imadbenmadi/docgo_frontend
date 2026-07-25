@@ -1,12 +1,17 @@
 import { FaLock, FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const AuthRequired = ({
-    title = "Authentication Required",
-    message = "You need to be logged in to access this feature.",
+    title,
+    message,
     returnUrl = "",
     showRegister = true,
 }) => {
+    const { t } = useTranslation("", { keyPrefix: "authRequired" });
+    const heading = title || t("title", "Authentication Required");
+    const text =
+        message || t("message", "You need to be logged in to access this feature.");
     const loginUrl = returnUrl
         ? `/login?from=${encodeURIComponent(returnUrl)}`
         : "/login";
@@ -27,11 +32,11 @@ const AuthRequired = ({
 
                     {/* Title */}
                     <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                        {title}
+                        {heading}
                     </h1>
 
                     {/* Message */}
-                    <p className="text-gray-600 mb-8">{message}</p>
+                    <p className="text-gray-600 mb-8">{text}</p>
 
                     {/* Action Buttons */}
                     <div className="space-y-3">
@@ -41,7 +46,7 @@ const AuthRequired = ({
                         >
                             <span className="flex items-center justify-center gap-2">
                                 <FaSignInAlt />
-                                <span>Sign In</span>
+                                <span>{t("signIn", "Sign In")}</span>
                             </span>
                         </Link>
 
@@ -52,7 +57,7 @@ const AuthRequired = ({
                             >
                                 <span className="flex items-center justify-center gap-2">
                                     <FaUserPlus />
-                                    <span>Create Account</span>
+                                    <span>{t("createAccount", "Create Account")}</span>
                                 </span>
                             </Link>
                         )}
@@ -61,20 +66,20 @@ const AuthRequired = ({
                             onClick={() => window.history.back()}
                             className="w-full text-gray-600 hover:text-gray-800 py-2 transition-colors duration-200"
                         >
-                            Go Back
+                            {t("goBack", "Go Back")}
                         </button>
                     </div>
 
                     {/* Benefits */}
                     <div className="mt-8 pt-6 border-t border-gray-200">
                         <h3 className="text-sm font-medium text-gray-900 mb-3">
-                            Why create an account?
+                            {t("whyCreate", "Why create an account?")}
                         </h3>
                         <ul className="text-sm text-gray-600 space-y-1">
-                            <li> Track your learning progress</li>
-                            <li> Access exclusive content</li>
-                            <li> Earn certificates</li>
-                            <li> Save your favorite courses</li>
+                            <li>{t("benefit1", "Track your learning progress")}</li>
+                            <li>{t("benefit2", "Access exclusive content")}</li>
+                            <li>{t("benefit3", "Earn certificates")}</li>
+                            <li>{t("benefit4", "Save your favorite courses")}</li>
                         </ul>
                     </div>
                 </div>
