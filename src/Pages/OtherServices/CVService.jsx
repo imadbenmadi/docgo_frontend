@@ -77,8 +77,8 @@ export default function CVService() {
       if (error.response?.status !== 404) {
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: "Failed to load CV service data",
+          title: t("common.error", "Error"),
+          text: t("cvServicePage.loadFailed", "Failed to load CV service data"),
         });
       }
     } finally {

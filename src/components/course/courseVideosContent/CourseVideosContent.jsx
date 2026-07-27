@@ -370,7 +370,7 @@ export function CourseVideosContent() {
         <div className="flex flex-col w-full max-md:mt-8 max-md:max-w-full">
           <div className="text-center py-8">
             <p className="text-red-600">
-              Erreur lors du chargement des données. Veuillez réessayer.
+              {t("common.loadDataError", "Error loading data. Please try again.")}
             </p>
           </div>
         </div>
@@ -550,7 +550,7 @@ export function CourseVideosContent() {
                   }}
                   className="px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors"
                 >
-                  Annuler
+                  {t("common.cancel", "Cancel")}
                 </button>
                 <button
                   onClick={handleFeedbackSubmit}

@@ -250,13 +250,15 @@ const CourseSidebar = ({
                     <div className="flex items-center mb-4">
                         <span className="text-red-500 text-xl mr-3"></span>
                         <h3 className="text-lg font-bold text-gray-900">
-                            Your Access
+                            {t("courseInfo.yourAccess", "Your Access")}
                         </h3>
                     </div>
 
                     <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                            <span className="text-gray-600">Video Access:</span>
+                            <span className="text-gray-600">
+                              {t("courseInfo.videoAccess", "Video Access:")}
+                            </span>
                             <span
                                 className={`font-medium ${
                                     userStatus.hasVideoAccess
@@ -272,7 +274,7 @@ const CourseSidebar = ({
 
                         <div className="flex justify-between">
                             <span className="text-gray-600">
-                                Download Access:
+                                {t("courseInfo.downloadAccess", "Download Access:")}
                             </span>
                             <span
                                 className={`font-medium ${
@@ -290,7 +292,7 @@ const CourseSidebar = ({
                         {userStatus.accessExpiryDate && (
                             <div className="flex justify-between">
                                 <span className="text-gray-600">
-                                    Access Expires:
+                                    {t("courseInfo.accessExpires", "Access Expires:")}
                                 </span>
                                 <span className="font-medium text-orange-600">
                                     {new Date(

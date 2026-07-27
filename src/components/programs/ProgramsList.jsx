@@ -248,7 +248,7 @@ function ProgramListItem({
           <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
             {isFree && (
               <span className="bg-emerald-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
-                FREE
+                {t("badges.free", "FREE")}
               </span>
             )}
             {program.isFeatured && (

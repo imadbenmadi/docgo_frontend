@@ -106,7 +106,7 @@ const CountryFlagSelector = ({
   value,
   onChange,
   countries = [],
-  placeholder = "Select Country",
+  placeholder,
   disabled = false,
   className = "",
   showLabel = true,
@@ -114,7 +114,8 @@ const CountryFlagSelector = ({
   required = false,
   ...props
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const ph = placeholder ?? t("common.selectCountry", "Select Country");
 
   // Convert French country names to ISO codes for the component
   const countryCodesArray = useMemo(() => {
@@ -136,7 +137,7 @@ const CountryFlagSelector = ({
   // Get display text in current language
   const displayName = value
     ? getCountryDisplayName(value, i18n.language?.split("-")[0] || "fr")
-    : placeholder;
+    : ph;
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>

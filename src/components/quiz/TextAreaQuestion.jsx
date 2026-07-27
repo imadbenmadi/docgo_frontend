@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function TextAreaQuestion({ question }) {
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState("");
 
   return (
@@ -11,7 +13,7 @@ function TextAreaQuestion({ question }) {
       <textarea
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
-        placeholder="Écrivez ici votre réponse"
+        placeholder={t("quiz.answerPlaceholder", "Write your answer here")}
         className="flex gap-2 items-start px-4 pt-4 pb-36 mt-4 w-full text-xl leading-10 rounded-2xl border border border-solid min-h-48 text-neutral-600 max-md:pb-24 max-md:max-w-full resize-none"
       />
     </div>

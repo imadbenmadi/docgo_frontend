@@ -126,13 +126,13 @@ function CourseListItem({ course }) {
           <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
             {isFree && (
               <span className="bg-emerald-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
-                FREE
+                {t("badges.free", "FREE")}
               </span>
             )}
             {course.isFeatured && (
               <span className="bg-amber-400 text-amber-900 text-xs font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
                 <Star className="w-2.5 h-2.5 fill-amber-900" />
-                Featured
+                {t("badges.featured", "Featured")}
               </span>
             )}
             {/* {course.certificate && (

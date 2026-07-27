@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaCheck, FaCheckCircle, FaCircle, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -8,6 +9,7 @@ export function CourseSidebar({
   quizPassed,
   hasCertificate = true,
 }) {
+  const { t } = useTranslation("", { keyPrefix: "courseSidebar" });
   const [activeSectionId, setActiveSectionId] = useState(1);
 
   const handleSectionClick = (id) => {
@@ -61,7 +63,9 @@ export function CourseSidebar({
 
         {/* Sections Navigation */}
         <section className="mt-8 max-w-full   w-[264px]">
-          <h2 className="text-xl leading-10 text-zinc-800">Contenu du cours</h2>
+          <h2 className="text-xl leading-10 text-zinc-800">
+            {t("courseContent", "Course Content")}
+          </h2>
           <nav className="mt-4 w-full text-sm leading-5 max-w-[264px]">
             {sections.map((section) => {
               const isActive = section.id === activeSectionId;
@@ -110,11 +114,11 @@ export function CourseSidebar({
                 className="text-blue-600 hover:underline flex items-center gap-2"
               >
                 <FaCheckCircle className="text-green-600" />
-                Quiz débloqué
+                {t("quizUnlocked", "Quiz unlocked")}
               </Link>
             ) : (
               <span className="text-gray-400 flex items-center gap-2">
-                <FaLock /> Quiz (verrouillé)
+                <FaLock /> {t("quizLocked", "Quiz (locked)")}
               </span>
             )}
           </div>
@@ -131,11 +135,11 @@ export function CourseSidebar({
                     className="text-blue-600 hover:underline flex items-center gap-2"
                   >
                     <FaCheckCircle className="text-green-600" />
-                    Certificat + PDF
+                    {t("certificatePdf", "Certificate + PDF")}
                   </Link>
                 ) : (
                   <span className="text-gray-400 flex items-center gap-2">
-                    <FaLock /> Certificat + PDF (verrouillé)
+                    <FaLock /> {t("certificatePdfLocked", "Certificate + PDF (locked)")}
                   </span>
                 )}
               </>

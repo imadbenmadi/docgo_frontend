@@ -242,7 +242,7 @@ const ProgramReviews = ({
             onClick={() => setEditMode(false)}
             className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors"
           >
-            Cancel
+            {t("reviews.cancel", "Cancel")}
           </button>
         )}
       </div>
@@ -337,7 +337,7 @@ const ProgramReviews = ({
                     }}
                     className="px-3 py-1.5 text-xs font-medium bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
-                    Edit
+                    {t("reviews.edit", "Edit")}
                   </button>
                   <button
                     onClick={handleDelete}

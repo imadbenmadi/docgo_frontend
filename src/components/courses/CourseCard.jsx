@@ -111,7 +111,7 @@ export function CourseCard({
         <div className="flex gap-1.5">
           {isFree && (
             <span className="bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
-              FREE
+              {t("badges.free", "FREE")}
             </span>
           )}
           {course.uploadType === "zip" && (
@@ -135,7 +135,7 @@ export function CourseCard({
           {course.isFeatured && (
             <span className="bg-amber-400 text-amber-900 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
               <Star className="w-3 h-3 fill-amber-900" />
-              Featured
+              {t("badges.featured", "Featured")}
             </span>
           )}
           {/* {course.certificate && (

@@ -1459,7 +1459,7 @@ export function CourseVideos() {
                             disabled={currentVideoIndex === 0}
                             className="p-3 rounded-full bg-white hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed 
                                    transition-all hover:scale-110 active:scale-95 shadow-md border border-gray-200"
-                            title="Previous video"
+                            title={t("courseVideos.previousVideo", "Previous video")}
                           >
                             <ChevronLeft className="w-6 h-6 text-gray-700" />
                           </button>
@@ -1483,7 +1483,7 @@ export function CourseVideos() {
                             disabled={currentVideoIndex === videos.length - 1}
                             className="p-3 rounded-full bg-white hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed 
                                    transition-all hover:scale-110 active:scale-95 shadow-md border border-gray-200"
-                            title="Next video"
+                            title={t("courseVideos.nextVideo", "Next video")}
                           >
                             <ChevronRight className="w-6 h-6 text-gray-700" />
                           </button>

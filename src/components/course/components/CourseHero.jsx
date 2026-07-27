@@ -172,7 +172,9 @@ const CourseHero = ({ course, courseStats, formatTotalDuration }) => {
               <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1">
                 {course.videos?.length || 0}
               </div>
-              <div className="text-blue-200 text-xs sm:text-sm">Videos</div>
+              <div className="text-blue-200 text-xs sm:text-sm">
+                {t("common.videos", "Videos")}
+              </div>
             </div>
 
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 lg:p-6 border border-white/20">

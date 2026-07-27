@@ -656,7 +656,7 @@ const UserSettings = () => {
           </p>
           <div className="rounded-lg bg-amber-50 border border-amber-200 p-3">
             <p className="text-xs text-amber-700">
-              <strong>Note :</strong>{" "}
+              <strong>{t("common.note", "Note:")}</strong>{" "}
               {t(
                 "settings.deleteManualNote",
                 "This process is manual. An administrator will review your request and may contact you before proceeding.",

@@ -214,7 +214,7 @@ const UserProfile = () => {
                 errors={validationErrors}
                 isVisible={showPanel}
                 onClose={hidePanel}
-                title="Fix profile errors"
+                title={t("profile.fixErrors", "Fix profile errors")}
             />
             {/* Header */}
             <div className="bg-white rounded-lg shadow-sm p-6 mb-6">

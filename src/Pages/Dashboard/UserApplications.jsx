@@ -235,7 +235,7 @@ const UserApplications = () => {
                   </div>
                   {payment.rejectionReason && (
                     <p className="text-xs text-red-600 mt-1">
-                      <span className="font-medium">Reason:</span>{" "}
+                      <span className="font-medium">{t("common.reason", "Reason:")}</span>{" "}
                       {payment.rejectionReason}
                     </p>
                   )}

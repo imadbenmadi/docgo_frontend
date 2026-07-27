@@ -49,7 +49,7 @@ const UserFavorites = () => {
 
   const handleRemoveFavorite = async (itemId, type) => {
     const result = await Swal.fire({
-      title: "Remove from Favorites?",
+      title: t("favorites.confirmRemoveTitle", "Remove from Favorites?"),
       text: t(
         "favorites.confirmRemove",
         "Are you sure you want to remove this from favorites?",
@@ -58,8 +58,8 @@ const UserFavorites = () => {
       showCancelButton: true,
       confirmButtonColor: "#ef4444",
       cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, remove",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t("favorites.yesRemove", "Yes, remove"),
+      cancelButtonText: t("common.cancel", "Cancel"),
     });
     if (result.isConfirmed) {
       try {

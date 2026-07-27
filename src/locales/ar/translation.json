@@ -487,7 +487,17 @@
     "delete": "حذف",
     "general": "عام",
     "message": "رسالة",
-    "refresh": "تحديث"
+    "refresh": "تحديث",
+    "noCountriesFeatured": "لا توجد دول مميّزة بعد",
+    "videos": "فيديوهات",
+    "sort": "ترتيب",
+    "currentlyUnavailable": "غير متوفر حاليًا",
+    "reason": "السبب:",
+    "note": "ملاحظة:",
+    "loadDataError": "فشل تحميل البيانات",
+    "error": "خطأ",
+    "courseContent": "محتوى الدورة",
+    "selectCountry": "اختر الدولة"
   },
   "Programs": "  البرامج المتاحة",
   "Courses": "الدورات",
@@ -871,7 +881,8 @@
     "save": "حفظ",
     "saving": "جارٍ الحفظ...",
     "subtitle": "أدر معلوماتك الشخصية",
-    "title": "ملفي الشخصي"
+    "title": "ملفي الشخصي",
+    "fixErrors": "تصحيح أخطاء الملف الشخصي"
   },
   "courses_data": {
     "title": "دوراتك",
@@ -1056,7 +1067,8 @@
     "noSpecialtiesAvailable": "لم يتم تكوين مجالات الدراسة بعد. يرجى المحاولة لاحقًا.",
     "passwordPlaceholder": "8 أحرف على الأقل",
     "processing": "جارٍ المعالجة...",
-    "visualAlt": "صورة التسجيل"
+    "visualAlt": "صورة التسجيل",
+    "optional": "(اختياري)"
   },
   "dashboard_data": {
     "voir_profile": "عرض الملف الشخصي",
@@ -1319,7 +1331,10 @@
     "remove": "إزالة",
     "students": "طلاب",
     "subtitle": "دوراتك وبرامجك المحفوظة",
-    "view": "عرض"
+    "view": "عرض",
+    "confirmRemoveTitle": "إزالة من المفضلة؟",
+    "yesRemove": "نعم، أزل",
+    "featured": "مميّز"
   },
   "quiz_page": {
     "true": "صحيح",
@@ -1368,7 +1383,11 @@
     "field": "المجال",
     "lastUpdated": "آخر تحديث",
     "instructor": "المدرب",
-    "courseInstructor": "مدرب الدورة"
+    "courseInstructor": "مدرب الدورة",
+    "yourAccess": "وصولك",
+    "videoAccess": "الوصول إلى الفيديو:",
+    "downloadAccess": "الوصول إلى التنزيل:",
+    "accessExpires": "انتهاء الوصول:"
   },
   "blocked": {
     "title": "تم حظر الحساب",
@@ -1651,7 +1670,8 @@
     "submitFailed": "فشل إرسال الطلب",
     "login": "تسجيل الدخول",
     "loginToPay": "يرجى تسجيل الدخول للدفع وإرسال طلب السيرة الذاتية.",
-    "paymentSubmitted": "تم إرسال دفعتك. سنتحقق منها ونعالج طلب سيرتك الذاتية."
+    "paymentSubmitted": "تم إرسال دفعتك. سنتحقق منها ونعالج طلب سيرتك الذاتية.",
+    "loadFailed": "فشل تحميل بيانات خدمة السيرة الذاتية"
   },
   "internshipDetailPage": {
     "loading": "جارٍ تحميل تفاصيل التدريب...",
@@ -2152,5 +2172,78 @@
     "dashFavorites": "لوحة التحكم - المفضلة",
     "dashNotifications": "لوحة التحكم - الإشعارات",
     "dashSettings": "لوحة التحكم - الإعدادات"
-  }
+  },
+  "badges": {
+    "free": "مجاني",
+    "featured": "مميّز"
+  },
+  "videoPlayer": {
+    "error": "خطأ في الفيديو",
+    "buffering": "جارٍ التحميل المؤقت...",
+    "speed": "السرعة"
+  },
+  "courseResources": {
+    "viewingPdf": "عرض مستند PDF",
+    "loadingPdf": "جارٍ تحميل PDF..."
+  },
+  "courseVideos": {
+    "previousVideo": "الفيديو السابق",
+    "nextVideo": "الفيديو التالي"
+  },
+  "richText": {
+    "placeholder": "ابدأ الكتابة...",
+    "expandFullscreen": "توسيع إلى ملء الشاشة",
+    "title": "محرر النصوص المنسقة",
+    "exitFullscreen": "الخروج من ملء الشاشة",
+    "close": "إغلاق",
+    "pressEsc": "اضغط ESC للخروج من ملء الشاشة",
+    "done": "تم"
+  },
+  "quiz": {
+    "yourAnswer": "إجابتك",
+    "answerPlaceholder": "اكتب إجابتك هنا"
+  },
+  "courseContent": {
+    "required": "مطلوب",
+    "noItems": "لا توجد عناصر بعد",
+    "sections": "أقسام",
+    "items": "عناصر",
+    "videos": "فيديوهات",
+    "quizzes": "اختبارات"
+  },
+  "helpSection": {
+    "getInTouch": "تواصل معنا"
+  },
+  "courseSidebar": {
+    "courseContent": "محتوى الدورة",
+    "quizUnlocked": "الاختبار مفتوح",
+    "quizLocked": "الاختبار (مقفل)",
+    "certificatePdf": "الشهادة + PDF",
+    "certificatePdfLocked": "الشهادة + PDF (مقفل)"
+  },
+  "seoTitles": {
+    "home": "الرئيسية",
+    "homeDesc": "{{brand}}: استكشف التعلم والدراسة في الخارج، وسجّل، وتعلّم عبر الإنترنت.",
+    "courses": "التعلم",
+    "coursesDesc": "تصفّح جميع الدورات المتاحة على {{brand}}.",
+    "course": "دورة",
+    "watchCourse": "مشاهدة الدورة",
+    "courseDesc": "تفاصيل الدورة ومحتوى التعلم على {{brand}}.",
+    "programs": "الدراسة في الخارج",
+    "programsDesc": "تصفّح جميع فرص الدراسة في الخارج على {{brand}}.",
+    "program": "برنامج",
+    "programDesc": "تفاصيل البرنامج والتسجيل على {{brand}}.",
+    "faq": "الأسئلة الشائعة",
+    "faqDesc": "الأسئلة الشائعة حول {{brand}}.",
+    "favorites": "المفضلة",
+    "favoritesDesc": "دوراتك ودراستك في الخارج المحفوظة على {{brand}}.",
+    "login": "تسجيل الدخول",
+    "loginDesc": "سجّل الدخول إلى حسابك في {{brand}}.",
+    "register": "إنشاء حساب",
+    "registerDesc": "أنشئ حسابك في {{brand}}.",
+    "dashboard": "لوحة التحكم",
+    "dashboardDesc": "لوحة التحكم الخاصة بك في {{brand}}."
+  },
+  "Services_nav": "الخدمات",
+  "cv_professional_creation": "إنشاء سيرة ذاتية احترافية"
 }

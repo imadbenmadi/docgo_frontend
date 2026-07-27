@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import {
   PlayIcon,
   PauseIcon,
@@ -27,6 +28,7 @@ const VideoPlayer = ({
   onPause,
   onEnded,
 }) => {
+  const { t } = useTranslation("", { keyPrefix: "videoPlayer" });
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const volumeRef = useRef(null);
@@ -311,7 +313,7 @@ const VideoPlayer = ({
               />
             </svg>
           </div>
-          <p className="text-lg font-semibold mb-2">Video Error</p>
+          <p className="text-lg font-semibold mb-2">{t("error", "Video Error")}</p>
           <p className="text-sm opacity-70 mb-4">{error.message}</p>
           <button
             onClick={handleRetry}
@@ -361,7 +363,7 @@ const VideoPlayer = ({
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
             {isBuffering && !isLoading && (
               <span className="text-white text-sm opacity-75">
-                Buffering...
+                {t("buffering", "Buffering...")}
               </span>
             )}
           </div>
@@ -477,7 +479,7 @@ const VideoPlayer = ({
                 {showSettings && (
                   <div className="absolute bottom-8 right-0 bg-black bg-opacity-90 rounded-lg p-2 min-w-32">
                     <div className="text-white text-sm">
-                      <div className="mb-2 font-semibold">Speed</div>
+                      <div className="mb-2 font-semibold">{t("speed", "Speed")}</div>
                       {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
                         <button
                           key={rate}

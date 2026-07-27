@@ -1,6 +1,8 @@
 import { FaCheck } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const PaymentMethodSelector = ({ methods, selectedMethod, onMethodChange }) => {
+    const { t } = useTranslation();
     return (
         <div className="grid gap-4">
             {methods.map((method) => (
@@ -46,7 +48,7 @@ const PaymentMethodSelector = ({ methods, selectedMethod, onMethodChange }) => {
                             </p>
                             {!method.available && (
                                 <p className="text-xs text-red-500 mt-1">
-                                    Currently unavailable
+                                    {t("common.currentlyUnavailable", "Currently unavailable")}
                                 </p>
                             )}
                         </div>

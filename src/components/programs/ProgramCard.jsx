@@ -203,7 +203,7 @@ export function ProgramCard({
         <div className="flex gap-1.5 flex-wrap justify-end">
           {isFree && (
             <span className="bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
-              FREE
+              {t("badges.free", "FREE")}
             </span>
           )}
           {program.isFeatured && (

@@ -65,6 +65,7 @@ const ItemTypeIcon = ({ type, accessible }) => {
 
 /* ────────── Sections curriculum ────────── */
 const SectionsCurriculum = ({ sections, isEnrolled, formatDuration }) => {
+  const { t } = useTranslation();
   const totalItems = sections.reduce(
     (acc, s) => acc + (s.items?.length || 0),
     0,
@@ -94,18 +95,21 @@ const SectionsCurriculum = ({ sections, isEnrolled, formatDuration }) => {
       {/* Summary bar */}
       <div className="flex flex-wrap gap-3 text-sm text-gray-500 pb-3 border-b border-gray-100">
         <span>
-          <strong className="text-gray-700">{sections.length}</strong> sections
+          <strong className="text-gray-700">{sections.length}</strong>{" "}
+          {t("courseContent.sections", "sections")}
         </span>
         <span>•</span>
         <span>
-          <strong className="text-gray-700">{totalItems}</strong> éléments
+          <strong className="text-gray-700">{totalItems}</strong>{" "}
+          {t("courseContent.items", "items")}
         </span>
         {totalVideos > 0 && (
           <>
             <span>•</span>
             <span>
               <strong className="text-gray-700">{totalVideos}</strong>{" "}
-              <FaPlay className="inline mb-0.5 text-blue-500" /> vidéos
+              <FaPlay className="inline mb-0.5 text-blue-500" />{" "}
+              {t("courseContent.videos", "videos")}
             </span>
           </>
         )}
@@ -114,7 +118,8 @@ const SectionsCurriculum = ({ sections, isEnrolled, formatDuration }) => {
             <span>•</span>
             <span>
               <strong className="text-gray-700">{totalQuizzes}</strong>{" "}
-              <FaQuestion className="inline mb-0.5 text-amber-500" /> quiz
+              <FaQuestion className="inline mb-0.5 text-amber-500" />{" "}
+              {t("courseContent.quizzes", "quizzes")}
             </span>
           </>
         )}
@@ -196,7 +201,7 @@ const SectionsCurriculum = ({ sections, isEnrolled, formatDuration }) => {
                         </span>
                         {item.isRequired && (
                           <span className="ml-1 text-xs bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded">
-                            Requis
+                            {t("courseContent.required", "Required")}
                           </span>
                         )}
                       </div>
@@ -216,7 +221,7 @@ const SectionsCurriculum = ({ sections, isEnrolled, formatDuration }) => {
             )}
             {isOpen && items.length === 0 && (
               <p className="px-5 py-3 text-sm text-gray-400 italic">
-                Aucun élément dans cette section.
+                {t("courseContent.noItems", "No items in this section.")}
               </p>
             )}
           </div>

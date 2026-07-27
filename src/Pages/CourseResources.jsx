@@ -101,7 +101,7 @@ export default function CourseResources() {
                     {viewingPdf.title || viewingPdf.name || "Document"}
                   </h2>
                   <p className="text-sm text-slate-500 mt-1">
-                    Viewing PDF Document
+                    {t("courseResources.viewingPdf", "Viewing PDF Document")}
                   </p>
                 </div>
               </div>
@@ -120,7 +120,7 @@ export default function CourseResources() {
             <div className="w-full" style={{ height: "calc(100vh - 220px)" }}>
               {loadingPdfPreview ? (
                 <div className="w-full h-full flex items-center justify-center text-slate-600">
-                  Chargement du PDF...
+                  {t("courseResources.loadingPdf", "Loading PDF...")}
                 </div>
               ) : viewingPdfBlobUrl ? (
                 <iframe

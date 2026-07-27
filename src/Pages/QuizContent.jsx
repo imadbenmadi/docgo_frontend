@@ -188,7 +188,7 @@ const QuizResults = ({ results, onRetry, score }) => {
                                 </h4>
                                 <div className="text-sm text-gray-600 space-y-1">
                                     <p>
-                                        <strong>Votre réponse:</strong>{" "}
+                                        <strong>{t("quiz.yourAnswer", "Your answer:")}</strong>{" "}
                                         {result.userAnswer}
                                     </p>
                                     {!result.isCorrect && (

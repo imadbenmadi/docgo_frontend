@@ -20,7 +20,7 @@ function App() {
   const location = useLocation();
   // Auth state + pre-fetched site data (fetched in parallel on startup by AppContext)
   const { loading: authLoading, siteSettings, contactInfo } = useAppContext();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   // Keep favicon in sync with the logo saved by the admin
   useEffect(() => {
@@ -71,77 +71,114 @@ function App() {
   const seo = (() => {
     if (pathname === "/") {
       return {
-        title: "Home",
-        description: `${brand}: explore l'apprentissage et les études à l’étranger, enroll, and learn online.`,
+        title: t("seoTitles.home", "Home"),
+        description: t("seoTitles.homeDesc", {
+          brand,
+          defaultValue:
+            "{{brand}}: explore learning and study abroad, enroll, and learn online.",
+        }),
       };
     }
 
     if (pathname === "/courses") {
       return {
-        title: "Apprentissage",
-        description: `Parcourez tous les apprentissages disponibles sur ${brand}.`,
+        title: t("seoTitles.courses", "Learning"),
+        description: t("seoTitles.coursesDesc", {
+          brand,
+          defaultValue: "Browse all learning available on {{brand}}.",
+        }),
       };
     }
 
     if (pathname.startsWith("/courses/")) {
       return {
-        title: pathname.includes("/watch") ? "Watch Course" : "Course",
-        description: `Course details and learning content on ${brand}.`,
+        title: pathname.includes("/watch")
+          ? t("seoTitles.watchCourse", "Watch Course")
+          : t("seoTitles.course", "Course"),
+        description: t("seoTitles.courseDesc", {
+          brand,
+          defaultValue: "Course details and learning content on {{brand}}.",
+        }),
       };
     }
 
     if (pathname === "/programs") {
       return {
-        title: "Études à l’étranger",
-        description: `Parcourez toutes les études à l’étranger disponibles sur ${brand}.`,
+        title: t("seoTitles.programs", "Study Abroad"),
+        description: t("seoTitles.programsDesc", {
+          brand,
+          defaultValue: "Browse all study abroad opportunities on {{brand}}.",
+        }),
       };
     }
 
     if (pathname.startsWith("/programs/")) {
       return {
-        title: "Program",
-        description: `Program details and enrollment on ${brand}.`,
+        title: t("seoTitles.program", "Program"),
+        description: t("seoTitles.programDesc", {
+          brand,
+          defaultValue: "Program details and enrollment on {{brand}}.",
+        }),
       };
     }
 
     if (pathname === "/faq") {
       return {
-        title: "FAQ",
-        description: `Frequently asked questions about ${brand}.`,
+        title: t("seoTitles.faq", "FAQ"),
+        description: t("seoTitles.faqDesc", {
+          brand,
+          defaultValue: "Frequently asked questions about {{brand}}.",
+        }),
       };
     }
 
     if (pathname === "/favorites") {
       return {
-        title: "Favorites",
-        description: `Vos apprentissages et études à l’étranger enregistrés sur ${brand}.`,
+        title: t("seoTitles.favorites", "Favorites"),
+        description: t("seoTitles.favoritesDesc", {
+          brand,
+          defaultValue: "Your saved learning and study abroad on {{brand}}.",
+        }),
       };
     }
 
     if (pathname === "/login") {
       return {
-        title: "Login",
-        description: `Login to your ${brand} account.`,
+        title: t("seoTitles.login", "Login"),
+        description: t("seoTitles.loginDesc", {
+          brand,
+          defaultValue: "Login to your {{brand}} account.",
+        }),
       };
     }
 
     if (pathname === "/register") {
       return {
-        title: "Register",
-        description: `Create your ${brand} account.`,
+        title: t("seoTitles.register", "Register"),
+        description: t("seoTitles.registerDesc", {
+          brand,
+          defaultValue: "Create your {{brand}} account.",
+        }),
       };
     }
 
     if (pathname.startsWith("/dashboard")) {
       return {
-        title: "Dashboard",
-        description: `Your ${brand} dashboard.`,
+        title: t("seoTitles.dashboard", "Dashboard"),
+        description: t("seoTitles.dashboardDesc", {
+          brand,
+          defaultValue: "Your {{brand}} dashboard.",
+        }),
       };
     }
 
     return {
       title: brand,
-      description: `${brand}: explore l'apprentissage et les études à l’étranger, enroll, and learn online.`,
+      description: t("seoTitles.homeDesc", {
+        brand,
+        defaultValue:
+          "{{brand}}: explore learning and study abroad, enroll, and learn online.",
+      }),
     };
   })();
 

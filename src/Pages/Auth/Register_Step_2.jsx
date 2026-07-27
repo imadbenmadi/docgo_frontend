@@ -114,7 +114,7 @@ const Register_Sterp_2 = ({
 
       {error && (
         <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg text-sm sm:text-base">
-          <div className="font-semibold mb-1">Error</div>
+          <div className="font-semibold mb-1">{t("common.error", "Error")}</div>
           <div>{error}</div>
         </div>
       )}
@@ -216,12 +216,18 @@ const Register_Sterp_2 = ({
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {t("register.universityOptional", "University / Institution") ||
               "University / Institution"}
-            <span className="text-gray-400 font-normal"> (optional)</span>
+            <span className="text-gray-400 font-normal">
+              {" "}
+              {t("register.optional", "(optional)")}
+            </span>
           </label>
           <input
             type="text"
             name="university"
-            placeholder="Enter your university or institution name"
+            placeholder={t(
+              "register.universityPlaceholder",
+              "Enter your university or institution name",
+            )}
             value={formData.university || ""}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"

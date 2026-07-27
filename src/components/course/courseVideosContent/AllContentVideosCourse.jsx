@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Outlet, useParams } from "react-router-dom";
 import { CourseSidebar } from "./CourseSidebar";
 import { getCourseDetails } from "../../../API/Courses";
@@ -6,6 +7,7 @@ import useScrollLock from "../../../hooks/useScrollLock";
 
 function AllContentVideosCourse() {
   const { courseId } = useParams();
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [hasCertificate, setHasCertificate] = useState(false);
 
@@ -33,7 +35,7 @@ function AllContentVideosCourse() {
       <div className="md:hidden bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-[999]">
         <div className="flex  items-center justify-between">
           <h1 className="text-lg font-semibold text-gray-800">
-            Course Content
+            {t("common.courseContent", "Course Content")}
           </h1>
           <button
             onClick={toggleSidebar}

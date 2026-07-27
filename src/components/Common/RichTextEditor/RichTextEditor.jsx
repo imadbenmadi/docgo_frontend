@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
 import {
@@ -12,7 +13,7 @@ import "./RichTextEditor.css";
 const RichTextEditor = ({
     value,
     onChange,
-    placeholder = "Commencez à écrire...",
+    placeholder,
     readOnly = false,
     height = "200px",
     theme = "snow",
@@ -21,6 +22,8 @@ const RichTextEditor = ({
     error,
     required = false,
 }) => {
+    const { t } = useTranslation("", { keyPrefix: "richText" });
+    const ph = placeholder ?? t("placeholder", "Start writing...");
     const [isFullscreen, setIsFullscreen] = useState(false);
 
     const toggleFullscreen = () => {
@@ -130,7 +133,7 @@ const RichTextEditor = ({
                             type="button"
                             onClick={toggleFullscreen}
                             className="absolute top-2 right-2 z-10 p-1 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
-                            title="Expand to fullscreen"
+                            title={t("expandFullscreen", "Expand to fullscreen")}
                         >
                             <ArrowsPointingOutIcon className="h-4 w-4" />
                         </button>
@@ -138,7 +141,7 @@ const RichTextEditor = ({
                     <ReactQuill
                         value={value || ""}
                         onChange={handleChange}
-                        placeholder={placeholder}
+                        placeholder={ph}
                         readOnly={readOnly}
                         theme={theme}
                         modules={modules}
@@ -171,7 +174,7 @@ const RichTextEditor = ({
                             )}
                             {!label && (
                                 <h3 className="text-lg font-medium text-gray-900">
-                                    Rich Text Editor
+                                    {t("title", "Rich Text Editor")}
                                 </h3>
                             )}
                         </div>
@@ -180,7 +183,7 @@ const RichTextEditor = ({
                                 type="button"
                                 onClick={toggleFullscreen}
                                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded transition-colors"
-                                title="Exit fullscreen"
+                                title={t("exitFullscreen", "Exit fullscreen")}
                             >
                                 <ArrowsPointingInIcon className="h-5 w-5" />
                             </button>
@@ -188,7 +191,7 @@ const RichTextEditor = ({
                                 type="button"
                                 onClick={toggleFullscreen}
                                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded transition-colors"
-                                title="Close"
+                                title={t("close", "Close")}
                             >
                                 <XMarkIcon className="h-5 w-5" />
                             </button>
@@ -201,7 +204,7 @@ const RichTextEditor = ({
                             <ReactQuill
                                 value={value || ""}
                                 onChange={handleChange}
-                                placeholder={placeholder}
+                                placeholder={ph}
                                 readOnly={readOnly}
                                 theme={theme}
                                 modules={modules}
@@ -216,14 +219,14 @@ const RichTextEditor = ({
                     {/* Fullscreen Footer */}
                     <div className="p-4 border-t border-gray-200 bg-gray-50 flex justify-between items-center">
                         <div className="text-sm text-gray-500">
-                            Press ESC to exit fullscreen
+                            {t("pressEsc", "Press ESC to exit fullscreen")}
                         </div>
                         <button
                             type="button"
                             onClick={toggleFullscreen}
                             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                         >
-                            Done
+                            {t("done", "Done")}
                         </button>
                     </div>
 

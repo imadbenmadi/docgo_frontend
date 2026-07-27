@@ -63,7 +63,9 @@ export default function FeaturedCountriesSection({
             ))
           ) : (
             <div className="col-span-full text-center py-8">
-              <p className="text-gray-500">No countries featured yet</p>
+              <p className="text-gray-500">
+                {t("common.noCountriesFeatured", "No countries featured yet")}
+              </p>
             </div>
           )}
         </div>

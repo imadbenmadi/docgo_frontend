@@ -771,14 +771,16 @@ function CourseReviewWidget({ courseId, courseData }) {
                 }}
                 className="px-3 py-1.5 text-xs font-medium bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                Edit
+                {t("reviews.edit", "Edit")}
               </button>
               <button
                 onClick={handleDelete}
                 disabled={deleting}
                 className="px-3 py-1.5 text-xs font-medium bg-red-50 border border-red-200 text-red-600 rounded-lg hover:bg-red-100 disabled:opacity-60 transition-colors"
               >
-                {deleting ? "Deleting..." : "Delete"}
+                {deleting
+                  ? t("reviews.deleting", "Deleting...")
+                  : t("reviews.delete", "Delete")}
               </button>
             </div>
           </div>
@@ -833,7 +835,7 @@ function CourseReviewWidget({ courseId, courseData }) {
                   onClick={() => setEditMode(false)}
                   className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors"
                 >
-                  Cancel
+                  {t("reviews.cancel", "Cancel")}
                 </button>
               )}
             </div>

@@ -514,7 +514,17 @@
     "delete": "Supprimer",
     "general": "Général",
     "message": "Message",
-    "refresh": "Actualiser"
+    "refresh": "Actualiser",
+    "noCountriesFeatured": "Aucun pays en vedette pour le moment",
+    "videos": "Vidéos",
+    "sort": "Trier",
+    "currentlyUnavailable": "Actuellement indisponible",
+    "reason": "Raison :",
+    "note": "Remarque :",
+    "loadDataError": "Échec du chargement des données",
+    "error": "Erreur",
+    "courseContent": "Contenu du cours",
+    "selectCountry": "Sélectionner un pays"
   },
   "Courses": "Cours",
   "Programs": "Programmes",
@@ -900,7 +910,8 @@
     "save": "Enregistrer",
     "saving": "Enregistrement...",
     "subtitle": "Gérez vos informations personnelles",
-    "title": "Mon profil"
+    "title": "Mon profil",
+    "fixErrors": "Corriger les erreurs du profil"
   },
   "courses_data": {
     "title": "Vos cours",
@@ -1057,7 +1068,8 @@
     "noSpecialtiesAvailable": "Les domaines d'études ne sont pas encore configurés. Veuillez revenir plus tard.",
     "passwordPlaceholder": "Au moins 8 caractères",
     "processing": "Traitement...",
-    "visualAlt": "Illustration d'inscription"
+    "visualAlt": "Illustration d'inscription",
+    "optional": "(facultatif)"
   },
   "dashboard_data": {
     "voir_profile": "Voir le profil",
@@ -1319,7 +1331,10 @@
     "remove": "Retirer",
     "students": "étudiants",
     "subtitle": "Vos cours et programmes enregistrés",
-    "view": "Voir"
+    "view": "Voir",
+    "confirmRemoveTitle": "Retirer des favoris ?",
+    "yesRemove": "Oui, retirer",
+    "featured": "En vedette"
   },
   "quiz_page": {
     "true": "Vrai",
@@ -1368,7 +1383,11 @@
     "field": "Domaine",
     "lastUpdated": "Dernière mise à jour",
     "instructor": "Instructeur",
-    "courseInstructor": "Instructeur du cours"
+    "courseInstructor": "Instructeur du cours",
+    "yourAccess": "Votre accès",
+    "videoAccess": "Accès vidéo :",
+    "downloadAccess": "Accès au téléchargement :",
+    "accessExpires": "Expiration de l'accès :"
   },
   "blocked": {
     "title": "Compte bloqué",
@@ -1649,7 +1668,8 @@
     "submitFailed": "Échec de l'envoi de la demande",
     "login": "Se connecter",
     "loginToPay": "Veuillez vous connecter pour payer et soumettre votre demande de CV.",
-    "paymentSubmitted": "Votre paiement a été soumis. Nous le vérifierons et traiterons votre demande de CV."
+    "paymentSubmitted": "Votre paiement a été soumis. Nous le vérifierons et traiterons votre demande de CV.",
+    "loadFailed": "Échec du chargement des données du service CV"
   },
   "internshipDetailPage": {
     "loading": "Chargement des détails du stage...",
@@ -2150,5 +2170,78 @@
     "dashFavorites": "Tableau de bord - Mes favoris",
     "dashNotifications": "Tableau de bord - Notifications",
     "dashSettings": "Tableau de bord - Paramètres"
-  }
+  },
+  "badges": {
+    "free": "GRATUIT",
+    "featured": "En vedette"
+  },
+  "videoPlayer": {
+    "error": "Erreur vidéo",
+    "buffering": "Mise en mémoire tampon...",
+    "speed": "Vitesse"
+  },
+  "courseResources": {
+    "viewingPdf": "Affichage du document PDF",
+    "loadingPdf": "Chargement du PDF..."
+  },
+  "courseVideos": {
+    "previousVideo": "Vidéo précédente",
+    "nextVideo": "Vidéo suivante"
+  },
+  "richText": {
+    "placeholder": "Commencez à écrire...",
+    "expandFullscreen": "Passer en plein écran",
+    "title": "Éditeur de texte enrichi",
+    "exitFullscreen": "Quitter le plein écran",
+    "close": "Fermer",
+    "pressEsc": "Appuyez sur ÉCHAP pour quitter le plein écran",
+    "done": "Terminé"
+  },
+  "quiz": {
+    "yourAnswer": "Votre réponse",
+    "answerPlaceholder": "Écrivez votre réponse ici"
+  },
+  "courseContent": {
+    "required": "Requis",
+    "noItems": "Aucun élément pour le moment",
+    "sections": "sections",
+    "items": "éléments",
+    "videos": "vidéos",
+    "quizzes": "quiz"
+  },
+  "helpSection": {
+    "getInTouch": "Contactez-nous"
+  },
+  "courseSidebar": {
+    "courseContent": "Contenu du cours",
+    "quizUnlocked": "Quiz débloqué",
+    "quizLocked": "Quiz (verrouillé)",
+    "certificatePdf": "Certificat + PDF",
+    "certificatePdfLocked": "Certificat + PDF (verrouillé)"
+  },
+  "seoTitles": {
+    "home": "Accueil",
+    "homeDesc": "{{brand}} : explorez l'apprentissage et les études à l'étranger, inscrivez-vous et apprenez en ligne.",
+    "courses": "Apprentissage",
+    "coursesDesc": "Parcourez tous les apprentissages disponibles sur {{brand}}.",
+    "course": "Cours",
+    "watchCourse": "Regarder le cours",
+    "courseDesc": "Détails du cours et contenu d'apprentissage sur {{brand}}.",
+    "programs": "Études à l'étranger",
+    "programsDesc": "Parcourez toutes les études à l'étranger disponibles sur {{brand}}.",
+    "program": "Programme",
+    "programDesc": "Détails du programme et inscription sur {{brand}}.",
+    "faq": "FAQ",
+    "faqDesc": "Questions fréquemment posées sur {{brand}}.",
+    "favorites": "Favoris",
+    "favoritesDesc": "Vos apprentissages et études à l'étranger enregistrés sur {{brand}}.",
+    "login": "Connexion",
+    "loginDesc": "Connectez-vous à votre compte {{brand}}.",
+    "register": "Inscription",
+    "registerDesc": "Créez votre compte {{brand}}.",
+    "dashboard": "Tableau de bord",
+    "dashboardDesc": "Votre tableau de bord {{brand}}."
+  },
+  "Services_nav": "Services",
+  "cv_professional_creation": "Création de CV professionnel"
 }

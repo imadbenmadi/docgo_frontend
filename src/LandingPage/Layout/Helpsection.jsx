@@ -28,7 +28,7 @@ function HelpSection({ contactInfo }) {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-gray-600 animate-pulse" />
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-              Entrer en Contact
+              {t("helpSection.getInTouch", "Get in Touch")}
             </h2>
             <Sparkles className="w-6 h-6 text-gray-600 animate-pulse animation-delay-2000" />
           </div>
