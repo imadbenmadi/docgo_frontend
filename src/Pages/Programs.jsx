@@ -759,7 +759,7 @@ export function Programs() {
             <input
               type="text"
               placeholder={
-                t("Search programs...", "Search programs...") ||
+                t("programsPage.searchPlaceholder", "Search programs...") ||
                 "Search programs..."
               }
               value={searchQuery}
@@ -929,7 +929,8 @@ export function Programs() {
                       <div className="flex items-center gap-1 sm:gap-2">
                         <div className="animate-spin rounded-full h-3 sm:h-4 w-3 sm:w-4 border-b-2 border-blue-500"></div>
                         <span className="text-xs sm:text-sm text-blue-600 hidden sm:inline">
-                          {t("Updating...", "Updating...") || "Updating..."}
+                          {t("programsPage.updating", "Updating...") ||
+                            "Updating..."}
                         </span>
                       </div>
                     )}
@@ -1121,6 +1122,7 @@ export function Programs() {
                     </h3>
                     <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
                       {t(
+                        "programsPage.noneAvailableHint",
                         "There are currently no programs available. Please check back later.",
                       ) ||
                         "There are currently no programs available. Please check back later."}
@@ -1144,8 +1146,10 @@ export function Programs() {
                       <div className="bg-white rounded-lg shadow-lg px-4 py-2 flex items-center gap-2">
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
                         <span className="text-sm text-gray-600">
-                          {t("Updating results...", "Updating results...") ||
-                            "Updating results..."}
+                          {t(
+                            "programsPage.updatingResults",
+                            "Updating results...",
+                          ) || "Updating results..."}
                         </span>
                       </div>
                     </div>

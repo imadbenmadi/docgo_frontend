@@ -128,8 +128,13 @@ const UserDashboard = () => {
         {/* Fixed Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        {/* Main Content with proper spacing for fixed sidebar */}
-        <div className={`flex-1 w-full ${isRTL ? "lg:me-64" : "lg:ms-64"}`}>
+        {/* Main Content with proper spacing for fixed sidebar.
+            Use PHYSICAL margins that match the sidebar's physical side
+            (right-0 in RTL, left-0 in LTR) so the offset can never land on
+            the wrong side — logical me-/ms- flipped opposite the sidebar. */}
+        <div
+          className={`flex-1 min-w-0 w-full ${isRTL ? "lg:mr-64" : "lg:ml-64"}`}
+        >
           {/* <Navigation /> */}
           {/* Mobile header with menu button */}
           <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-[999] flex items-center">

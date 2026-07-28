@@ -21,6 +21,8 @@ import {
   Image as ImageIcon,
   BookOpen,
   GraduationCap,
+  FileText,
+  Briefcase,
 } from "lucide-react";
 import apiClient from "../../utils/apiClient";
 
@@ -54,6 +56,8 @@ const UserAllPaymentsPage = () => {
     const type = String(payment?.itemType || "").toLowerCase();
     if (type === "program") return t("program", "Program");
     if (type === "course") return t("course", "Course");
+    if (type === "cv") return t("cv", "CV Service");
+    if (type === "internship") return t("internship", "Internship");
     return t("payment", "Payment");
   };
 
@@ -61,6 +65,8 @@ const UserAllPaymentsPage = () => {
     const type = String(payment?.itemType || "").toLowerCase();
     if (type === "program") return GraduationCap;
     if (type === "course") return BookOpen;
+    if (type === "cv") return FileText;
+    if (type === "internship") return Briefcase;
     return ImageIcon;
   };
 
@@ -359,6 +365,10 @@ const UserAllPaymentsPage = () => {
                 <option value="all">{t("allTypes", "All Types")}</option>
                 <option value="course">{t("courses", "Courses")}</option>
                 <option value="program">{t("programs", "Programs")}</option>
+                <option value="cv">{t("cvServices", "CV Service")}</option>
+                <option value="internship">
+                  {t("internships", "Internships")}
+                </option>
               </select>
             </div>
           </div>

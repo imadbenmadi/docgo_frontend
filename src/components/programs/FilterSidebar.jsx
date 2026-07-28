@@ -325,7 +325,7 @@ const FilterSidebar = ({ filters, onApplyFilters, onReset }) => {
 
           <p className="mt-2 text-[11px] text-gray-600">
             {t(
-              "Tip: use Free/Paid, or set Min/Max for a custom range.",
+              "programFilters.priceTip",
               "Tip: use Free/Paid, or set Min/Max for a custom range.",
             ) || "Tip: use Free/Paid, or set Min/Max for a custom range."}
           </p>
@@ -347,7 +347,7 @@ const FilterSidebar = ({ filters, onApplyFilters, onReset }) => {
           >
             <option value="">
               {loading
-                ? t("Loading...", "Loading...")
+                ? t("programFilters.loading", "Loading...")
                 : t("All Universities", "All Universities") ||
                   "All Universities"}
             </option>
@@ -372,7 +372,7 @@ const FilterSidebar = ({ filters, onApplyFilters, onReset }) => {
           >
             <option value="">
               {loading
-                ? t("Loading...", "Loading...")
+                ? t("programFilters.loading", "Loading...")
                 : t("Select Country", "Select Country") || "Select Country"}
             </option>
             {options.countries.map((country, index) => (

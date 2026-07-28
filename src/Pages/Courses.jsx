@@ -516,7 +516,7 @@ export default function Courses() {
             <input
               type="text"
               placeholder={
-                t("Search courses...", "Search courses...") ||
+                t("coursesPage.searchPlaceholder", "Search courses...") ||
                 "Search courses..."
               }
               value={searchQuery}
