@@ -26,7 +26,7 @@
     "axios": "^1.10.0",
     "chart.js": "^4.5.0",
     "dompurify": "^3.2.6",
-    "fabric": "^5.5.2",
+    "fabric": "^7.2.0",
     "formik": "^2.4.6",
     "framer-motion": "^11.18.2",
     "hls.js": "^1.6.13",
