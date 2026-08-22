@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import { EnrollmentAPI } from "../API/Enrollment";
 import reviewsAPI from "../API/Reviews";
 import apiClient from "../services/apiClient";
+import WordViewer from "../components/Common/WordViewer";
 import VideoPlayer from "../components/Common/VideoPlayer";
 import RichTextDisplay from "../components/Common/RichTextEditor/RichTextDisplay";
 import { useAppContext } from "../AppContext";
@@ -42,6 +43,8 @@ function ItemTypeIcon({ type, className = "w-4 h-4" }) {
       return <Video className={`${className} text-blue-500`} />;
     case "pdf":
       return <FileText className={`${className} text-red-500`} />;
+    case "word":
+      return <FileText className={`${className} text-blue-700`} />;
     case "text":
       return <BookOpen className={`${className} text-green-500`} />;
     case "quiz":
@@ -425,15 +428,41 @@ function PdfViewer({ item, onComplete, isCompleted }) {
     }
   };
 
-  // Route through the media stream endpoint (direct /Courses_PDFs/ access
-  // is blocked by the media protection middleware).
+  // Resolve through /media/signed-url, exactly like the video player does.
+  //
+  // This previously pointed <iframe src> straight at /media/stream/pdf/<file>
+  // with no token, which only worked because the stream endpoint falls back to
+  // reading the session cookie. A cross-origin iframe does not reliably send
+  // cookies (Chrome's third-party cookie phase-out kills it outright), so the
+  // PDF would 403 in production while working locally. The signed URL carries
+  // its own short-lived token and needs no cookie.
   const url = item.pdfUrl;
   const _pdfBasename = url?.split("/").pop();
-  const embedUrl = url?.startsWith("http")
-    ? url
-    : _pdfBasename
-      ? `${getApiBaseUrl()}/media/stream/pdf/${encodeURIComponent(_pdfBasename)}`
-      : buildApiUrl(url);
+  const [embedUrl, setEmbedUrl] = useState(null);
+
+  useEffect(() => {
+    if (!url) return;
+    if (url.startsWith("http")) {
+      setEmbedUrl(url);
+      return;
+    }
+    if (!_pdfBasename) {
+      setEmbedUrl(buildApiUrl(url));
+      return;
+    }
+    let cancelled = false;
+    apiClient
+      .get(`/media/signed-url/pdf/${encodeURIComponent(_pdfBasename)}`)
+      .then((res) => {
+        if (!cancelled) setEmbedUrl(res.data?.url || null);
+      })
+      .catch(() => {
+        if (!cancelled) setEmbedUrl(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [url, _pdfBasename]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -467,6 +496,59 @@ function PdfViewer({ item, onComplete, isCompleted }) {
           <p>{t("PDF not available", "PDF not available")}</p>
         </div>
       )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Word Document Viewer
+// ─────────────────────────────────────────────────────────────────────────────
+WordItemViewer.propTypes = {
+  item: PropTypes.object.isRequired,
+  onComplete: PropTypes.func.isRequired,
+  isCompleted: PropTypes.bool,
+};
+function WordItemViewer({ item, onComplete, isCompleted }) {
+  const { t } = useTranslation();
+  const [marked, setMarked] = useState(isCompleted);
+  const [marking, setMarking] = useState(false);
+
+  useEffect(() => {
+    setMarked(isCompleted);
+  }, [isCompleted]);
+
+  const handleMark = async () => {
+    if (marking || marked) return;
+    setMarking(true);
+    try {
+      const res = await onComplete(item.id);
+      if (res?.success) setMarked(true);
+    } finally {
+      setMarking(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-gray-800">{item.title}</h2>
+        {!marked ? (
+          <button
+            onClick={handleMark}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+          >
+            <FaCheckCircle /> {t("Mark as Read", "Mark as Read")}
+          </button>
+        ) : (
+          <span className="flex items-center gap-2 text-green-700 font-medium text-sm">
+            <FaCheckCircle /> {t("Completed", "Completed")}
+          </span>
+        )}
+      </div>
+      {item.description && (
+        <p className="text-gray-600 text-sm">{item.description}</p>
+      )}
+      <WordViewer wordUrl={item.wordUrl} title={item.title} />
     </div>
   );
 }
@@ -1538,6 +1620,21 @@ export function CourseSections() {
       case "pdf":
         return (
           <PdfViewer
+            key={currentItem.id}
+            item={currentItem}
+            onComplete={async (id) => {
+              const res = await EnrollmentAPI.markItemComplete(courseId, id, {
+                timeSpent: 0,
+              });
+              if (res.success) handleItemComplete(id);
+              return res;
+            }}
+            isCompleted={done}
+          />
+        );
+      case "word":
+        return (
+          <WordItemViewer
             key={currentItem.id}
             item={currentItem}
             onComplete={async (id) => {
