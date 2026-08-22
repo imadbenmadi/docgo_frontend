@@ -147,6 +147,20 @@ export const PaymentAPI = {
             },
           },
         );
+      } else if (
+        itemData.itemType === "cv" ||
+        itemData.itemType === "internship"
+      ) {
+        // Courses and programs go through the older /upload/Payment/* routes.
+        // The CV service and paid internships use the generic CCP endpoint,
+        // which takes itemType/itemId in the body rather than in the path.
+        formData.append("itemType", itemData.itemType);
+        formData.append("itemId", String(itemData.itemId));
+        response = await apiClient.post("/payments/ccp/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       } else {
         throw new Error("Invalid item type");
       }
@@ -184,6 +198,15 @@ export const PaymentAPI = {
         response = await apiClient.delete(
           "/upload/Payment/Programs/" + itemData.itemId,
         );
+      } else if (
+        itemData.itemType === "cv" ||
+        itemData.itemType === "internship"
+      ) {
+        // The generic CCP endpoint writes the payment in a single transaction,
+        // so a failed submission leaves nothing orphaned to clean up. Treat
+        // this as a success rather than throwing, which would surface a
+        // misleading "Invalid item type" on an otherwise handled error path.
+        return { success: true, message: "Nothing to clean up" };
       } else {
         throw new Error("Invalid item type");
       }
