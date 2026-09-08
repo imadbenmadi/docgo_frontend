@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { createBrowserRouter, Navigate, redirect } from "react-router-dom";
 import App from "./App";
 import ProtectedRoute from "./ProtectedRoute";
@@ -5,60 +6,54 @@ import { getApiBaseUrl } from "./utils/apiBaseUrl";
 import apiClient from "./utils/apiClient";
 
 import ErrorElement from "./erorrhandle/ErrorElement";
-import Login from "./Pages/Auth/Login";
-import Register from "./Pages/Auth/Register";
-import Blocked from "./Pages/Auth/Blocked";
-import Deleted from "./Pages/Auth/Deleted";
-import ForgotPassword from "./Pages/Auth/ForgotPassword";
-import ResetPassword from "./Pages/Auth/ResetPassword";
-import Courses from "./Pages/Courses";
-import FAQPage from "./Pages/FAQPage";
-import FavoritesPage from "./Pages/FavoritesPage";
-import Home from "./Pages/Home";
-import MyApplications from "./Pages/MyApplications";
-import PaymentPage from "./Pages/PaymentPage";
-import PaymentSuccessPage from "./Pages/PaymentSuccessPage";
-import { ProgramDetails } from "./Pages/ProgramDetails";
-import { Programs } from "./Pages/Programs";
-
+const Login = lazy(() => import("./Pages/Auth/Login"));
+const Register = lazy(() => import("./Pages/Auth/Register"));
+const Blocked = lazy(() => import("./Pages/Auth/Blocked"));
+const Deleted = lazy(() => import("./Pages/Auth/Deleted"));
+const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("./Pages/Auth/ResetPassword"));
+const Courses = lazy(() => import("./Pages/Courses"));
+const FAQPage = lazy(() => import("./Pages/FAQPage"));
+const FavoritesPage = lazy(() => import("./Pages/FavoritesPage"));
+const Home = lazy(() => import("./Pages/Home"));
+const MyApplications = lazy(() => import("./Pages/MyApplications"));
+const PaymentPage = lazy(() => import("./Pages/PaymentPage"));
+const PaymentSuccessPage = lazy(() => import("./Pages/PaymentSuccessPage"));
+const ProgramDetails = lazy(() => import("./Pages/ProgramDetails").then((m) => ({ default: m.ProgramDetails })));
+const Programs = lazy(() => import("./Pages/Programs").then((m) => ({ default: m.Programs })));
 import { CourseDetails } from "./components/course/CourseDetails";
 import AllContentVideosCourse from "./components/course/courseVideosContent/AllContentVideosCourse";
 import CourseVideosContent from "./components/course/courseVideosContent/CourseVideosContent";
-import Certificate from "./Pages/Certificate";
-import VerifyCertificate from "./Pages/VerifyCertificate";
-import Course from "./Pages/Course";
-import CourseResources from "./Pages/CourseResources";
-import CourseVideos from "./Pages/CourseVideos";
-import CourseSections from "./Pages/CourseSections";
-import CourseExploreZip from "./Pages/CourseExploreZip";
-import UserDashboard from "./Pages/Dashboard/UserDashboard";
-import NotFound from "./Pages/NotFound";
-import EditProfile from "./Pages/Profile/EditProfile";
-import Profile from "./Pages/Profile/Profile";
-import QuizContent from "./Pages/QuizContent";
-
-import UserMessages_Default from "./Pages/Dashboard/Messages/Default";
-import UserMessages from "./Pages/Dashboard/Messages/UserMessages";
-import UserMessages_new from "./Pages/Dashboard/Messages/UserMessages_new";
-
-import UserApplications from "./Pages/Dashboard/UserApplications";
-import UserCertificates from "./Pages/Dashboard/UserCertificates";
-import UserFavorites from "./Pages/Dashboard/UserFavorites";
-import UserNotifications from "./Pages/Dashboard/UserNotifications";
-import UserSettings from "./Pages/Dashboard/UserSettings";
-
-import MyLearning from "./Pages/Dashboard/MyLearning";
-import MyPrograms from "./Pages/Dashboard/MyPrograms";
-import UserAllPaymentsPage from "./Pages/Dashboard/UserAllPaymentsPage";
-import ProgramApplicationStatus from "./Pages/ProgramApplicationStatus";
-
+const Certificate = lazy(() => import("./Pages/Certificate"));
+const VerifyCertificate = lazy(() => import("./Pages/VerifyCertificate"));
+const Course = lazy(() => import("./Pages/Course"));
+const CourseResources = lazy(() => import("./Pages/CourseResources"));
+const CourseVideos = lazy(() => import("./Pages/CourseVideos"));
+const CourseSections = lazy(() => import("./Pages/CourseSections"));
+const CourseExploreZip = lazy(() => import("./Pages/CourseExploreZip"));
+const UserDashboard = lazy(() => import("./Pages/Dashboard/UserDashboard"));
+const NotFound = lazy(() => import("./Pages/NotFound"));
+const EditProfile = lazy(() => import("./Pages/Profile/EditProfile"));
+const Profile = lazy(() => import("./Pages/Profile/Profile"));
+const QuizContent = lazy(() => import("./Pages/QuizContent"));
+const UserMessages_Default = lazy(() => import("./Pages/Dashboard/Messages/Default"));
+const UserMessages = lazy(() => import("./Pages/Dashboard/Messages/UserMessages"));
+const UserMessages_new = lazy(() => import("./Pages/Dashboard/Messages/UserMessages_new"));
+const UserApplications = lazy(() => import("./Pages/Dashboard/UserApplications"));
+const UserCertificates = lazy(() => import("./Pages/Dashboard/UserCertificates"));
+const UserFavorites = lazy(() => import("./Pages/Dashboard/UserFavorites"));
+const UserNotifications = lazy(() => import("./Pages/Dashboard/UserNotifications"));
+const UserSettings = lazy(() => import("./Pages/Dashboard/UserSettings"));
+const MyLearning = lazy(() => import("./Pages/Dashboard/MyLearning"));
+const MyPrograms = lazy(() => import("./Pages/Dashboard/MyPrograms"));
+const UserAllPaymentsPage = lazy(() => import("./Pages/Dashboard/UserAllPaymentsPage"));
+const ProgramApplicationStatus = lazy(() => import("./Pages/ProgramApplicationStatus"));
 // Other Services
-import OtherServices from "./Pages/OtherServices/OtherServices";
-import CVService from "./Pages/OtherServices/CVService";
-import InternshipsList from "./Pages/OtherServices/InternshipsList";
-import InternshipDetail from "./Pages/OtherServices/InternshipDetail";
-import MyOtherServicesApplications from "./Pages/OtherServices/MyOtherServicesApplications";
-
+const OtherServices = lazy(() => import("./Pages/OtherServices/OtherServices"));
+const CVService = lazy(() => import("./Pages/OtherServices/CVService"));
+const InternshipsList = lazy(() => import("./Pages/OtherServices/InternshipsList"));
+const InternshipDetail = lazy(() => import("./Pages/OtherServices/InternshipDetail"));
+const MyOtherServicesApplications = lazy(() => import("./Pages/OtherServices/MyOtherServicesApplications"));
 // Auth protection loader
 const protectedLoader = async ({ request }) => {
   const API_URL = getApiBaseUrl();
