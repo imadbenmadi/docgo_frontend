@@ -342,6 +342,17 @@ function Footer({ contactInfo, branding = null }) {
             </ul>
           </div>
         </div>
+
+        <div className="mt-10 pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-gray-500">
+          <p>
+            &copy; {new Date().getFullYear()}{" "}
+            {brandName || "HealthPathGlobal"}
+          </p>
+          <p>
+            {t("developedBy", "Developed by")}{" "}
+            <span className="font-semibold text-gray-700">disol</span>
+          </p>
+        </div>
       </div>
     </footer>
   );
