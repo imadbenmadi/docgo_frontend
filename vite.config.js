@@ -46,6 +46,12 @@ export default defineConfig({
     },
   },
   server: {
+    // Pinned so the two dev servers never swap ports. Vite silently
+    // increments when its default is taken, which is how the proxy
+    // targets and the app you are looking at end up disagreeing.
+    port: 5173,
+    strictPort: true,
+
     // Serve index.html for any path Vite doesn't recognise — the final safety net
     // for routes that are purely SPA-only (no backend overlap).
     historyApiFallback: true,

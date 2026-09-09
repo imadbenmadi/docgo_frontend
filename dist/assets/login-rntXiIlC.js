@@ -1,1 +1,0 @@
-import{j as n}from"./index-CV0jmxgQ.js";function e({className:a="",borderColor:s="#464646"}){return n.jsx("span",{className:`small-loader m-auto ${a}`,style:{borderColor:`${s} ${s} transparent ${s}`}})}const l="/assets/login-DuTlI_rs.png";export{e as I,l};
