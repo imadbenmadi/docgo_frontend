@@ -15,6 +15,41 @@ import apiClient from "../../services/apiClient";
 import { getApiBaseUrl } from "../../utils/apiBaseUrl";
 
 function Navigation({ branding = null }) {
+    // The header is fixed, so it takes its height out of the page. Two other
+    // things need that number -- the spacer below it, and the dashboard
+    // sidebar that has to start beneath it -- and hardcoding it in three
+    // places is what put the top 13px of every page behind the header.
+    //
+    // Measured once, published as --site-header-h, re-measured when the header
+    // resizes (it grows a second row on some breakpoints, and shrinks when
+    // scrolled).
+    const headerRef = useRef(null);
+    const headerSpacerRef = useRef(null);
+
+    useEffect(() => {
+        const header = headerRef.current;
+        if (!header) return undefined;
+
+        const publish = () => {
+            const h = Math.round(header.getBoundingClientRect().height);
+            if (!h) return;
+            document.documentElement.style.setProperty("--site-header-h", `${h}px`);
+            // The spacer is sized directly rather than through the variable so
+            // it is correct on the very first paint, before any CSS using the
+            // variable has had a chance to apply.
+            if (headerSpacerRef.current) headerSpacerRef.current.style.height = `${h}px`;
+        };
+
+        publish();
+        const ro = new ResizeObserver(publish);
+        ro.observe(header);
+        window.addEventListener("resize", publish);
+        return () => {
+            ro.disconnect();
+            window.removeEventListener("resize", publish);
+        };
+    }, []);
+
   const { t } = useTranslation();
   const { user, isAuth } = useAppContext();
   const { getActiveNavItem } = useUserNavigation();
@@ -291,10 +326,15 @@ function Navigation({ branding = null }) {
 
   return (
     <>
-      <div className="lg:h-[132px]" />
-      {/* <div className="h-20 sm:h-24 md:h-28 " /> */}
+      {/* Reserves the space the fixed header takes out of the page.
+          It used to be a hardcoded lg:h-[132px] while the header actually
+          renders 145px, so the top 13px of every page sat behind it -- and
+          the dashboard sidebar, pinned at top-5, sat 125px behind it. The
+          height is measured now, so the two cannot drift apart again. */}
+      <div ref={headerSpacerRef} aria-hidden="true" />
 
       <div
+        ref={headerRef}
         className={`fixed inset-x-0 top-0 z-50 w-full transform transition-transform duration-300 ${
           isNavVisible ? "translate-y-0" : "-translate-y-full"
         } ${

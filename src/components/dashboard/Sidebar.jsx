@@ -186,7 +186,16 @@ const UserSidebar = ({ isOpen, onClose }) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-5 ${
+        style={{
+          // Starts where the header ends and stops at the bottom of the
+          // window. It was `top-5` with `max-h-[100vh]`, which put 125px of it
+          // behind the 145px header and ran the last 20px off the bottom of
+          // the screen -- hence the second scrollbar. The value is published
+          // by Navigation, which measures its own header.
+          top: "var(--site-header-h, 0px)",
+          height: "calc(100vh - var(--site-header-h, 0px))",
+        }}
+        className={`fixed ${
           isRTL ? "right-0" : "left-0"
         } flex flex-col w-64 bg-white border-r border-gray-200
             z-[999] transform transition-transform duration-300 ease-in-out overflow-y-auto overscroll-contain
@@ -196,7 +205,7 @@ const UserSidebar = ({ isOpen, onClose }) => {
                 : isRTL
                   ? "translate-x-full"
                   : "-translate-x-full"
-            }  max-h-[100vh] `}
+            }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">

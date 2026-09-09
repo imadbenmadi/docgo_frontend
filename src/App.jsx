@@ -231,8 +231,10 @@ function App() {
           siteName={brand}
         />
         {!shouldHideNavAndFooter && <Navigation branding={siteSettings} />}
-        {/* <div className="pt-28 lg:pt-0"> */}
-        <div className="pt-28 lg:pt-0">
+        {/* No top padding here: Navigation renders a spacer the exact height
+            of its own fixed header. This used to be pt-28 lg:pt-0, which
+            double-counted on mobile and counted nothing on desktop. */}
+        <div>
           <Outlet />
         </div>
         {!shouldHideNavAndFooter && (
