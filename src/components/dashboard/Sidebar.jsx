@@ -190,7 +190,7 @@ const UserSidebar = ({ isOpen, onClose }) => {
           // Starts where the header ends and stops at the bottom of the
           // window. It was `top-5` with `max-h-[100vh]`, which put 125px of it
           // behind the 145px header and ran the last 20px off the bottom of
-          // the screen -- hence the second scrollbar. The value is published
+          // the screen - hence the second scrollbar. The value is published
           // by Navigation, which measures its own header.
           top: "var(--site-header-h, 0px)",
           height: "calc(100vh - var(--site-header-h, 0px))",

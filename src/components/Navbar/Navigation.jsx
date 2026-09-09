@@ -16,8 +16,8 @@ import { getApiBaseUrl } from "../../utils/apiBaseUrl";
 
 function Navigation({ branding = null }) {
     // The header is fixed, so it takes its height out of the page. Two other
-    // things need that number -- the spacer below it, and the dashboard
-    // sidebar that has to start beneath it -- and hardcoding it in three
+    // things need that number - the spacer below it, and the dashboard
+    // sidebar that has to start beneath it - and hardcoding it in three
     // places is what put the top 13px of every page behind the header.
     //
     // Measured once, published as --site-header-h, re-measured when the header

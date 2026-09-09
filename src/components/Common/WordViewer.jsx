@@ -6,19 +6,11 @@ import apiClient from "../../services/apiClient";
 /**
  * Renders a .docx / .doc section item inline.
  *
- * WHY IT FETCHES A SIGNED URL FIRST
- * ---------------------------------
- * Course_Words is a protected directory — direct GETs are 404'd by the media
- * protection shield. The only legitimate way in is /media/signed-url, which
- * verifies enrollment server-side and hands back a short-lived, IP-pinned URL.
- *
- * WHY IT CONVERTS IN THE BROWSER
- * ------------------------------
- * Rendering .docx server-side needs LibreOffice, which shared cPanel hosting
- * does not provide. Handing the file to Office Online (view.officeapps.live.com)
- * would work but requires the document to be PUBLICLY reachable, which defeats
- * the whole point of gating paid content. mammoth converts the file to HTML
- * entirely client-side, so the bytes never leave our origin.
+ * Course_Words is protected, so direct GETs are 404'd; the file is fetched
+ * through /media/signed-url, which checks enrolment and returns a short-lived
+ * IP-pinned URL. Conversion runs client-side via mammoth: server-side
+ * rendering would need LibreOffice, and Office Online would require the
+ * document to be publicly reachable.
  */
 function WordViewer({ wordUrl, title }) {
     const [html, setHtml] = useState("");

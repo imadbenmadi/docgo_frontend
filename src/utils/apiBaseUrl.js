@@ -1,17 +1,9 @@
 /**
- * Where the API lives.
+ * API origin, from VITE_API_URL.
  *
- * This used to be a hardcoded `return "http://localhost:3000"`, and there was
- * no .env at all -- only .env.example. So two things were broken at once:
- *
- *   - a production build pointed at localhost, meaning the deployed site
- *     called whatever happened to be running on the visitor's own machine;
- *   - the many components that read `import.meta.env.VITE_API_URL` directly
- *     got undefined, and rendered image sources like
- *     "undefined/Courses_Pictures/x.png".
- *
- * The env variable decides. The localhost fallback applies only when nothing
- * is configured, which is a development convenience and not a deploy target.
+ * The localhost fallback is a development convenience only. Components also
+ * read import.meta.env.VITE_API_URL directly, so .env must be present at build
+ * time or those render "undefined/..." URLs.
  */
 
 const FALLBACK = "http://localhost:3000";

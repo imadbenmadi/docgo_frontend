@@ -4,21 +4,10 @@ import { AlertTriangle, Check, Copy, Home, RefreshCw, Send } from "lucide-react"
 import { getApiBaseUrl } from "../utils/apiBaseUrl";
 
 /**
- * What a person sees when the site crashes.
+ * Error boundary screen, used as the router's errorElement.
  *
- * It replaces React Router's default, which greets whoever hit the bug with
- * "Hey developer 👋, you can provide a way better UX than this" and a raw
- * stack trace -- addressed to the wrong person, and reported to nobody.
- *
- * Three things matter here:
- *
- *   - The report is sent automatically, once. Asking someone to describe a
- *     crash is asking for the report you will not get.
- *   - The reference code is visible and copyable, so a screenshot or a
- *     sentence in chat is enough to find the entry in the admin log.
- *   - The stack is available but folded away. It means nothing to most people
- *     and alarms all of them, but the one person who can read it should not
- *     have to open devtools.
+ * Posts the error to /client-errors once on mount, shows the resulting
+ * reference code for the user to quote, and keeps the stack trace collapsed.
  */
 
 /** Short, unambiguous, and easy to read down a phone line. */
@@ -74,7 +63,7 @@ const AppErrorScreen = ({ error, app = "frontend", onRetry }) => {
 
         // Deliberately NOT aborting on unmount. React runs effects twice in
         // development, so the cleanup from the first run was cancelling the
-        // request the second run then refused to retry -- the report never
+        // request the second run then refused to retry - the report never
         // left the browser. A crash report is fire-and-forget: it should
         // outlive the screen that sent it.
         return () => clearTimeout(timeout);

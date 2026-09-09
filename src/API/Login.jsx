@@ -21,16 +21,6 @@ const handleLogin = async ({ userData, setAuth, setUser, onError = null }) => {
       //   localStorage.setItem("user", JSON.stringify(user));
       //   sessionStorage.setItem("user", JSON.stringify(user));
 
-      //   Swal.fire({
-      //     title: "Login Successful",
-      //     text: "You have successfully logged in.",
-      //     icon: "success",
-      //     confirmButtonText: "OK",
-      //     timer: 2000,
-      //     timerProgressBar: true,
-      //   }).then(() => {
-      //     window.location.href = "/dashboard";
-      //   });
 
       return {
         success: true,

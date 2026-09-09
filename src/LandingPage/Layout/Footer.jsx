@@ -23,16 +23,6 @@ function Footer({ contactInfo, branding = null }) {
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
 
-  // useEffect(() => {
-  //   clientProgramsAPI
-  //     .getProgramCategories()
-  //     .then((res) => {
-  //       if (res?.success && Array.isArray(res.data?.categories)) {
-  //         setCategories(res.data.categories.filter(Boolean).slice(0, 8));
-  //       }
-  //     })
-  //     .catch(() => {});
-  // }, []);
 
   const brandName = branding?.brandName || "";
   const brandLogoSrc = (() => {
