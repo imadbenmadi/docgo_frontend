@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /myapplications
+Disallow: /my-applications
+Disallow: /notifications
+Disallow: /payment
+Disallow: /courses/*/watch
+Disallow: /courses/*/videos
+Disallow: /courses/*/resources
+Disallow: /courses/*/watch/quiz
+Disallow: /courses/*/watch/certificate
+
+Sitemap: https://healthpathglobal.com/sitemap.xml

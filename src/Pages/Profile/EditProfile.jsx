@@ -11,6 +11,7 @@ import { useFormValidation } from "../../components/Common/FormValidation/useFor
 import { getApiErrorMessage } from "../../utils/apiErrorTranslate";
 import CountryFlagSelector from "../../components/CountryFlagSelector";
 import { BILINGUAL_COUNTRIES } from "../../utils/countryCodeMap";
+import { getApiBaseUrl } from "../../utils/apiBaseUrl";
 
 const EditProfile = () => {
   const { user, updateUserProfile } = useAppContext();
@@ -48,7 +49,7 @@ const EditProfile = () => {
     currentJobTitle: "",
     profile_pic_link: "",
   });
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const API_URL = getApiBaseUrl();
 
   // Function to get country name based on current language
   const getCountryDisplayName = (countryString) => {

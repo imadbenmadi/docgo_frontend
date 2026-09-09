@@ -24,8 +24,11 @@ export function CourseCard({
   progress = 0,
   hasImage = true,
 }) {
-  const defaultThumbnail =
-    "http://localhost:3000/Courses_Pictures/default-course-thumbnail.jpeg";
+  // Served by this site, not by the API. It used to point at
+  // http://localhost:3000/Courses_Pictures/default-course-thumbnail.jpeg --
+  // a file that exists in no bucket, on a host that is not the API in
+  // production and not reachable at all from anyone else's browser.
+  const defaultThumbnail = "/course-placeholder.svg";
 
   const {
     isFavorited,

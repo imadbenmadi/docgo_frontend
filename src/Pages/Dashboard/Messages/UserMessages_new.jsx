@@ -21,6 +21,7 @@ import logo from "../../../assets/Logo.png";
 import { useAppContext } from "../../../AppContext";
 import ContactForm from "../../../components/contact/ContactForm";
 import Swal from "sweetalert2";
+import { getApiBaseUrl } from "../../../utils/apiBaseUrl";
 
 function UserMessages_new() {
   const { t, i18n } = useTranslation();
@@ -30,7 +31,7 @@ function UserMessages_new() {
   const isRTL = i18n.language === "ar";
 
   // Branding helpers (same pattern as Footer)
-  const apiBase = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const apiBase = getApiBaseUrl();
   const brandName = siteSettings?.brandName || "";
   const brandLogoSrc = (() => {
     const logoUrl = siteSettings?.logoUrl;
