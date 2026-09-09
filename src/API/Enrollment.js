@@ -104,8 +104,10 @@ export const EnrollmentAPI = {
   // Submit quiz results
   submitQuizResults: async (courseId, quizData) => {
     try {
+      // There is no /api prefix on this server; every route sits at the
+      // root. With it, submitting a quiz 404'd and the score was lost.
       const response = await apiClient.post(
-        `/api/courses/${courseId}/quiz-result`,
+        `/courses/${courseId}/quiz-result`,
         quizData,
       );
 
