@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FileText, Info, ShieldAlert } from "lucide-react";
 import apiClient from "../../utils/apiClient";
@@ -11,6 +11,7 @@ import { buildApiUrl } from "../../utils/apiBaseUrl";
 export default function CVService() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id: serviceId } = useParams();
   const { t } = useTranslation();
   const { isAuth } = useAppContext();
   const [cvService, setCVService] = useState(null);
@@ -28,16 +29,23 @@ export default function CVService() {
   const myApplicationsPath = isDashboardRoute
     ? "/dashboard/service-applications"
     : "/other-services/my-applications";
-  const cvSelfPath = isDashboardRoute ? "/dashboard/cv" : "/other-services/cv";
+  const cvListPath = isDashboardRoute ? "/dashboard/cv" : "/other-services/cv";
+  const paymentPath = isDashboardRoute
+    ? `/dashboard/payment/cv/${serviceId}`
+    : `/payment/cv/${serviceId}`;
+  const cvSelfPath = `${cvListPath}/${serviceId}`;
 
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serviceId]);
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const serviceRes = await apiClient.get("/other-services/cv-service");
+      const serviceRes = await apiClient.get(
+        `/other-services/cv-services/${serviceId}`,
+      );
       setCVService(serviceRes.data.data);
 
       if (isAuth) {
@@ -45,9 +53,15 @@ export default function CVService() {
           const appsRes = await apiClient.get(
             "/other-services/my-cv-applications",
           );
-          const apps = Array.isArray(appsRes.data?.data)
+          const all = Array.isArray(appsRes.data?.data)
             ? appsRes.data.data
             : [];
+
+          // A user may have an application open against several services, so
+          // this page only considers the ones for the service being viewed.
+          const apps = all.filter(
+            (a) => String(a?.serviceId) === String(serviceId),
+          );
 
           const latest = apps[0] || null;
           const latestPending =
@@ -131,6 +145,7 @@ export default function CVService() {
     try {
       setIsSaving(true);
       const response = await apiClient.post("/other-services/cv-application", {
+        serviceId,
         content,
         applicationId: pendingApp?.id,
       });
@@ -180,11 +195,12 @@ export default function CVService() {
         {/* Header */}
         <div className="mb-8">
           <button
-            onClick={() => navigate(servicesHomePath)}
+            onClick={() => navigate(cvListPath)}
             className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2"
           >
             ←{" "}
-            {t("cvServicePage.back", "Back to Services") || "Back to Services"}
+            {t("cvServicePage.back", "Back to CV services") ||
+              "Back to CV services"}
           </button>
 
           <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -314,15 +330,29 @@ export default function CVService() {
                   "Application Status"}
               </h3>
 
-              <button
-                onClick={() => navigate(myApplicationsPath)}
-                className="px-4 py-2 rounded-xl font-semibold bg-blue-600 hover:bg-blue-700 text-white transition"
-              >
-                {t(
-                  "cvServicePage.goToMyApplications",
-                  "Go to My Applications",
-                ) || "Go to My Applications"}
-              </button>
+              <div className="flex items-center gap-2 flex-wrap">
+                {currentApp?.paymentStatus === "pending" ? (
+                  <button
+                    onClick={() => navigate(paymentPath)}
+                    className="px-4 py-2 rounded-xl font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition"
+                  >
+                    {t("cvServicePage.payNow", "Pay now") || "Pay now"}
+                    {currentApp?.amountPaid
+                      ? ` — ${cvService?.currency || "DZD"} ${currentApp.amountPaid}`
+                      : ""}
+                  </button>
+                ) : null}
+
+                <button
+                  onClick={() => navigate(myApplicationsPath)}
+                  className="px-4 py-2 rounded-xl font-semibold bg-blue-600 hover:bg-blue-700 text-white transition"
+                >
+                  {t(
+                    "cvServicePage.goToMyApplications",
+                    "Go to My Applications",
+                  ) || "Go to My Applications"}
+                </button>
+              </div>
             </div>
             <p className="mb-2">
               {t("cvServicePage.status", "Status") || "Status"}:{" "}
@@ -334,6 +364,18 @@ export default function CVService() {
               {t("cvServicePage.submittedOn", "Submitted on") || "Submitted on"}{" "}
               : {new Date(currentApp.submissionDate).toLocaleDateString()}
             </p>
+
+            {currentApp?.paymentStatus === "pending" ? (
+              <div className="mt-4 p-4 bg-white rounded-xl border border-emerald-200">
+                <p className="text-sm text-gray-700">
+                  {t(
+                    "cvServicePage.paymentPending",
+                    "This service is paid. Your application is held until the payment is received and approved.",
+                  ) ||
+                    "This service is paid. Your application is held until the payment is received and approved."}
+                </p>
+              </div>
+            ) : null}
 
             {currentApp.status === "accepted" && (
               <div className="mt-4 p-4 bg-white rounded-xl border border-green-200">

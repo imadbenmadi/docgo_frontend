@@ -50,6 +50,7 @@ const UserAllPaymentsPage = lazy(() => import("./Pages/Dashboard/UserAllPayments
 const ProgramApplicationStatus = lazy(() => import("./Pages/ProgramApplicationStatus"));
 // Other Services
 const OtherServices = lazy(() => import("./Pages/OtherServices/OtherServices"));
+const CVList = lazy(() => import("./Pages/OtherServices/CVList"));
 const CVService = lazy(() => import("./Pages/OtherServices/CVService"));
 const InternshipsList = lazy(() => import("./Pages/OtherServices/InternshipsList"));
 const InternshipDetail = lazy(() => import("./Pages/OtherServices/InternshipDetail"));
@@ -188,6 +189,11 @@ const Routers = createBrowserRouter([
       {
         path: "other-services/cv",
         caseSensitive: false,
+        element: <CVList />,
+      },
+      {
+        path: "other-services/cv/:id",
+        caseSensitive: false,
         element: <CVService />,
       },
       {
@@ -310,6 +316,18 @@ const Routers = createBrowserRouter([
         element: <PaymentPage />,
       },
       {
+        path: "payment/cv/:cvId",
+        caseSensitive: false,
+        loader: protectedLoader,
+        element: <PaymentPage />,
+      },
+      {
+        path: "payment/internship/:internshipId",
+        caseSensitive: false,
+        loader: protectedLoader,
+        element: <PaymentPage />,
+      },
+      {
         path: "payment/success/course/:courseId",
         caseSensitive: false,
         loader: protectedLoader,
@@ -391,6 +409,11 @@ const Routers = createBrowserRouter([
           },
           {
             path: "cv",
+            caseSensitive: false,
+            element: <CVList />,
+          },
+          {
+            path: "cv/:id",
             caseSensitive: false,
             element: <CVService />,
           },

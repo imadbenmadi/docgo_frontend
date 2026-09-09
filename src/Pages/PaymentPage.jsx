@@ -19,6 +19,37 @@ const PaymentPage = () => {
   const params = useParams();
   const courseId = params.courseId;
   const programId = params.programId;
+  const cvId = params.cvId;
+  const internshipId = params.internshipId;
+
+  // The page used to infer its subject from whichever of two params was
+  // present, which is why CV services and internships had no way to reach it
+  // even though the payment API has always accepted them.
+  const subject = courseId
+    ? { kind: "course", id: courseId }
+    : programId
+      ? { kind: "program", id: programId }
+      : cvId
+        ? { kind: "cv", id: cvId }
+        : internshipId
+          ? { kind: "internship", id: internshipId }
+          : { kind: null, id: null };
+
+  // Where to send someone back to when there is nothing to pay for here.
+  const itemPath = {
+    course: `/Courses/${courseId}`,
+    program: `/Programs/${programId}`,
+    cv: `/other-services/cv/${cvId}`,
+    internship: `/other-services/internships/${internshipId}`,
+  };
+
+  // Where they belong once the payment is in.
+  const afterPaymentPath = {
+    course: `/Courses/${courseId}`,
+    program: "/programs",
+    cv: "/other-services/my-applications",
+    internship: "/other-services/my-applications",
+  };
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuth, user } = useAppContext();
@@ -42,8 +73,9 @@ const PaymentPage = () => {
 
       try {
         setCheckingPayment(true);
-        const itemId = courseId || programId;
-        const itemType = courseId ? "course" : "program";
+        const itemId = subject.id;
+        const itemType = subject.kind;
+        if (!itemType || !itemId) return;
 
         const response = await apiClient.get(
           `/user-payments/check-application/${itemType}/${itemId}`,
@@ -64,9 +96,7 @@ const PaymentPage = () => {
               confirmButtonText: t("alerts.payment.goBack", "Go Back"),
               allowOutsideClick: false,
             }).then(() => {
-              navigate(
-                `/${itemType === "course" ? "Courses" : "Programs"}/${itemId}`,
-              );
+              navigate(itemPath[itemType] || "/");
             });
             return;
           }
@@ -85,7 +115,7 @@ const PaymentPage = () => {
               }).then(() => {
                 const go = async () => {
                   if (itemType !== "course") {
-                    navigate("/programs");
+                    navigate(afterPaymentPath[itemType] || "/");
                     return;
                   }
 
@@ -236,16 +266,38 @@ const PaymentPage = () => {
             navigate(`/Programs/${programId}`);
             return;
           }
+        } else if (cvId) {
+          setItemType("cv");
+
+          const response = await apiClient.get(
+            `/other-services/cv-services/${cvId}`,
+          );
+          if (response.data?.success && response.data?.data) {
+            setItemData(response.data.data);
+          } else {
+            navigate(`/other-services/cv/${cvId}`);
+            return;
+          }
+        } else if (internshipId) {
+          setItemType("internship");
+
+          const response = await apiClient.get(
+            `/other-services/internships/${internshipId}`,
+          );
+          const internship =
+            response.data?.data?.internship || response.data?.data;
+          if (internship?.id) {
+            setItemData(internship);
+          } else {
+            navigate(`/other-services/internships/${internshipId}`);
+            return;
+          }
         } else {
           // No valid data or ID, redirect to home
           navigate("/");
         }
       } catch (error) {
-        const currentItemType = courseId
-          ? "course"
-          : programId
-            ? "program"
-            : "item";
+        const currentItemType = subject.kind || "item";
 
         // Don't redirect, show error message instead
         setError(
@@ -253,12 +305,9 @@ const PaymentPage = () => {
         );
 
         // Set basic item data from URL params if available
-        if (programId) {
-          setItemData({ id: programId, Title: "Loading..." });
-          setItemType("program");
-        } else if (courseId) {
-          setItemData({ id: courseId, title: "Loading..." });
-          setItemType("course");
+        if (subject.id && subject.kind) {
+          setItemData({ id: subject.id, Title: "Loading..." });
+          setItemType(subject.kind);
         }
       } finally {
         setItemLoading(false);
@@ -266,7 +315,8 @@ const PaymentPage = () => {
     };
 
     fetchItemData();
-  }, [location.state, courseId, programId, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state, courseId, programId, cvId, internshipId, navigate]);
 
   // Check authentication
   useEffect(() => {
@@ -318,6 +368,10 @@ const PaymentPage = () => {
       if (discountPrice > 0) return discountPrice;
       if (regularPrice > 0) return regularPrice;
       return 0;
+    } else if (itemType === "cv" || itemType === "internship") {
+      // `price` is the catalogue field on both. `estimatedPrice` is the older
+      // CV column and is only read when a row has no price yet.
+      return parseFloat(itemData.price ?? itemData.estimatedPrice ?? 0) || 0;
     }
     return 0;
   };
@@ -347,17 +401,12 @@ const PaymentPage = () => {
   //       itemData.price &&
   //       itemData.originalPrice > itemData.price;
 
-  const getItemTitle = () => {
-    if (itemType === "course") {
-      return itemData.Title;
-    } else if (itemType === "program") {
-      return itemData.Title || itemData.title;
-    }
-    return "Unknown Item";
-  };
+  const getItemTitle = () =>
+    itemData?.Title || itemData?.title || "Unknown Item";
 
   const getItemImage = () => {
-    const imagePath = itemData?.Image || itemData?.image;
+    const imagePath =
+      itemData?.Image || itemData?.image || itemData?.introductoryImage;
     if (!imagePath) return null;
     // If it's already a full URL, return as is
     if (imagePath.startsWith("http")) return imagePath;
@@ -375,6 +424,14 @@ const PaymentPage = () => {
         itemData.category ||
         "Program"
       }  ${itemData.language || "Multiple"}`;
+    } else if (itemType === "internship") {
+      return [itemData.companyName, itemData.field, itemData.location]
+        .filter(Boolean)
+        .join("  ");
+    } else if (itemType === "cv") {
+      return itemData.deliveryDays
+        ? `${itemData.deliveryDays} days`
+        : "CV service";
     }
     return "";
   };

@@ -34,6 +34,14 @@ export default function InternshipDetail() {
     ? `/dashboard/internships/${id}`
     : `/other-services/internships/${id}`;
 
+  // An accepted application on a paid internship still owes money, and until
+  // now there was nowhere to pay it: the application was submitted, the row was
+  // marked pending, and the screen said nothing more.
+  const owesPayment = myApplication?.paymentStatus === "pending";
+  const paymentPath = isDashboardRoute
+    ? `/dashboard/payment/internship/${id}`
+    : `/payment/internship/${id}`;
+
   const statusVariant = useMemo(() => {
     const status = myApplication?.status;
     if (status === "accepted") return "accepted";
@@ -484,16 +492,42 @@ export default function InternshipDetail() {
                 ) : null}
               </div>
 
-              <button
-                onClick={() => navigate(myApplicationsPath)}
-                className="px-4 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white transition"
-              >
-                {t(
-                  "internshipDetailPage.goToMyApplications",
-                  "Go to My Applications",
-                ) || "Go to My Applications"}
-              </button>
+              <div className="flex items-center gap-2 flex-wrap">
+                {owesPayment ? (
+                  <button
+                    onClick={() => navigate(paymentPath)}
+                    className="px-4 py-2 rounded-lg font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition"
+                  >
+                    {t("internshipDetailPage.payNow", "Pay now") || "Pay now"}
+                    {myApplication?.amountPaid
+                      ? ` — ${internship?.currency || "DZD"} ${myApplication.amountPaid}`
+                      : ""}
+                  </button>
+                ) : null}
+
+                <button
+                  onClick={() => navigate(myApplicationsPath)}
+                  className="px-4 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white transition"
+                >
+                  {t(
+                    "internshipDetailPage.goToMyApplications",
+                    "Go to My Applications",
+                  ) || "Go to My Applications"}
+                </button>
+              </div>
             </div>
+
+            {owesPayment ? (
+              <div className="mt-4 p-4 bg-white rounded-lg border border-emerald-200">
+                <p className="text-sm text-gray-700">
+                  {t(
+                    "internshipDetailPage.paymentPending",
+                    "This internship is paid. Your application is held until the payment is received and approved.",
+                  ) ||
+                    "This internship is paid. Your application is held until the payment is received and approved."}
+                </p>
+              </div>
+            ) : null}
 
             {myApplication?.status === "rejected" &&
             myApplication?.rejectionReason ? (
