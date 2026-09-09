@@ -8,6 +8,11 @@ const ContactForm = ({
   context = "landing",
   courseId = null,
   programId = null,
+  // A message can be about any of the four products, a payment or an
+  // enrolment. courseId and programId stay for the callers that still pass
+  // them; the server accepts either.
+  subjectType = null,
+  subjectId = null,
   enableContextSelection = false,
   title = null,
   className = "",
@@ -139,6 +144,10 @@ const ContactForm = ({
       }
       if (effectiveContext === "program" && effectiveProgramId) {
         payload.programId = effectiveProgramId;
+      }
+      if (subjectType && subjectId) {
+        payload.subjectType = subjectType;
+        payload.subjectId = String(subjectId);
       }
 
       const response = await apiClient.post(post_link, payload);
@@ -529,9 +538,28 @@ const ContactForm = ({
 };
 
 ContactForm.propTypes = {
-  context: PropTypes.oneOf(["landing", "dashboard", "course", "program"]),
+  context: PropTypes.oneOf([
+    "landing",
+    "dashboard",
+    "course",
+    "program",
+    "cv",
+    "internship",
+    "payment",
+    "enrolment",
+    "application",
+  ]),
   courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   programId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  subjectType: PropTypes.oneOf([
+    "course",
+    "program",
+    "cv",
+    "internship",
+    "payment",
+    "enrolment",
+  ]),
+  subjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   enableContextSelection: PropTypes.bool,
   title: PropTypes.string,
   className: PropTypes.string,

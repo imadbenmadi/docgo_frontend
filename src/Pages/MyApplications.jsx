@@ -3,9 +3,11 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import {
   FaBook,
+  FaBriefcase,
   FaCheckCircle,
   FaClock,
   FaEye,
+  FaFileAlt,
   FaFilter,
   FaGraduationCap,
   FaSpinner,
@@ -26,7 +28,7 @@ const MyApplications = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // all, pending, approved, rejected
-  const [typeFilter, setTypeFilter] = useState("all"); // all, course, program
+  const [typeFilter, setTypeFilter] = useState("all"); // all, or one of the four
 
   // Contact support modal
   const [contactModalData, setContactModalData] = useState(null); // { context, courseId, programId, title }
@@ -98,33 +100,42 @@ const MyApplications = () => {
 
   const filteredApplications = applications.filter((app) => {
     const statusMatch = filter === "all" || app.status === filter;
-    const typeMatch =
-      typeFilter === "all" ||
-      (typeFilter === "course" && app.Course) ||
-      (typeFilter === "program" && app.Program);
+    const typeMatch = typeFilter === "all" || app.type === typeFilter;
     return statusMatch && typeMatch;
   });
 
-  const handleViewItem = (application) => {
-    if (application.Course) {
-      navigate(`/Courses/${application.CourseId}`);
-    } else if (application.Program) {
-      navigate(`/Programs/${application.ProgramId}`);
+  // Where an application's subject lives on the site.
+  const itemPath = (application) => {
+    switch (application.type) {
+      case "course":
+        return `/Courses/${application.itemId}`;
+      case "program":
+        return `/Programs/${application.itemId}`;
+      case "cv":
+        return `/other-services/cv/${application.itemId}`;
+      case "internship":
+        return `/other-services/internships/${application.itemId}`;
+      default:
+        return null;
     }
   };
 
+  const handleViewItem = (application) => {
+    const path = itemPath(application);
+    if (path) navigate(path);
+  };
+
   const openContactSupport = (application) => {
-    const item = application.Course || application.Program;
-    const itemType = application.Course ? "course" : "program";
     setContactModalData({
       context: "application",
-      courseId: application.Course ? application.CourseId : null,
-      programId: application.Program ? application.ProgramId : null,
-      title:
-        item?.title ||
-        item?.Title ||
-        (itemType === "course" ? "Course" : "Program"),
-      itemType,
+      // A message can now be about any of the four, so the subject travels as
+      // a type and an id rather than as one of two named columns.
+      subjectType: application.type,
+      subjectId: application.itemId,
+      courseId: application.type === "course" ? application.itemId : null,
+      programId: application.type === "program" ? application.itemId : null,
+      title: application.title || application.type,
+      itemType: application.type,
     });
   };
 
@@ -196,6 +207,8 @@ const MyApplications = () => {
               <option value="all">All Types</option>
               <option value="course">Courses</option>
               <option value="program">Programs</option>
+              <option value="cv">CV services</option>
+              <option value="internship">Internships</option>
             </select>
 
             <div className="ml-auto text-sm text-gray-600">
@@ -227,9 +240,8 @@ const MyApplications = () => {
         ) : (
           <div className="space-y-4">
             {filteredApplications.map((application) => {
-              const item = application.Course || application.Program;
-              const itemType = application.Course ? "course" : "program";
-              const itemTitle = item?.title || item?.Title;
+              const itemType = application.type;
+              const itemTitle = application.title;
 
               return (
                 <div
@@ -241,15 +253,27 @@ const MyApplications = () => {
                       {/* Item Info */}
                       <div className="flex items-start gap-4 flex-1">
                         <div className="flex-shrink-0">
-                          {itemType === "course" ? (
-                            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                          <div
+                            className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                              itemType === "course"
+                                ? "bg-blue-100"
+                                : itemType === "program"
+                                  ? "bg-purple-100"
+                                  : itemType === "cv"
+                                    ? "bg-indigo-100"
+                                    : "bg-emerald-100"
+                            }`}
+                          >
+                            {itemType === "course" ? (
                               <FaBook className="text-blue-600" />
-                            </div>
-                          ) : (
-                            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            ) : itemType === "program" ? (
                               <FaGraduationCap className="text-purple-600" />
-                            </div>
-                          )}
+                            ) : itemType === "cv" ? (
+                              <FaFileAlt className="text-indigo-600" />
+                            ) : (
+                              <FaBriefcase className="text-emerald-600" />
+                            )}
+                          </div>
                         </div>
 
                         <div className="flex-1 min-w-0">
@@ -361,6 +385,8 @@ const MyApplications = () => {
                 context="application"
                 courseId={contactModalData.courseId}
                 programId={contactModalData.programId}
+                subjectType={contactModalData.subjectType}
+                subjectId={contactModalData.subjectId}
                 showTitle={false}
                 onSuccess={() => setContactModalData(null)}
               />
