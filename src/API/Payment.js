@@ -1,4 +1,5 @@
 import apiClient from "../services/apiClient";
+import OrdersAPI from "./Orders";
 
 // Payment API (CCP screenshot payments only for now)
 export const PaymentAPI = {
@@ -95,91 +96,70 @@ export const PaymentAPI = {
   // =================================================================
 
   // Create CCP payment with screenshot upload
+  /**
+   * Pay for something by CCP.
+   *
+   * Two steps against one pipeline: place the order, then send the receipt.
+   * This used to be a three-way branch - /upload/Payment/Courses/:id for a
+   * course, /upload/Payment/Programs/:id for a program and
+   * /payments/ccp/create for the other two - and the three did different
+   * things, which is most of why the four products behaved differently.
+   *
+   * If an order is already waiting on this item, the receipt goes onto that
+   * one rather than failing with "you already have an order open", which is
+   * what somebody who reloaded the page and tried again expects.
+   */
   createCCPPayment: async (itemData, paymentForm, screenshotFile) => {
-    try {
-      const formData = new FormData();
-
-      formData.append("CCP_number", paymentForm.ccpNumber);
-
-      // Add coupon code if provided
-      if (paymentForm.couponCode) {
-        formData.append("couponCode", paymentForm.couponCode);
-      }
-
-      // Add phone number if provided
-      if (paymentForm.phoneNumber) {
-        formData.append("phoneNumber", paymentForm.phoneNumber);
-      }
-
-      // Add screenshot file with correct field name
-      if (screenshotFile) {
-        formData.append("Image", screenshotFile);
-      } else {
-        throw new Error("Screenshot is required");
-      }
-
-      // Validation
-      if (!paymentForm.ccpNumber) {
-        throw new Error("CCP number is required");
-      }
-      if (!screenshotFile) {
-        throw new Error("Screenshot is required");
-      }
-
-      let response;
-      if (itemData.itemType === "course") {
-        response = await apiClient.post(
-          "/upload/Payment/Courses/" + itemData.itemId,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          },
-        );
-      } else if (itemData.itemType === "program") {
-        response = await apiClient.post(
-          "/upload/Payment/Programs/" + itemData.itemId,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          },
-        );
-      } else if (
-        itemData.itemType === "cv" ||
-        itemData.itemType === "internship"
-      ) {
-        // Courses and programs go through the older /upload/Payment/* routes.
-        // The CV service and paid internships use the generic CCP endpoint,
-        // which takes itemType/itemId in the body rather than in the path.
-        formData.append("itemType", itemData.itemType);
-        formData.append("itemId", String(itemData.itemId));
-        response = await apiClient.post("/payments/ccp/create", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } else {
-        throw new Error("Invalid item type");
-      }
-
-      return {
-        success: true,
-        data: response.data.data || response.data,
-        message: response.data.message || "CCP payment submitted successfully",
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message:
-          error.response?.data?.message ||
-          error.message ||
-          "Failed to create CCP payment",
-        error: error.response?.data?.error || error.message,
-      };
+    if (!paymentForm.ccpNumber) {
+      return { success: false, message: "CCP number is required" };
     }
+    if (!screenshotFile) {
+      return { success: false, message: "Screenshot is required" };
+    }
+
+    const { itemType, itemId } = itemData;
+
+    const existing = await OrdersAPI.access(itemType, itemId);
+    if (existing.success && existing.hasAccess) {
+      return { success: false, message: "You already have this" };
+    }
+
+    let order = existing.success ? existing.order : null;
+    const reusable =
+      order && (order.status === "pending" || order.status === "rejected");
+
+    if (!reusable) {
+      const placed = await OrdersAPI.place({
+        itemType,
+        itemId,
+        couponCode: paymentForm.couponCode,
+        discountedPrice: paymentForm.discountedPrice,
+      });
+      if (!placed.success) return placed;
+      order = placed.order;
+    }
+
+    // Sending against a rejected order starts a new attempt on the server and
+    // returns the new order, so nothing here has to know the difference.
+    const sent = await OrdersAPI.sendReceipt(order.id, {
+      file: screenshotFile,
+      ccpNumber: paymentForm.ccpNumber,
+      phoneNumber: paymentForm.phoneNumber,
+    });
+    if (!sent.success) return sent;
+
+    return {
+      success: true,
+      message: sent.message,
+      data: {
+        paymentId: sent.order.id,
+        reference: sent.order.reference,
+        amount: sent.order.price,
+        currency: sent.order.currency,
+        status: "pending_verification",
+        attemptNumber: sent.order.attemptNumber,
+      },
+    };
   },
 
   // =================================================================
@@ -187,46 +167,23 @@ export const PaymentAPI = {
   // =================================================================
 
   // Clean up CCP payment screenshot after error or cancellation
-  cleanupCCPPayment: async (itemData) => {
-    try {
-      let response;
-      if (itemData.itemType === "course") {
-        response = await apiClient.delete(
-          "/upload/Payment/Courses/" + itemData.itemId,
-        );
-      } else if (itemData.itemType === "program") {
-        response = await apiClient.delete(
-          "/upload/Payment/Programs/" + itemData.itemId,
-        );
-      } else if (
-        itemData.itemType === "cv" ||
-        itemData.itemType === "internship"
-      ) {
-        // The generic CCP endpoint writes the payment in a single transaction,
-        // so a failed submission leaves nothing orphaned to clean up. Treat
-        // this as a success rather than throwing, which would surface a
-        // misleading "Invalid item type" on an otherwise handled error path.
-        return { success: true, message: "Nothing to clean up" };
-      } else {
-        throw new Error("Invalid item type");
-      }
-
-      return {
-        success: true,
-        data: response.data.data || response.data,
-        message: response.data.message || "Payment cleanup successful",
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message:
-          error.response?.data?.message ||
-          error.message ||
-          "Failed to cleanup payment",
-        error: error.response?.data?.error || error.message,
-      };
-    }
-  },
+  /**
+   * Nothing to clean up any more, and that is deliberate.
+   *
+   * This used to DELETE /upload/Payment/Courses/:id when a payment attempt
+   * was abandoned - a route that removed the payment row and its screenshot.
+   * On this platform a payment record is never destroyed, and an order
+   * somebody started and walked away from is a real record of what they were
+   * trying to do, not litter.
+   *
+   * The order stays pending. If they come back, the receipt attaches to it;
+   * if they never do, an admin can see they tried. Kept as a function because
+   * PaymentPage calls it on the error and unload paths.
+   */
+  cleanupCCPPayment: async () => ({
+    success: true,
+    message: "Nothing is cleaned up - the order is kept.",
+  }),
 
   // =================================================================
   // PAYMENT HISTORY AND STATUS

@@ -16,7 +16,11 @@ const Courses = lazy(() => import("./Pages/Courses"));
 const FAQPage = lazy(() => import("./Pages/FAQPage"));
 const FavoritesPage = lazy(() => import("./Pages/FavoritesPage"));
 const Home = lazy(() => import("./Pages/Home"));
-const MyApplications = lazy(() => import("./Pages/MyApplications"));
+// One list of everything ordered, for all four products, with what to do
+// next on each. The per-product "my applications" routes point at it: they
+// read tables nothing writes to any more, and somebody whose receipt had been
+// rejected had nowhere to find that out and no way to send another.
+const MyOrders = lazy(() => import("./Pages/MyOrders"));
 const PaymentPage = lazy(() => import("./Pages/PaymentPage"));
 const PaymentSuccessPage = lazy(() => import("./Pages/PaymentSuccessPage"));
 const ProgramDetails = lazy(() => import("./Pages/ProgramDetails").then((m) => ({ default: m.ProgramDetails })));
@@ -54,7 +58,6 @@ const CVList = lazy(() => import("./Pages/OtherServices/CVList"));
 const CVService = lazy(() => import("./Pages/OtherServices/CVService"));
 const InternshipsList = lazy(() => import("./Pages/OtherServices/InternshipsList"));
 const InternshipDetail = lazy(() => import("./Pages/OtherServices/InternshipDetail"));
-const MyOtherServicesApplications = lazy(() => import("./Pages/OtherServices/MyOtherServicesApplications"));
 // Auth protection loader
 const protectedLoader = async ({ request }) => {
   const API_URL = getApiBaseUrl();
@@ -155,16 +158,22 @@ const Routers = createBrowserRouter([
         element: <ProgramApplicationStatus />,
       },
       {
+        path: "my-orders",
+        caseSensitive: false,
+        loader: protectedLoader,
+        element: <MyOrders />,
+      },
+      {
         path: "myapplications",
         caseSensitive: false,
         loader: protectedLoader,
-        element: <MyApplications />,
+        element: <MyOrders />,
       },
       {
         path: "my-applications",
         caseSensitive: false,
         loader: protectedLoader,
-        element: <MyApplications />,
+        element: <MyOrders />,
       },
       {
         path: "Courses",
@@ -210,7 +219,7 @@ const Routers = createBrowserRouter([
         path: "other-services/my-applications",
         caseSensitive: false,
         loader: protectedLoader,
-        element: <MyOtherServicesApplications />,
+        element: <MyOrders />,
       },
       {
         path: "notifications",
@@ -405,7 +414,7 @@ const Routers = createBrowserRouter([
           {
             path: "service-applications",
             caseSensitive: false,
-            element: <MyOtherServicesApplications />,
+            element: <MyOrders />,
           },
           {
             path: "cv",

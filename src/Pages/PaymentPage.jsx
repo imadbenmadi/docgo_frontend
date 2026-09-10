@@ -325,31 +325,11 @@ const PaymentPage = () => {
     }
   }, [isAuth, user, navigate]);
 
-  // Cleanup payment on page unload (when user navigates away or refreshes)
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      // Only cleanup if we're in the middle of a CCP payment process
-      if (loading && selectedMethod === "ccp" && itemData?.id) {
-        try {
-          // Send cleanup request - this will be sent even if page is closing
-          navigator.sendBeacon(
-            `/upload/Payment/${
-              itemType === "course" ? "Courses" : "Programs"
-            }/${itemData.id}`,
-            JSON.stringify({ method: "DELETE" }),
-          );
-        } catch (error) {}
-      }
-    };
-
-    // Add event listener for page unload
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Cleanup function to remove event listener
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [loading, selectedMethod, itemData, itemType]);
+  // Closing the tab mid-payment used to fire a beacon at
+  // DELETE /upload/Payment/Courses/:id, which removed the payment row and its
+  // screenshot. Nothing does that now: an order somebody started and walked
+  // away from stays pending, which is a true record of what they were trying
+  // to do. If they come back, the receipt attaches to that same order.
 
   // Extract pricing information based on item type
   const getItemPrice = () => {
