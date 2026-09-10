@@ -22,6 +22,13 @@ const UserMessages = () => {
     const [loading, setLoading] = useState(true);
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [showMessageModal, setShowMessageModal] = useState(false);
+    // The conversation. Support used to be one message and one answer: an
+    // admin replying twice overwrote the first reply, and there was no way to
+    // reply back at all.
+    const [thread, setThread] = useState([]);
+    const [threadLoading, setThreadLoading] = useState(false);
+    const [replyText, setReplyText] = useState("");
+    const [sendingReply, setSendingReply] = useState(false);
 
     const isRTL = i18n.language === "ar";
 
@@ -49,14 +56,61 @@ const UserMessages = () => {
         }
     }, [user?.id]);
 
+    const loadThread = async (messageId) => {
+        if (!messageId) return;
+        try {
+            setThreadLoading(true);
+            const res = await apiClient.get(
+                `/contact/messages/${messageId}/thread`,
+            );
+            setThread(res.data?.data?.replies || []);
+        } catch {
+            setThread([]);
+        } finally {
+            setThreadLoading(false);
+        }
+    };
+
     const handleViewMessage = (message) => {
         setSelectedMessage(message);
         setShowMessageModal(true);
+        loadThread(message.id);
     };
 
     const handleCloseModal = () => {
         setShowMessageModal(false);
         setSelectedMessage(null);
+        setThread([]);
+        setReplyText("");
+    };
+
+    const handleSendReply = async () => {
+        const body = replyText.trim();
+        if (!body || !selectedMessage) return;
+
+        try {
+            setSendingReply(true);
+            await apiClient.post(
+                `/contact/messages/${selectedMessage.id}/replies`,
+                { body },
+            );
+            setReplyText("");
+            await loadThread(selectedMessage.id);
+            // Replying puts it back in the queue, so say so here too rather
+            // than leaving the badge claiming it was answered.
+            setSelectedMessage((prev) => ({ ...prev, status: "unread" }));
+            setMessages((prev) =>
+                prev.map((m) =>
+                    m.id === selectedMessage.id
+                        ? { ...m, status: "unread" }
+                        : m,
+                ),
+            );
+        } catch {
+            // The panel still shows the thread; nothing was lost.
+        } finally {
+            setSendingReply(false);
+        }
     };
 
     const getStatusIcon = (status) => {
@@ -347,38 +401,105 @@ const UserMessages = () => {
                                     </div>
                                 </div>
 
-                                {selectedMessage.adminResponse && (
+                                {threadLoading ? (
+                                    <p className="text-sm text-gray-500">
+                                        {t(
+                                            "messages.loadingThread",
+                                            "Loading the conversation...",
+                                        )}
+                                    </p>
+                                ) : thread.length > 0 ? (
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
                                             {t(
-                                                "messages.ourResponse",
-                                                "Our Response",
-                                            )}
+                                                "messages.conversation",
+                                                "Conversation",
+                                            )}{" "}
+                                            ({thread.length})
                                         </label>
-                                        <div className="mt-1 p-3 border border-green-300 rounded-md bg-green-50">
-                                            <p className="text-sm text-gray-900">
-                                                {/* {selectedMessage.adminResponse} */}
-                                                <RichTextDisplay
-                                                    content={
-                                                        selectedMessage.adminResponse
-                                                    }
-                                                    className="text-sm text-gray-900"
-                                                />
-                                            </p>
-                                            {selectedMessage.respondedAt && (
-                                                <p className="text-xs text-gray-500 mt-2">
-                                                    {t(
-                                                        "messages.respondedOn",
-                                                        "Responded on",
-                                                    )}{" "}
-                                                    {new Date(
-                                                        selectedMessage.respondedAt,
-                                                    ).toLocaleString()}
-                                                </p>
-                                            )}
+                                        <div className="space-y-2">
+                                            {thread.map((reply) => {
+                                                const fromAdmin =
+                                                    reply.authorType ===
+                                                    "admin";
+                                                return (
+                                                    <div
+                                                        key={reply.id}
+                                                        className={`p-3 rounded-md border ${
+                                                            fromAdmin
+                                                                ? "border-green-300 bg-green-50 mr-6"
+                                                                : "border-gray-200 bg-gray-50 ml-6"
+                                                        }`}
+                                                    >
+                                                        <div className="flex items-baseline justify-between gap-3 mb-1">
+                                                            <span className="text-xs font-semibold text-gray-700">
+                                                                {fromAdmin
+                                                                    ? t(
+                                                                          "messages.support",
+                                                                          "Support",
+                                                                      )
+                                                                    : t(
+                                                                          "messages.you",
+                                                                          "You",
+                                                                      )}
+                                                            </span>
+                                                            <span className="text-xs text-gray-500">
+                                                                {new Date(
+                                                                    reply.createdAt,
+                                                                ).toLocaleString()}
+                                                            </span>
+                                                        </div>
+                                                        <RichTextDisplay
+                                                            content={
+                                                                reply.bodyHtml ||
+                                                                reply.body
+                                                            }
+                                                            className="text-sm text-gray-900"
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     </div>
-                                )}
+                                ) : null}
+
+                                {/* Replying was not possible at all before:
+                                    the message carried one admin answer and
+                                    nothing came back the other way. */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        {t("messages.reply", "Reply")}
+                                    </label>
+                                    <textarea
+                                        value={replyText}
+                                        onChange={(e) =>
+                                            setReplyText(e.target.value)
+                                        }
+                                        rows={3}
+                                        placeholder={t(
+                                            "messages.replyPlaceholder",
+                                            "Write your reply...",
+                                        )}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <div className="mt-2 flex justify-end">
+                                        <button
+                                            onClick={handleSendReply}
+                                            disabled={
+                                                !replyText.trim() ||
+                                                sendingReply
+                                            }
+                                            className="px-4 py-2 bg-blue-600 rounded-md text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                                        >
+                                            {sendingReply
+                                                ? t(
+                                                      "messages.sending",
+                                                      "Sending...",
+                                                  )
+                                                : t("messages.send", "Send")}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="mt-6 flex justify-end space-x-3">
