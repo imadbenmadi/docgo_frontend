@@ -145,7 +145,7 @@ const PendingApplicationsSection = ({ applications }) => {
             >
               <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
                 <ImageWithFallback
-                  type={application.type === "program" ? "program" : "course"}
+                  type={application.type}
                   src={
                     item?.Image
                       ? `${import.meta.env.VITE_API_URL}${item.Image}`

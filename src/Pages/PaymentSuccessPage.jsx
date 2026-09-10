@@ -162,7 +162,7 @@ const PaymentSuccessPage = () => {
             </h3>
             <div className="flex items-center gap-3">
               <ImageWithFallback
-                type={itemType === "program" ? "program" : "course"}
+                type={itemType}
                 src={itemData.Image || null}
                 alt={itemData.Title || itemData.title}
                 className="w-12 h-12 object-cover rounded"
@@ -295,7 +295,14 @@ const PaymentSuccessPage = () => {
             )}
 
             <Link
-              to={itemType === "course" ? "/courses" : "/programs"}
+              to={
+                {
+                  course: "/courses",
+                  program: "/programs",
+                  cv: "/other-services/cv",
+                  internship: "/other-services/internships",
+                }[itemType] || "/courses"
+              }
               className="block w-full text-gray-600 hover:text-gray-800 py-2 transition-colors duration-200"
             >
               {itemType === "course"

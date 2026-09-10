@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { GraduationCap, BookOpen, User } from "lucide-react";
+import {
+  GraduationCap,
+  BookOpen,
+  User,
+  FileText,
+  Briefcase,
+} from "lucide-react";
 
 /* eslint-disable react/prop-types */
 
@@ -11,6 +17,14 @@ const FALLBACK_CONFIG = {
   course: {
     gradient: "from-blue-500 via-cyan-500 to-teal-500",
     Icon: BookOpen,
+  },
+  cv: {
+    gradient: "from-indigo-500 via-violet-500 to-purple-600",
+    Icon: FileText,
+  },
+  internship: {
+    gradient: "from-emerald-500 via-teal-500 to-cyan-600",
+    Icon: Briefcase,
   },
   user: {
     gradient: "from-slate-400 to-slate-600",

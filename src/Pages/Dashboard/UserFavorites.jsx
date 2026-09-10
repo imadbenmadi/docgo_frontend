@@ -102,7 +102,7 @@ const UserFavorites = () => {
         <div className="flex items-start justify-between">
           <div className="flex items-start space-x-4 flex-1">
             <ImageWithFallback
-              type={type === "program" ? "program" : "course"}
+              type={type}
               src={
                 item.Image
                   ? `${import.meta.env.VITE_API_URL}${item.Image}`

@@ -312,7 +312,7 @@ const UserApplications = () => {
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-start space-x-4 flex-1">
               <ImageWithFallback
-                type={type === "program" ? "program" : "course"}
+                type={type}
                 src={
                   imageUrl ? `${import.meta.env.VITE_API_URL}${imageUrl}` : null
                 }
