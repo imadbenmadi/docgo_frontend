@@ -23,3 +23,4 @@ lerna-debug.log*
 # build-time values only, and the GitHub Actions build reads them from the
 # checkout. Ignore them and the deployed bundle is built with VITE_API_URL
 # undefined.
+i18n-missing.json

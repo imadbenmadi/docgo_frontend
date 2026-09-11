@@ -47,9 +47,12 @@
     "signingIn": "Signing in...",
     "loginError": "An error occurred during login",
     "emailPlaceholder": "you@example.com",
-    "passwordPlaceholder": "••••••••"
+    "passwordPlaceholder": "••••••••",
+    "completeProfile": "Complete Your Profile",
+    "completeProfileSubtitle": "Help us personalize your learning experience",
+    "back": "Back",
+    "createAccount": "Create Account"
   },
-
   "contact": {
     "supportTitle": "Support",
     "supportDesc": "Available 7 days a week to answer your questions",
@@ -76,14 +79,30 @@
     "errorSending": "Failed to send message. Please try again.",
     "richTextEnabled": "Rich text formatting available",
     "phone": "Phone",
-    "address": "Address"
+    "address": "Address",
+    "course": "Course",
+    "program": "Program",
+    "courseHelp": "Need help with this course?",
+    "programHelp": "Have questions about this program?",
+    "generalSupport": "Contact Support",
+    "courseSubtitle": "Ask about course content, prerequisites, or any other questions you have.",
+    "programSubtitle": "Get answers about program requirements, application process, or scholarships.",
+    "dashboardSubtitle": "Our support team is here to help you with any questions or issues.",
+    "landingSubtitle": "We",
+    "concernType": "Concern type",
+    "concernGeneral": "General support",
+    "concernCourse": "A course",
+    "concernProgram": "A program",
+    "selectCourse": "Select course",
+    "loading": "Loading...",
+    "chooseCourse": "Choose a course",
+    "selectProgram": "Select program",
+    "chooseProgram": "Choose a program"
   },
-
   "faq_data": {
     "title": "Frequently Asked Questions",
     "intro": "Find answers to common questions about our courses and programs."
   },
-
   "dashboard": {
     "sidebar": {
       "title": "Dashboard",
@@ -97,19 +116,75 @@
       "support": "Need help?",
       "supportText": "Contact our support team",
       "sendMessage": "Send a message",
-      "settings": "Settings"
+      "settings": "Settings",
+      "myLearning": "My Learning",
+      "myPrograms": "Mes études à l’étranger",
+      "applications": "Applications",
+      "serviceApplications": "Service Applications",
+      "certificates": "My Certificates",
+      "payments": "All Payments",
+      "landingPage": "Landing Page"
     },
     "pendingApplications": "Pending applications",
     "enrolledCourses": "My enrolled courses",
-    "enrolledPrograms": "My enrolled programs"
+    "enrolledPrograms": "My enrolled programs",
+    "noCertificates": "No Certificates Yet",
+    "noCertificatesDescription": "Complete courses and pass quizzes to earn certificates!",
+    "startLearning": "Start Learning",
+    "earnedCertificates": "Earned Certificates",
+    "certificates": "certificates",
+    "certified": "Certified",
+    "allVideosWatched": "All videos watched",
+    "quizPassed": "Quiz passed",
+    "viewCertificate": "View Certificate",
+    "viewAllCertificates": "View All Certificates",
+    "noEnrolledCourses": "No Enrolled Courses",
+    "noEnrolledCoursesDescription": "Start learning by enrolling in courses!",
+    "browseCourses": "Browse Courses",
+    "courses": "courses",
+    "deleted": "Deleted",
+    "completed": "Completed",
+    "active": "Active",
+    "enrolledOn": "Enrolled on",
+    "deletedCourseSupport": "This course has been deleted. Contact support for any considerations regarding your enrollment.",
+    "viewAllCourses": "View All My Courses",
+    "noEnrolledPrograms": "No Enrolled Programs",
+    "noEnrolledProgramsDescription": "Apply to scholarship programs to boost your career!",
+    "browsePrograms": "Browse Programs",
+    "programs": "programs",
+    "pendingStart": "Pending Start",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "deletedProgramSupport": "This program has been deleted. Contact support for any considerations regarding your enrollment.",
+    "viewAllPrograms": "View All My Programs",
+    "noPendingApplications": "No Pending Applications",
+    "noPendingApplicationsDescription": "Apply for courses and programs to start your journey!",
+    "applyPrograms": "Apply for Programs",
+    "applyCourses": "Apply for Courses",
+    "applications": "applications",
+    "program": "Program",
+    "course": "Course",
+    "pending": "Pending",
+    "opened": "Opened",
+    "rejected": "Rejected",
+    "submittedOn": "Submitted on",
+    "deadline": "Deadline",
+    "price": "Price",
+    "applicationRejected": "This application was rejected",
+    "applicationProgress": "Application Progress",
+    "viewAllApplications": "View All Applications",
+    "myLearning": "My Learning",
+    "myLearningSubtitle": "Your enrolled courses and progress",
+    "progress": "Progress",
+    "myPrograms": "Mes études à l’étranger",
+    "myProgramsSubtitle": "Études à l’étranger auxquelles vous avez postulé",
+    "loadError": "Failed to load dashboard data"
   },
-
   "Home_nav": "Home",
   "UserDashboard_nav": "My Dashboard",
   "Programs_nav": "Programs",
   "Courses_nav": "Courses",
   "Profile_nav": "Profile",
-
   "FAQ": "FAQ",
   "MyLearning": "My Learning",
   "MyPrograms": "My Programs",
@@ -128,7 +203,6 @@
   "no_data": "No data available",
   "ImageNotFound": "Image not found",
   "NoResultsFound": "No results found",
-
   "profile_data": {
     "noCourses": "No courses available",
     "noCoursesDescription": "Explore our wide range of available courses.",
@@ -150,9 +224,21 @@
     "study_domain": "Specialization",
     "phone": "Phone",
     "completed_courses": "Completed courses",
-    "in_progress_courses": "Courses in progress"
+    "in_progress_courses": "Courses in progress",
+    "notProvided": "Not provided",
+    "avatarAlt": "Profile avatar",
+    "studentProfileInformation": "Student Profile Information",
+    "university": "University",
+    "studyDomain": "Study Domain",
+    "specialty": "Specialty",
+    "academicAverage": "Academic Average",
+    "currentAcademicLevel": "Current Academic Level",
+    "redoubledYear": "Redoubled Year",
+    "professionalStatus": "Professional Status",
+    "academicStatus": "Academic Status",
+    "yearsOfExperience": "Years Of Experience",
+    "currentJobTitle": "Current Job Title"
   },
-
   "course_data": {
     "no_prerequisites": "No prerequisites",
     "enroll": "Enroll",
@@ -208,9 +294,9 @@
     "ApplicationRejected": "Application Rejected",
     "free": "Free",
     "whatYouLearn": "What you'll learn",
-    "content": "Course Content"
+    "content": "Course Content",
+    "course_reviews": "Course reviews"
   },
-
   "programs": {
     "title": "Educational Programs",
     "subtitle": "Discover our excellence programs for your academic future",
@@ -368,7 +454,6 @@
     "enrolled program": "enrolled program",
     "Enrolled": "Enrolled"
   },
-
   "notifications": {
     "title": "Notifications",
     "description": "Stay up to date with your latest updates",
@@ -401,9 +486,9 @@
     "loading": "Loading notifications...",
     "noNotifications": "No notifications",
     "noNotificationsText": "You're all caught up! No new notifications to show.",
-    "confirmDelete": "Are you sure you want to delete this notification?"
+    "confirmDelete": "Are you sure you want to delete this notification?",
+    "confirmDeleteTitle": "Delete notification?"
   },
-
   "common": {
     "retry": "Retry",
     "back": "Back",
@@ -435,9 +520,15 @@
     "noOptionsFound": "No options found",
     "error": "Error",
     "filter": "Filter",
-    "sort": "Sort"
+    "sort": "Sort",
+    "general": "General",
+    "close": "Close",
+    "delete": "Delete",
+    "browsePrograms": "Browse Programs",
+    "backToDashboard": "Back to Dashboard",
+    "refresh": "Refresh",
+    "message": "Message"
   },
-
   "Courses": "Courses",
   "Programs": "Programs",
   "Favorites": "Favorites",
@@ -453,7 +544,6 @@
   "Nurse": "Nurse",
   "CampusFrance": "Campus France",
   "PrivateSchools": "Private Schools",
-
   "ExploreOpportunities": "Explore the world of opportunities",
   "DiveIntoPossibilities": "Dive into a world of possibilities: Study abroad with us",
   "JoinUsToDiscover": "Join us to discover incredible study abroad options and elevate your learning through specialized courses",
@@ -578,7 +668,6 @@
   "Oops": "Oops",
   "SomethingWentWrong": "Something went wrong!",
   "payment": "Payment",
-
   "paymentPage": {
     "title": "Secure Payment",
     "enrollmentMessage": "Complete your enrollment in this course",
@@ -672,9 +761,27 @@
         "transactionId": "Transaction ID:",
         "amount": "Amount:"
       }
+    },
+    "profileInformation": "Profile Information",
+    "university": "University / Institution",
+    "notProvided": "Not provided",
+    "professionalStatus": "Professional Status",
+    "academicStatus": "Academic Status",
+    "editProfileInfo": "To update this information, please edit your profile",
+    "rejectionNotice": {
+      "title": "Title",
+      "reason": "Reason",
+      "noReason": "No Reason"
+    },
+    "cancelNotice": {
+      "title": "Previous Payment Cancelled",
+      "text": "cancelled by the administrator"
+    },
+    "deleteNotice": {
+      "title": "Previous Payment Deleted",
+      "text": "removed by the administrator"
     }
   },
-
   "rejectionNotice": {
     "title": "Previous payment rejected",
     "reason": "Rejection reason",
@@ -694,10 +801,35 @@
   "invalidExpiryFormat": "MM/YY format",
   "expiredCard": "Card expired",
   "invalidCVV": "Invalid CVV",
-  "paymentSuccess": "Payment successful!",
+  "paymentSuccess": {
+    "titleCompleted": "Payment Successful!",
+    "titlePending": "Payment Submitted!",
+    "ccpSubmitted": "Your CCP payment has been submitted for verification.",
+    "ccpImportant": "Important",
+    "ccpVerifyTime": "We will verify your payment within 24 hours. You will receive an email confirmation once verified.",
+    "courseEnrolled": "Course Enrolled",
+    "programApplied": "Program Applied",
+    "paymentDetails": "Payment Details",
+    "paymentId": "Payment ID",
+    "method": "Method",
+    "amount": "Amount",
+    "status": "Status",
+    "startLearning": "Start Learning",
+    "autoRedirect": "Auto-redirecting in {{countdown}} seconds...",
+    "viewCourseDetails": "View Course Details",
+    "saveReceipt": "Save Receipt",
+    "viewApplications": "View My Applications",
+    "browseMoreCourses": "Browse More Courses",
+    "browseMorePrograms": "Browse More Programs",
+    "needHelp": "Need help? Contact our support team:",
+    "sendSupportMessage": "Send Support Message",
+    "contactSupport": "Contact Support",
+    "paymentContextCourse": "Your message will be tagged as payment support for the course.",
+    "paymentContextProgram": "Your message will be tagged as payment support for the program.",
+    "exploreCourse": "Explore the course"
+  },
   "processing": "Processing...",
   "completePayment": "Complete Payment",
-
   "RechercherUnCours": "Search for a course...",
   "Gratuit": "Free",
   "Payant": "Paid",
@@ -712,7 +844,10 @@
   "Search courses...": "Search courses...",
   "Highest Price": "Highest Price",
   "Lowest Price": "Lowest Price",
-  "course": "course",
+  "course": {
+    "freePreview": "Free Preview",
+    "rating": "Rating"
+  },
   "found": "found",
   "for": "for",
   "Showing": "Showing",
@@ -723,15 +858,32 @@
   "cours": "course",
   "heures": "hours",
   "Completezvotreeducation": "Complete your education",
-
   "profile": {
     "professional_member": "Professional Member",
     "completed_courses": "completed courses",
     "in_progress_courses": "courses in progress",
     "name": "Name",
-    "email": "Email"
+    "email": "Email",
+    "loading": "Loading profile...",
+    "title": "My Profile",
+    "subtitle": "Manage your personal information",
+    "edit": "Edit Profile",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "save": "Save",
+    "coursesCompleted": "Courses Completed",
+    "certificates": "Certificates",
+    "personalInfo": "Personal Information",
+    "firstName": "First Name",
+    "notProvided": "Not provided",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "country": "Country",
+    "city": "City",
+    "dateOfBirth": "Date of Birth",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself..."
   },
-
   "courses_data": {
     "title": "Your Courses",
     "progress": "Progress",
@@ -742,7 +894,6 @@
     "videos": "videos",
     "view_all": "View all courses"
   },
-
   "applications": {
     "title": "My Applications",
     "submitted": "Submitted on:",
@@ -757,16 +908,54 @@
       "under_review": "Under Review",
       "rejected": "Rejected",
       "unknown": "Unknown Status"
-    }
+    },
+    "courses": "Course Applications",
+    "programs": "Program Applications",
+    "paymentHistory": "Payment History",
+    "enrolledOn": "Enrolled",
+    "appliedOn": "Applied",
+    "reviewedOn": "Reviewed",
+    "message": "Application Message",
+    "adminResponse": "Admin Response",
+    "applicationId": "Application ID",
+    "view": "View Details",
+    "viewProgram": "View Program",
+    "startCourse": "Start Course",
+    "programTitle": "My Program Applications",
+    "courseTitle": "My Course Applications",
+    "programSubtitle": "Track your program applications and their status",
+    "courseSubtitle": "Track your course applications and their status",
+    "subtitle": "Track your course and program applications",
+    "loading": "Loading applications...",
+    "noProgramApplications": "No program applications",
+    "noProgramApplicationsText": "You haven",
+    "browsePrograms": "Browse Programs",
+    "noCourseApplications": "No course applications",
+    "noCourseApplicationsText": "You haven",
+    "browseCourses": "Browse Courses"
   },
-
   "certificates": {
     "title": "My Certificates",
     "issued_by": "Issued by",
     "view_official": "View official certificate",
-    "view_all": "View all certificates"
+    "view_all": "View all certificates",
+    "certificateOf": "Certificate of Completion",
+    "noDescription": "Course description not available",
+    "completed": "Completed",
+    "grade": "Grade",
+    "number": "Certificate ID",
+    "issued": "Issued on",
+    "viewCourse": "View Course",
+    "share": "Share",
+    "downloading": "Opening...",
+    "download": "View",
+    "subtitle": "Your earned certificates and achievements",
+    "totalCertificates": "certificates earned",
+    "loading": "Loading certificates...",
+    "noCertificates": "No certificates yet",
+    "noCertificatesText": "Complete courses to earn certificates and showcase your achievements.",
+    "browseCourses": "Browse Courses"
   },
-
   "editProfile": {
     "title": "Edit Profile",
     "uploadingImage": "Uploading...",
@@ -794,9 +983,21 @@
     "graduated": "Graduated",
     "saveChanges": "Save Changes",
     "cancel": "Cancel",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "uploadSuccess": "Profile picture uploaded successfully!",
+    "updateSuccess": "Profile updated successfully!",
+    "specialty": "Specialty",
+    "specialtyPlaceholder": "e.g., Medicine, Pharmacy, Dentistry",
+    "academicAverage": "Academic Average",
+    "academicAverageHint": "0-20",
+    "currentAcademicLevel": "Current Academic Level",
+    "currentAcademicLevelPlaceholder": "e.g., L3, M1, Intern",
+    "redoubledYear": "Redoubled Year",
+    "yearsOfExperience": "Years Of Experience",
+    "yearsOfExperiencePlaceholder": "e.g., 3",
+    "currentJobTitle": "Current Job Title",
+    "currentJobTitlePlaceholder": "e.g., Pharmacist"
   },
-
   "register": {
     "title": "Register",
     "welcome": "Welcome to healthpathglobal, your first step towards success",
@@ -821,9 +1022,10 @@
     "student": "Student",
     "other": "Other",
     "back": "Back",
-    "finish": "Finish"
+    "finish": "Finish",
+    "noCountriesAvailable": "Countries are not yet configured. Please check back later.",
+    "noSpecialtiesAvailable": "Study domains are not yet configured. Please check back later."
   },
-
   "dashboard_data": {
     "voir_profile": "View Profile",
     "totalEnrollments": "Total Enrollments",
@@ -862,7 +1064,6 @@
     "coursesCompleted": "Courses Completed",
     "certificatesEarned": "Certificates Earned"
   },
-
   "messages": {
     "another_one": "Send another",
     "yourMessage": "Your message",
@@ -888,9 +1089,27 @@
     "general": "General Inquiry",
     "generalDesc": "Other questions or feedback about our services",
     "responseTime": "Response Time",
-    "responseTimeDesc": "We typically respond within 24 hours on business days."
+    "responseTimeDesc": "We typically respond within 24 hours on business days.",
+    "status": {
+      "unread": "New",
+      "read": "Read",
+      "responded": "Responded"
+    },
+    "loading": "Loading messages...",
+    "generalInquiry": "General Inquiry",
+    "sent": "Sent",
+    "respondedAt": "Responded",
+    "messageDetails": "Message Details",
+    "loadingThread": "Loading the conversation...",
+    "conversation": "Conversation",
+    "support": "Support",
+    "you": "You",
+    "reply": "Reply",
+    "replyPlaceholder": "Write your reply...",
+    "sending": "Sending...",
+    "send": "Send",
+    "sentText": "Your message has been sent successfully."
   },
-
   "faq": {
     "all": "All",
     "peopleFoundHelpful": "people found this helpful",
@@ -900,9 +1119,11 @@
     "loginToVote": "Log in to vote",
     "pleaseLoginToVote": "Please log in to vote on FAQs.",
     "alreadyVoted": "You have already voted on this FAQ.",
-    "failedToVote": "Failed to submit vote. Please try again."
+    "failedToVote": "Failed to submit vote. Please try again.",
+    "description": "Frequently asked questions about this program",
+    "filterByCategory": "Filter by Category",
+    "noFaqsInCategory": "No FAQs found in this category"
   },
-
   "video_player": {
     "Watch Course": "Watch Course",
     "Back": "Back",
@@ -921,7 +1142,6 @@
     "Error loading course": "Error loading course",
     "Synced": "Synced"
   },
-
   "alerts": {
     "enrollment": {
       "successTitle": "Enrolled Successfully! ðŸŽ‰",
@@ -965,7 +1185,9 @@
       "errorTitle": "Payment Error!",
       "errorText": "Could not process your payment. Please check your details and try again.",
       "tryAgain": "Try again",
-      "goBack": "Go back"
+      "goBack": "Go back",
+      "accessRemovedTitle": "Access Removed",
+      "accessRemovedText": "Your access was removed by an admin. You can submit a new payment to re-enroll."
     },
     "certificate": {
       "generatingTitle": "Generating Certificate",
@@ -1041,34 +1263,6 @@
       "sentText": "Your message has been sent successfully."
     }
   },
-
-  "paymentSuccess": {
-    "titleCompleted": "Payment Successful!",
-    "titlePending": "Payment Submitted!",
-    "ccpSubmitted": "Your CCP payment has been submitted for verification.",
-    "ccpImportant": "Important",
-    "ccpVerifyTime": "We will verify your payment within 24 hours. You will receive an email confirmation once verified.",
-    "courseEnrolled": "Course Enrolled",
-    "programApplied": "Program Applied",
-    "paymentDetails": "Payment Details",
-    "paymentId": "Payment ID",
-    "method": "Method",
-    "amount": "Amount",
-    "status": "Status",
-    "startLearning": "Start Learning",
-    "autoRedirect": "Auto-redirecting in {{countdown}} seconds...",
-    "viewCourseDetails": "View Course Details",
-    "saveReceipt": "Save Receipt",
-    "viewApplications": "View My Applications",
-    "browseMoreCourses": "Browse More Courses",
-    "browseMorePrograms": "Browse More Programs",
-    "needHelp": "Need help? Contact our support team:",
-    "sendSupportMessage": "Send Support Message",
-    "contactSupport": "Contact Support",
-    "paymentContextCourse": "Your message will be tagged as payment support for the course.",
-    "paymentContextProgram": "Your message will be tagged as payment support for the program."
-  },
-
   "favorites": {
     "title": "My Favorites",
     "savedCourses": "Your saved courses and programs",
@@ -1087,9 +1281,20 @@
     "level": "Level",
     "from": "From",
     "scholarship": "Scholarship",
-    "deadline": "Deadline"
+    "deadline": "Deadline",
+    "confirmRemove": "Are you sure you want to remove this from favorites?",
+    "students": "students",
+    "addedOn": "Added on",
+    "view": "View",
+    "remove": "Remove",
+    "subtitle": "Your bookmarked courses and programs",
+    "loading": "Loading favorites...",
+    "noCourses": "No favorite courses",
+    "noCoursesText": "You haven",
+    "noPrograms": "No favorite programs",
+    "noProgramsText": "You haven",
+    "browsePrograms": "Browse Programs"
   },
-
   "quiz_page": {
     "true": "True",
     "false": "False",
@@ -1104,7 +1309,6 @@
     "textPlaceholder": "Write your answer here...",
     "description": "Description"
   },
-
   "myApplicationsPage": {
     "title": "My Applications",
     "noApplications": "No applications yet",
@@ -1120,7 +1324,6 @@
       "rejected": "Rejected"
     }
   },
-
   "courseInfo": {
     "courseStatistics": "Course Statistics",
     "totalStudents": "Total Students",
@@ -1141,7 +1344,6 @@
     "instructor": "Instructor",
     "courseInstructor": "Course Instructor"
   },
-
   "blocked": {
     "title": "Account Blocked",
     "message": "Your account has been temporarily suspended by an administrator. If you believe this is a mistake, please contact support.",
@@ -1157,7 +1359,6 @@
     "checkNow": "Check now",
     "contactSupport": "Contact Support"
   },
-
   "deleted": {
     "title": "Account Removed",
     "message": "Your account has been permanently removed from this platform by an administrator. Please contact support for more information.",
@@ -1174,7 +1375,6 @@
     "checkNow": "Check now",
     "contactSupport": "Contact Support"
   },
-
   "errorPage": {
     "title": "Oops! An Error Occurred",
     "message": "Something went wrong on this page.",
@@ -1182,7 +1382,6 @@
     "goBack": "Please go back to the",
     "homePage": "home page"
   },
-
   "apiErrors": {
     "serverError": "A server error occurred. Please try again.",
     "notFound": "The requested resource was not found.",
@@ -1205,22 +1404,19 @@
     "noFileUploaded": "No file selected. Please choose a file to upload.",
     "unknown": "An unexpected error occurred. Please try again."
   },
-
   "enrolled course": "enrolled course",
   "Continue Learning": "Continue Learning",
-
   "certificate": {
     "realNameTitle": "Your Certificate Name",
     "realNameWarning": "Your full name will appear on the certificate exactly as entered. Please make sure it is correct.",
     "noName": "your name",
     "goSetName": "Go set your name in profile",
     "proceed": "Get Certificate",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "notAvailable": "This course does not offer a certificate"
   },
-
   "report_desc": "Describe the problem you encountered with this lesson or content.",
   "report_placeholder": "e.g. Video won't play, audio is out of sync, subtitle error…",
-
   "forgot_password": {
     "title": "Password Recovery",
     "subtitle": "Enter your email to recover your account",
@@ -1257,9 +1453,10 @@
     "request_received": "Request Received",
     "admin_will_help": "Your password recovery request has been submitted. An administrator will contact you shortly at",
     "timeline": "Timeline:",
-    "timeline_desc": "You should expect to hear from us within 24 hours during business days."
+    "timeline_desc": "You should expect to hear from us within 24 hours during business days.",
+    "resent_success": "Email resent successfully!",
+    "resend_error": "Failed to resend email"
   },
-
   "reset_password": {
     "title": "Reset Your Password",
     "subtitle": "Enter a new password for your account",
@@ -1287,7 +1484,6 @@
     "request_new_link": "Request a New Reset Link",
     "back_to_login": "Back to Sign In"
   },
-
   "homepage": {
     "hero": {
       "badge": "Explore Opportunities",
@@ -1396,7 +1592,6 @@
     "descriptionTitle": "Service Description",
     "descriptionSubtitle": "Details configured by our team in the dashboard.",
     "descriptionFallback": "Our professional CV creation service helps you craft a compelling resume that stands out to employers. Share your information and let our experts create a polished, professional CV tailored to your industry.",
-
     "appStatusTitle": "Application Status",
     "goToMyApplications": "Go to My Applications",
     "status": "Status",
@@ -1405,7 +1600,6 @@
     "acceptedText": "Your CV application has been accepted. Our team will contact you shortly to discuss the next steps.",
     "acceptedHint": "Please check your email for contact information.",
     "rejectionReason": "Reason for rejection",
-
     "formTitleNew": "Submit Your CV Application",
     "formTitleUpdate": "Update Your CV Application",
     "formSubtitle": "Share your information and professional details. Our team will use this to create your CV.",
@@ -1417,7 +1611,6 @@
     "submitting": "Submitting...",
     "update": "Update Application",
     "submit": "Submit Application",
-
     "serviceUnavailableTitle": "Service unavailable",
     "serviceUnavailableText": "This service is currently unavailable. Please try again later.",
     "loginRequired": "Login required",
@@ -1428,13 +1621,14 @@
     "updated": "Your CV application has been updated",
     "submitted": "Your CV application has been submitted successfully",
     "error": "Error",
-    "submitFailed": "Failed to submit application"
+    "submitFailed": "Failed to submit application",
+    "payNow": "Pay now",
+    "paymentPending": "This service is paid. Your application is held until the payment is received and approved."
   },
   "internshipDetailPage": {
     "loading": "Loading internship details...",
     "notFound": "Internship not found",
     "backToInternships": "Back to Internships",
-
     "company": "Company",
     "location": "Location",
     "type": "Type",
@@ -1447,7 +1641,6 @@
     "contactPerson": "Contact Person",
     "email": "Email",
     "phone": "Phone",
-
     "applyTitle": "Apply for This Internship",
     "applySubtitle": "Tell us why you're interested in this opportunity and why you'd be a great fit.",
     "applicationLetter": "Application Letter / Motivation",
@@ -1455,7 +1648,6 @@
     "cancel": "Cancel",
     "submitting": "Submitting...",
     "submit": "Submit Application",
-
     "alreadyAppliedTitle": "Already applied",
     "alreadyAppliedText": "You have already applied to this internship",
     "alreadyAppliedBanner": "You already applied to this internship",
@@ -1463,14 +1655,221 @@
     "status": "Status",
     "goToMyApplications": "Go to My Applications",
     "rejectionReason": "Reason for rejection",
-
     "loginRequiredTitle": "Login required",
     "loginRequiredText": "Please login to submit your internship application.",
-
     "success": "Success",
     "submitted": "Your application has been submitted successfully",
     "submitFailed": "Failed to submit application",
     "loadFailed": "Failed to load internship details",
-    "checkApplicationFailed": "Failed to check your application status"
+    "checkApplicationFailed": "Failed to check your application status",
+    "payNow": "Pay now",
+    "paymentPending": "This internship is paid. Your application is held until the payment is received and approved."
+  },
+  "Course details and learning content on healthpathglobal": {
+    "": "Course details and learning content on healthpathglobal."
+  },
+  "timeAgo": {
+    "justNow": "Just now",
+    "hoursAgo": "${diffInHours}h ago",
+    "yesterday": "Yesterday",
+    "daysAgo": "${days}d ago"
+  },
+  "Tip: use Free/Paid, or set Min/Max for a custom range": {
+    "": "Tip: use Free/Paid, or set Min/Max for a custom range."
+  },
+  "Loading": {
+    "": {
+      "": {
+        "": "Loading..."
+      }
+    }
+  },
+  "Something went wrong while loading the course details": {
+    "": "Something went wrong while loading the course details."
+  },
+  "Refreshing": {
+    "": {
+      "": {
+        "": "Refreshing..."
+      }
+    }
+  },
+  "Your message about this course": {
+    "": {
+      "": {
+        "": "Your message about this course..."
+      }
+    }
+  },
+  "Sending": {
+    "": {
+      "": {
+        "": "Sending..."
+      }
+    }
+  },
+  "Search courses": {
+    "": {
+      "": {
+        "": "Search courses..."
+      }
+    }
+  },
+  "Quiz passed! Great job": {
+    "": "Quiz passed! Great job."
+  },
+  "Quiz failed": {
+    " Try again": {
+      "": "Quiz failed. Try again."
+    }
+  },
+  "Course data is incomplete": {
+    " Please try again": {
+      "": "Course data is incomplete. Please try again."
+    }
+  },
+  "settings": {
+    "validationError": "Validation error",
+    "firstNameMin": "First name must be at least 3 characters.",
+    "lastNameMin": "Last name must be at least 3 characters.",
+    "invalidEmail": "Please enter a valid email.",
+    "saved": "Saved!",
+    "profileSaved": "Profile updated successfully.",
+    "error": "Error",
+    "saveFailed": "Failed to save changes.",
+    "currentPasswordRequired": "Current password is required.",
+    "passwordMin": "New password must be at least 8 characters.",
+    "passwordMismatch": "New passwords do not match.",
+    "passwordChanged": "Password changed successfully.",
+    "passwordChangeFailed": "Failed to change password.",
+    "typeDeleteToConfirm": "Please type ",
+    "deleteAccountTitle": "Request account deletion?",
+    "deleteAccountWarning": "A deletion request will be sent to the administrator. Your account will remain active until an admin reviews and approves the request.",
+    "yesRequestDelete": "Yes, request deletion",
+    "deleteRequestSent": "Request submitted",
+    "deleteRequestSentText": "Your account deletion request has been submitted.<br><br>An administrator will review it and contact you if needed. Your account remains active in the meantime.",
+    "requestAlreadyPending": "Request already pending",
+    "deletePendingText": "You already have a pending deletion request. Please wait for admin review.",
+    "deleteFailed": "Failed to submit deletion request.",
+    "pwdWeak": "Weak",
+    "pwdFair": "Fair",
+    "pwdGood": "Good",
+    "pwdStrong": "Strong",
+    "title": "Settings",
+    "subtitle": "Manage your account preferences and security.",
+    "profileSection": "Profile Information",
+    "profileSubtitle": "Update your personal details",
+    "saving": "Saving...",
+    "securitySection": "Security",
+    "securitySubtitle": "Change your password",
+    "currentPassword": "Current Password",
+    "hide": "Hide",
+    "show": "Show",
+    "newPassword": "New Password",
+    "strength": "Strength",
+    "confirmPassword": "Confirm New Password",
+    "passwordHint": "Min 8 characters recommended.",
+    "changePassword": "Change Password",
+    "dangerZone": "Danger Zone",
+    "dangerSubtitle": "Irreversible account actions",
+    "deleteAccountDesc": "Submitting this request will notify an administrator. Your account stays active until the admin reviews and approves the request. Once approved, all your data - enrollments, certificates and progress - will be permanently removed.",
+    "deleteManualNote": "This process is manual. An administrator will review your request and may contact you before proceeding.",
+    "typeDeleteLabel": "Type ",
+    "submitting": "Submitting...",
+    "deleteAccountBtn": "Request Account Deletion"
+  },
+  "orders": {
+    "ccpTitle": "Your CCP number",
+    "send": "Send",
+    "ccpRequired": "We need the CCP number the payment came from",
+    "sent": "Receipt sent",
+    "cancelTitle": "Cancel this order?",
+    "cancelYes": "Cancel it",
+    "all": "All",
+    "pending": "Being checked",
+    "approved": "Yours",
+    "rejected": "Needs a new receipt",
+    "title": "My orders",
+    "subtitle": "Everything you have asked for, and where each one has got to.",
+    "empty": "You have not ordered anything yet.",
+    "browse": "Have a look around",
+    "attempt": "attempt",
+    "itemGone": "This item",
+    "free": "Free",
+    "open": "Open it",
+    "sendAnother": "Send a new receipt",
+    "sendReceipt": "Send your receipt",
+    "waiting": "We have your receipt. You will hear from us either way.",
+    "cancel": "Cancel",
+    "refunded": "Refunded",
+    "keptNote": "Nothing here is ever deleted. A rejected order keeps its receipt and its reason, and sending a new one starts a new attempt rather than replacing it."
+  },
+  "cvListPage": {
+    "back": "Back to Services",
+    "title": "CV Services",
+    "subtitle": "Choose the service that fits what you need, and our team will write it for you.",
+    "search": "Search services",
+    "loading": "Loading CV services...",
+    "empty": "No CV services are available yet.",
+    "free": "Free",
+    "delivery": "{{days}} days",
+    "view": "View details"
+  },
+  "enrolledProgram": {
+    "accessDenied": "Access Denied",
+    "noEnrollment": "You are not enrolled in this program. Only enrolled users can access this page.",
+    "description": "About This Program",
+    "paymentProof": "Payment Proof",
+    "paymentAccepted": "Payment accepted and verified",
+    "paymentReceipt": "Payment Receipt",
+    "viewFullImage": "View Full Image",
+    "details": "Program Details",
+    "startDate": "Program Start Date",
+    "endDate": "Program End Date",
+    "price": "Program Price",
+    "enrollmentDate": "Enrollment Date",
+    "paymentMethod": "Payment Method",
+    "communication": "Communication & Notes",
+    "noNotes": "No messages yet. Contact support if you have questions.",
+    "enrollmentStatus": "Enrollment Status",
+    "status": "Status",
+    "quickActions": "Quick Actions",
+    "myApplications": "My Applications",
+    "openMessages": "Open Messages",
+    "viewProgram": "View Program",
+    "contactInfo": "Contact Information",
+    "noContactInfo": "For inquiries, use our messaging system.",
+    "followUs": "Follow Us"
+  },
+  "Program details and enrollment on healthpathglobal": {
+    "": "Program details and enrollment on healthpathglobal."
+  },
+  "Applying": {
+    "": {
+      "": {
+        "": "Applying..."
+      }
+    }
+  },
+  "Search programs": {
+    "": {
+      "": {
+        "": "Search programs..."
+      }
+    }
+  },
+  "Updating": {
+    "": {
+      "": {
+        "": "Updating..."
+      }
+    }
+  },
+  "Updating results": {
+    "": {
+      "": {
+        "": "Updating results..."
+      }
+    }
   }
 }

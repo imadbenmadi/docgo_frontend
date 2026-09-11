@@ -13,7 +13,9 @@
     "lint": "eslint .",
     "check": "npm run build",
     "check:all": "npm run lint && npm run build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "i18n:audit": "node scripts/i18n-audit.cjs",
+    "i18n:fill-en": "node scripts/i18n-audit.cjs --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
