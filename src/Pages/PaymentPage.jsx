@@ -12,10 +12,12 @@ import CCPPayment from "../components/Payment/CCPPayment";
 import PaymentMethodSelector from "../components/Payment/PaymentMethodSelector";
 import MainLoading from "../MainLoading";
 import apiClient from "../utils/apiClient";
+import { formatEuro, formatPrice } from "../utils/money";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
+import AskQuestion from "../components/contact/AskQuestion";
 const PaymentPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const params = useParams();
   const courseId = params.courseId;
   const programId = params.programId;
@@ -546,6 +548,13 @@ const PaymentPage = () => {
   } else if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
+        {/* Something went wrong paying - this is exactly when someone needs
+            to be able to ask, rather than give up and leave. */}
+        <AskQuestion
+          context="payment"
+          subjectType="payment"
+          subjectId={params?.id || null}
+        />
         <div className="max-w-lg mx-auto">
           <div className="bg-white rounded-xl shadow-lg p-8 text-center border border-red-100">
             {/* Error Icon */}
@@ -616,6 +625,11 @@ const PaymentPage = () => {
   } else {
     return (
       <div className="min-h-screen bg-gray-50">
+        <AskQuestion
+          context="payment"
+          subjectType="payment"
+          subjectId={itemData?.id || params?.id || null}
+        />
         {/* Header */}
         <div className="bg-white shadow-sm">
           <div className="max-w-4xl mx-auto px-4 py-6">
@@ -853,7 +867,7 @@ const PaymentPage = () => {
                         )}
                       </span>
                       <span className="font-semibold text-gray-900 text-lg">
-                        {price} {currency}
+                        {formatPrice(price, currency, i18n.language)}
                       </span>
                     </div>
 
@@ -862,8 +876,18 @@ const PaymentPage = () => {
                         <span className="font-bold text-gray-900 text-lg">
                           {t("paymentPage.total", "Total")}
                         </span>
-                        <span className="font-bold text-2xl text-blue-600">
-                          {price} {currency}
+                        <span className="flex flex-col items-end">
+                          <span className="font-bold text-2xl text-blue-600">
+                            {formatPrice(price, currency, i18n.language)}
+                          </span>
+                          {/* What that is worth in euros. The transfer is in
+                              dinars - this is only so a reader abroad knows
+                              what they are being asked for. */}
+                          {formatEuro(price, currency, i18n.language) && (
+                            <span className="text-xs font-normal text-gray-500">
+                              {formatEuro(price, currency, i18n.language)}
+                            </span>
+                          )}
                         </span>
                       </div>
                     </div>

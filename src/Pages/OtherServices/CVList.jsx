@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import { Clock, FileText, Search } from "lucide-react";
 import apiClient from "../../utils/apiClient";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatEuro, formatPrice } from "../../utils/money";
 
 export default function CVList() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -109,8 +110,12 @@ export default function CVList() {
               const amount = service?.price ?? service?.estimatedPrice;
               const isPaid = service?.isPaid !== false && Number(amount) > 0;
               const priceLabel = isPaid
-                ? `${service.currency || "DZD"} ${amount}`
+                ? formatPrice(amount, service.currency || "DZD", i18n.language)
                 : t("cvListPage.free", "Free") || "Free";
+              // The euro is an indication only - CCP charges dinars.
+              const euroLabel = isPaid
+                ? formatEuro(amount, service.currency || "DZD", i18n.language)
+                : null;
 
               return (
                 <article
@@ -131,6 +136,11 @@ export default function CVList() {
                     <div className="absolute top-3 right-3">
                       <span className="bg-black/30 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full">
                         {priceLabel}
+                        {euroLabel && (
+                          <span className="ms-2 text-xs font-normal text-gray-500">
+                            {euroLabel}
+                          </span>
+                        )}
                       </span>
                     </div>
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />

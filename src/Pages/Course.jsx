@@ -22,6 +22,7 @@ import { useAppContext } from "../AppContext"; // Add auth context
 import { useCourse } from "../hooks/useCourse";
 import MainLoading from "../MainLoading";
 import apiClient from "../utils/apiClient";
+import { formatEuro } from "../utils/money";
 import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { buildApiUrl, getApiBaseUrl } from "../utils/apiBaseUrl";
@@ -642,6 +643,12 @@ export const Course = () => {
                         <p className="text-lg font-bold text-green-800">
                           {formatCurrency(coursePrice, currency)}
                         </p>
+                        {/* Roughly, in euros. Payment is in dinars. */}
+                        {formatEuro(coursePrice, currency, i18n.language) && (
+                          <p className="text-xs font-normal text-green-700/70">
+                            {formatEuro(coursePrice, currency, i18n.language)}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

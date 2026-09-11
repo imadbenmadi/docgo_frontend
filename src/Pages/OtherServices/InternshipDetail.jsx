@@ -6,12 +6,14 @@ import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { useTranslation } from "react-i18next";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatEuro, formatPrice } from "../../utils/money";
+import AskQuestion from "../../components/contact/AskQuestion";
 
 export default function InternshipDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isAuth } = useAppContext();
   const [internship, setInternship] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -291,9 +293,30 @@ export default function InternshipDetail() {
                 {t("internshipDetailPage.payment", "Payment") || "Payment"}
               </p>
               <p className="font-semibold">
-                {internship.isPaid
-                  ? `${internship.currency || "USD"} ${internship.price}`
-                  : t("internshipsPage.unpaid", "Unpaid") || "Unpaid"}
+                {internship.isPaid && Number(internship.price) > 0 ? (
+                  <>
+                    {formatPrice(
+                      internship.price,
+                      internship.currency || "DZD",
+                      i18n.language,
+                    )}
+                    {formatEuro(
+                      internship.price,
+                      internship.currency || "DZD",
+                      i18n.language,
+                    ) && (
+                      <span className="ms-2 text-xs font-normal text-gray-500">
+                        {formatEuro(
+                          internship.price,
+                          internship.currency || "DZD",
+                          i18n.language,
+                        )}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  t("common.free", "Gratuit")
+                )}
               </p>
             </div>
           </div>
@@ -547,6 +570,7 @@ export default function InternshipDetail() {
           </div>
         )}
       </div>
+      <AskQuestion context="internship" subjectType="internship" subjectId={id} />
     </div>
   );
 }

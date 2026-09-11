@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatEuro, formatPrice } from "../../utils/money";
+import AskQuestion from "../../components/contact/AskQuestion";
 
 export default function CVService() {
   const navigate = useNavigate();
   const location = useLocation();
   const { id: serviceId } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isAuth } = useAppContext();
   const [cvService, setCVService] = useState(null);
   const [currentApp, setCurrentApp] = useState(null);
@@ -230,10 +232,24 @@ export default function CVService() {
                     </span>
                   ) : (
                     <span className="text-2xl font-bold text-gray-900">
-                      {Number(cvService.price).toLocaleString("fr-FR")}{" "}
-                      <span className="text-base font-medium text-gray-500">
-                        {cvService.currency || "DZD"}
-                      </span>
+                      {formatPrice(
+                        cvService.price,
+                        cvService.currency || "DZD",
+                        i18n.language,
+                      )}
+                      {formatEuro(
+                        cvService.price,
+                        cvService.currency || "DZD",
+                        i18n.language,
+                      ) && (
+                        <span className="ms-2 text-sm font-normal text-gray-500">
+                          {formatEuro(
+                            cvService.price,
+                            cvService.currency || "DZD",
+                            i18n.language,
+                          )}
+                        </span>
+                      )}
                     </span>
                   )}
                   {Number(cvService.deliveryDays) > 0 && (
@@ -523,6 +539,8 @@ export default function CVService() {
           )}
         </div>
       </div>
+      {/* A question about this service, with its id already attached. */}
+      <AskQuestion context="cv" subjectType="cv" subjectId={serviceId} />
     </div>
   );
 }

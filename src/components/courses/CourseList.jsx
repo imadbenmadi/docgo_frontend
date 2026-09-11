@@ -14,6 +14,7 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useFavorite } from "../../hooks/useFavorite";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatEuro } from "../../utils/money";
 
 // Individual list-row item - mirrors CourseCard logic in a horizontal layout
 function CourseListItem({ course }) {
@@ -46,6 +47,13 @@ function CourseListItem({ course }) {
     discountPrice !== undefined && discountPrice !== null
       ? discountPrice === 0
       : price === 0 || !price;
+
+  const euroLine = formatEuro(
+    discountPrice !== undefined && discountPrice !== null
+      ? discountPrice
+      : price,
+    currency,
+  );
 
   const formatPrice = (p) => {
     if (!p || p === 0) return t("free", "Free") || "Free";
@@ -232,6 +240,12 @@ function CourseListItem({ course }) {
               ) : (
                 <span className="text-xl font-bold text-blue-600">
                   {formatPrice(price)}
+                </span>
+              )}
+              {/* The euro indication, for a reader outside Algeria. */}
+              {euroLine && (
+                <span className="text-xs font-normal text-gray-500">
+                  {euroLine}
                 </span>
               )}
               {enrollmentLabel && (

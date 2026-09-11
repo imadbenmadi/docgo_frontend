@@ -97,7 +97,11 @@
     "programHelp": "هل لديك أسئلة حول هذا البرنامج؟",
     "programSubtitle": "احصل على إجابات حول شروط البرنامج وإجراءات التقديم والمنح.",
     "selectCourse": "اختر دورة",
-    "selectProgram": "اختر برنامجًا"
+    "selectProgram": "اختر برنامجًا",
+    "askQuestion": "اطرح سؤالاً",
+    "screenshot": "لقطة شاشة (اختياري)",
+    "removeScreenshot": "إزالة",
+    "signInForScreenshot": "سجّل الدخول لإرفاق لقطة شاشة."
   },
   "faq_data": {
     "title": "الأسئلة المتكررة",

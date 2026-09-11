@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ContactForm from "../components/contact/ContactForm";
+import { formatEuro, formatPrice } from "../utils/money";
 import apiClient from "../services/apiClient";
 
 const PaymentSuccessPage = () => {
@@ -28,7 +29,7 @@ const PaymentSuccessPage = () => {
   });
   const [showContactModal, setShowContactModal] = useState(false);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const paymentData = location.state?.paymentData;
   const itemData =
@@ -172,7 +173,12 @@ const PaymentSuccessPage = () => {
                   {itemData.Title || itemData.title}
                 </h4>
                 <p className="text-sm text-gray-600">
-                  {paymentData.amount} DZD
+                  {formatPrice(paymentData.amount, "DZD", i18n.language)}
+                  {formatEuro(paymentData.amount, "DZD", i18n.language) && (
+                    <span className="ms-2 text-xs text-gray-500">
+                      {formatEuro(paymentData.amount, "DZD", i18n.language)}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -194,7 +200,9 @@ const PaymentSuccessPage = () => {
               </div>
               <div className="flex justify-between">
                 <span>{t("paymentSuccess.amount", "Amount")}:</span>
-                <span>{paymentData.amount} DZD</span>
+                <span>
+                  {formatPrice(paymentData.amount, "DZD", i18n.language)}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>{t("paymentSuccess.status", "Status")}:</span>

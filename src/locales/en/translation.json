@@ -97,7 +97,11 @@
     "loading": "Loading...",
     "chooseCourse": "Choose a course",
     "selectProgram": "Select program",
-    "chooseProgram": "Choose a program"
+    "chooseProgram": "Choose a program",
+    "askQuestion": "Ask a question",
+    "screenshot": "Screenshot (optional)",
+    "removeScreenshot": "remove",
+    "signInForScreenshot": "Sign in to attach a screenshot."
   },
   "faq_data": {
     "title": "Frequently Asked Questions",

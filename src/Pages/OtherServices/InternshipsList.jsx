@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import { BriefcaseBusiness, Clock, Filter, MapPin, Search } from "lucide-react";
 import apiClient from "../../utils/apiClient";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatEuro, formatPrice } from "../../utils/money";
 
 export default function InternshipsList() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [internships, setInternships] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
@@ -277,9 +278,23 @@ export default function InternshipsList() {
                     : "";
 
                   const showPrice = internship?.isPaid && internship?.price;
+                  // DZD, not USD: nothing on this platform is priced in
+                  // dollars, and the old default put "USD" beside a dinar
+                  // figure on every paid internship.
                   const priceLabel = showPrice
-                    ? `${internship.currency || "USD"} ${internship.price}`
-                    : t("internshipsPage.unpaid", "Unpaid") || "Unpaid";
+                    ? formatPrice(
+                        internship.price,
+                        internship.currency || "DZD",
+                        i18n.language,
+                      )
+                    : t("common.free", "Gratuit");
+                  const euroLabel = showPrice
+                    ? formatEuro(
+                        internship.price,
+                        internship.currency || "DZD",
+                        i18n.language,
+                      )
+                    : null;
 
                   return (
                     <article
@@ -314,6 +329,11 @@ export default function InternshipsList() {
                           </div>
                           <span className="bg-black/30 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full">
                             {priceLabel}
+                            {euroLabel && (
+                              <span className="ms-2 text-xs font-normal text-gray-500">
+                                {euroLabel}
+                              </span>
+                            )}
                           </span>
                         </div>
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />

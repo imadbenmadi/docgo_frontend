@@ -29,6 +29,10 @@ const ContactForm = ({
   const [selectedCourseId, setSelectedCourseId] = useState(courseId);
   const [selectedProgramId, setSelectedProgramId] = useState(programId);
   const [profileLoading, setProfileLoading] = useState(false);
+  // Optional, and only offered to a signed-in user - the guest endpoint takes
+  // JSON only. "It looks wrong on my screen" is most of what people write in
+  // about, and a picture saves three messages working out which screen.
+  const [screenshot, setScreenshot] = useState(null);
   const [availableCourses, setAvailableCourses] = useState([]);
   const [availablePrograms, setAvailablePrograms] = useState([]);
 
@@ -150,9 +154,24 @@ const ContactForm = ({
         payload.subjectId = String(subjectId);
       }
 
-      const response = await apiClient.post(post_link, payload);
+      // Multipart only when a file was picked, so the plain case stays a
+      // plain JSON post and nothing about the existing behaviour changes.
+      let response;
+      if (screenshot && user) {
+        const form = new FormData();
+        for (const [key, value] of Object.entries(payload)) {
+          if (value !== undefined && value !== null) form.append(key, value);
+        }
+        form.append("screenshot", screenshot);
+        response = await apiClient.post(post_link, form, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      } else {
+        response = await apiClient.post(post_link, payload);
+      }
 
       setSuccess(true);
+      setScreenshot(null);
       setFormData({
         name: user ? `${user.firstName} ${user.lastName}` : "",
         email: user?.email || "",
@@ -485,6 +504,37 @@ const ContactForm = ({
             {t("contact.characters", "characters")}
           </p>
         </div>
+
+        {/*
+          A screenshot, for a signed-in user. The guest endpoint takes JSON
+          only, so it is not offered there - a guest with a picture to send is
+          told to sign in by the rest of the form anyway.
+        */}
+        {user && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("contact.screenshot", "Capture d'écran (facultatif)")}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setScreenshot(e.target.files?.[0] || null)}
+              className="block w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-700 hover:file:bg-blue-100"
+            />
+            {screenshot && (
+              <p className="mt-1 text-xs text-gray-500">
+                {screenshot.name}{" "}
+                <button
+                  type="button"
+                  onClick={() => setScreenshot(null)}
+                  className="underline hover:text-gray-700"
+                >
+                  {t("contact.removeScreenshot", "retirer")}
+                </button>
+              </p>
+            )}
+          </div>
+        )}
 
         <button
           type="submit"

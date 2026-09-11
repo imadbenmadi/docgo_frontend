@@ -97,7 +97,11 @@
     "programHelp": "Des questions sur ce programme ?",
     "programSubtitle": "Obtenez des réponses sur les conditions, la procédure de candidature ou les bourses.",
     "selectCourse": "Sélectionner un cours",
-    "selectProgram": "Sélectionner un programme"
+    "selectProgram": "Sélectionner un programme",
+    "askQuestion": "Poser une question",
+    "screenshot": "Capture d'écran (facultatif)",
+    "removeScreenshot": "retirer",
+    "signInForScreenshot": "Connectez-vous pour joindre une capture d'écran."
   },
   "faq_data": {
     "title": "Questions Fréquemment Posées",

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { formatEuro, formatPrice } from "../../utils/money";
 import {
   FaCheckCircle,
   FaClock,
@@ -28,7 +29,7 @@ const CCPPayment = ({
   loading,
   setLoading,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAppContext();
   const {
     errors: panelErrors,
@@ -618,8 +619,15 @@ const CCPPayment = ({
                 </p>
               )}
               <span className="font-bold text-2xl text-green-600">
-                {displayAmount} {currency}
+                {formatPrice(displayAmount, currency, i18n.language)}
               </span>
+              {/* The euro equivalent, so the figure means something to a
+                  reader outside Algeria. The transfer itself is in dinars. */}
+              {formatEuro(displayAmount, currency, i18n.language) && (
+                <p className="text-xs font-normal text-gray-500">
+                  {formatEuro(displayAmount, currency, i18n.language)}
+                </p>
+              )}
               {couponResult && (
                 <p className="text-xs text-green-700 font-medium">
                   Code : {couponResult.code}

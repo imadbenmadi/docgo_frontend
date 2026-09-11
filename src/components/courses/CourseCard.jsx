@@ -7,6 +7,7 @@ import { Award, Star, BookOpen, PlayCircle } from "lucide-react";
 import PropTypes from "prop-types";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatEuro } from "../../utils/money";
 export function CourseCard({
   course,
   id,
@@ -57,6 +58,15 @@ export function CourseCard({
     discountPrice !== undefined && discountPrice !== null
       ? discountPrice === 0
       : price === 0 || !price;
+
+  // The euro shown beside the dinar figure, or nothing when the course is
+  // free or the rate has been switched off.
+  const euroLine = formatEuro(
+    discountPrice !== undefined && discountPrice !== null
+      ? discountPrice
+      : price,
+    currency,
+  );
 
   const formatPrice = (p) => {
     if (!p || p === 0) return t("free", "Free") || "Free";
@@ -257,6 +267,13 @@ export function CourseCard({
           ) : (
             <span className="text-xl font-bold text-blue-600">
               {formatPrice(price)}
+            </span>
+          )}
+          {/* What that is worth in euros, for anyone reading from outside
+              Algeria. Not a price - nothing is ever charged in euros. */}
+          {euroLine && (
+            <span className="text-xs font-normal text-gray-500">
+              {euroLine}
             </span>
           )}
           {enrollmentLabel && (
