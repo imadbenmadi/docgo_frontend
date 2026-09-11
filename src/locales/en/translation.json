@@ -527,7 +527,8 @@
     "browsePrograms": "Browse Programs",
     "backToDashboard": "Back to Dashboard",
     "refresh": "Refresh",
-    "message": "Message"
+    "message": "Message",
+    "free": "Free"
   },
   "Courses": "Courses",
   "Programs": "Programs",
@@ -1623,7 +1624,9 @@
     "error": "Error",
     "submitFailed": "Failed to submit application",
     "payNow": "Pay now",
-    "paymentPending": "This service is paid. Your application is held until the payment is received and approved."
+    "paymentPending": "This service is paid. Your application is held until the payment is received and approved.",
+    "deliveryIn": "Delivered in",
+    "days": "days"
   },
   "internshipDetailPage": {
     "loading": "Loading internship details...",

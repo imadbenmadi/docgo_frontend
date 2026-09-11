@@ -213,6 +213,38 @@ export default function CVService() {
                   ) ||
                   "Professional CV Creation"}
               </h1>
+
+              {/*
+                What it costs, before you order it.
+
+                This page showed the price nowhere - only the amount already
+                paid, on an application that existed. So somebody deciding
+                whether to order a paid CV service had to order it to find out
+                what it cost. Every other product leads with its price.
+              */}
+              {cvService && (
+                <p className="mt-3 flex flex-wrap items-center gap-3">
+                  {cvService.isPaid === false || !Number(cvService.price) ? (
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700 ring-1 ring-emerald-200">
+                      {t("common.free", "Free")}
+                    </span>
+                  ) : (
+                    <span className="text-2xl font-bold text-gray-900">
+                      {Number(cvService.price).toLocaleString("fr-FR")}{" "}
+                      <span className="text-base font-medium text-gray-500">
+                        {cvService.currency || "DZD"}
+                      </span>
+                    </span>
+                  )}
+                  {Number(cvService.deliveryDays) > 0 && (
+                    <span className="text-sm text-gray-500">
+                      {t("cvServicePage.deliveryIn", "Delivered in")}{" "}
+                      {cvService.deliveryDays}{" "}
+                      {t("cvServicePage.days", "days")}
+                    </span>
+                  )}
+                </p>
+              )}
               <p className="mt-2 text-gray-600">
                 {t(
                   "cvServicePage.subtitle",
