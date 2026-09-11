@@ -507,6 +507,58 @@ const ProgramContent = ({ program }) => {
       )}
 
       {/* Program Structure */}
+      {/*
+        The three links the admin form has always collected and no page ever
+        showed: where to apply, the university's own site, and the programme's
+        official page. Typed in by an admin for every programme and thrown
+        away at the point it mattered most - somebody deciding whether to
+        apply.
+
+        Rendered only where there is something to render, so a programme
+        without them looks no different from before.
+      */}
+      {[program.applicationLink, program.universityWebsite, program.programUrl]
+        .some(Boolean) && (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">
+            {t("Useful links", "Useful links") || "Useful links"}
+          </h3>
+          <ul className="space-y-3">
+            {[
+              [
+                program.applicationLink,
+                t("Apply on the official site", "Apply on the official site"),
+                Target,
+              ],
+              [
+                program.universityWebsite,
+                t("University website", "University website"),
+                Globe,
+              ],
+              [
+                program.programUrl,
+                t("Programme page", "Programme page"),
+                FileText,
+              ],
+            ]
+              .filter(([href]) => Boolean(href))
+              .map(([href, label, Icon]) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline break-all"
+                  >
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span>{label}</span>
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
+
       {hasContent(program.structure) && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-4">
