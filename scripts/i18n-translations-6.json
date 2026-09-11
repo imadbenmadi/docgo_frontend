@@ -1,0 +1,11 @@
+{
+  "orders.status.pending":   { "en": "Being checked" },
+  "orders.status.approved":  { "en": "Approved" },
+  "orders.status.rejected":  { "en": "Rejected" },
+  "orders.status.cancelled": { "en": "Cancelled" },
+  "orders.status.refunded":  { "en": "Refunded" },
+  "Content will appear here once the instructor publishes lessons.": { "en": "Content will appear here once the instructor publishes lessons." },
+  "The course you're looking for doesn't exist or has been removed.": { "en": "The course you're looking for doesn't exist or has been removed." },
+  "There are currently no programs available. Please check back later.": { "en": "There are currently no programs available. Please check back later." },
+  "There are no PDF resources available for this course yet.": { "en": "There are no PDF resources available for this course yet." }
+}

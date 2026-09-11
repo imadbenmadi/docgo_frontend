@@ -82,11 +82,23 @@ const collect = () => {
 
     for (const file of walk(SRC)) {
         const source = fs.readFileSync(file, "utf8");
-        const pattern =
-            /\bt\(\s*["'`]([^"'`]+)["'`]\s*(?:,\s*["'`]([^"'`]*)["'`])?/g;
+        // Quoted strings, properly. A fallback like "You haven't applied yet"
+        // contains an apostrophe, and a naive [^"'`]+ stops dead at it - which
+        // put the value "You haven" in the report, and would have put it in a
+        // dictionary.
+        const q = String.raw`"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|` + "`(?:[^`\\\\]|\\\\.)*`";
+        const pattern = new RegExp(
+            String.raw`\bt\(\s*(` + q + String.raw`)\s*(?:,\s*(` + q + `))?`,
+            "g",
+        );
+        const unquote = (raw) =>
+            raw === undefined
+                ? undefined
+                : raw.slice(1, -1).replace(/\\(['"`\\])/g, "$1");
 
         for (const match of source.matchAll(pattern)) {
-            const [, key, fallback] = match;
+            const key = unquote(match[1]);
+            const fallback = unquote(match[2]);
             if (!key.includes(".")) continue;
             // `t(`paymentPage.${itemType}`)` is resolved at runtime; a static
             // scan cannot know which keys it produces, and reporting the
@@ -158,11 +170,15 @@ const main = () => {
 
     // English: the inline fallback IS the English text, so this is a real
     // completion rather than a placeholder.
+    // Every key with a fallback, not only the missing ones. An earlier run of
+    // this script wrote truncated values into en - the extractor stopped at
+    // the apostrophe in "You haven't" - and those keys now exist, so filling
+    // only what is missing would leave them wrong forever.
     let filled = 0;
-    for (const key of missing.en) {
-        const fallback = used.get(key).fallback;
-        if (!fallback) continue;
-        set(dicts.en, key, fallback);
+    for (const [key, info] of used) {
+        if (!info.fallback) continue;
+        if (get(dicts.en, key) === info.fallback) continue;
+        set(dicts.en, key, info.fallback);
         filled++;
     }
     fs.writeFileSync(dictPath("en"), `${JSON.stringify(dicts.en, null, 2)}\n`);

@@ -17,13 +17,16 @@ const NotificationItem = ({
     const diffInHours = Math.floor((now - notificationTime) / (1000 * 60 * 60));
 
     if (diffInHours < 1) return t("timeAgo.justNow", "Just now");
+    // i18next interpolation, not a template literal. The fallback used to be
+    // `${diffInHours}h ago`, which meant the fallback was already formatted and
+    // no dictionary could carry a translation for it - adding one would have
+    // replaced the number with the literal text. "{{hours}}h ago" lets French
+    // and Arabic say it their own way.
     if (diffInHours < 24)
-      return t("timeAgo.hoursAgo", `${diffInHours}h ago`, {
-        hours: diffInHours,
-      });
+      return t("timeAgo.hoursAgo", "{{hours}}h ago", { hours: diffInHours });
     if (diffInHours < 48) return t("timeAgo.yesterday", "Yesterday");
     const days = Math.floor(diffInHours / 24);
-    return t("timeAgo.daysAgo", `${days}d ago`, { days });
+    return t("timeAgo.daysAgo", "{{days}}d ago", { days });
   };
 
   const colorClasses = {

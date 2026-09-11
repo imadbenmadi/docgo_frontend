@@ -47,9 +47,12 @@
     "signingIn": "جاري تسجيل الدخول...",
     "loginError": "حدث خطأ أثناء تسجيل الدخول",
     "emailPlaceholder": "البريد@مثال.com",
-    "passwordPlaceholder": "••••••••"
+    "passwordPlaceholder": "••••••••",
+    "back": "رجوع",
+    "completeProfile": "أكمل ملفك الشخصي",
+    "completeProfileSubtitle": "ساعدنا في تخصيص تجربتك التعليمية",
+    "createAccount": "إنشاء حساب"
   },
-
   "contact": {
     "supportTitle": "الدعم",
     "supportDesc": "متاح 7 أيام في الأسبوع للرد على استفساراتك",
@@ -76,7 +79,25 @@
     "errorSending": "فشل في إرسال الرسالة. يرجى المحاولة مرة أخرى.",
     "richTextEnabled": "تنسيق نص منسق متاح",
     "phone": "الهاتف",
-    "address": "العنوان"
+    "address": "العنوان",
+    "chooseCourse": "اختر دورة",
+    "chooseProgram": "اختر برنامجًا",
+    "concernCourse": "دورة",
+    "concernGeneral": "دعم عام",
+    "concernProgram": "برنامج",
+    "concernType": "موضوع الطلب",
+    "course": "دورة",
+    "courseHelp": "هل تحتاج مساعدة بخصوص هذه الدورة؟",
+    "courseSubtitle": "اسأل عن محتوى الدورة أو متطلباتها أو أي شيء آخر.",
+    "dashboardSubtitle": "فريق الدعم هنا لمساعدتك في أي سؤال أو مشكلة.",
+    "generalSupport": "تواصل مع الدعم",
+    "landingSubtitle": "يسعدنا تواصلك معنا. أرسل رسالتك وسنرد عليك في أقرب وقت.",
+    "loading": "جارٍ التحميل...",
+    "program": "برنامج",
+    "programHelp": "هل لديك أسئلة حول هذا البرنامج؟",
+    "programSubtitle": "احصل على إجابات حول شروط البرنامج وإجراءات التقديم والمنح.",
+    "selectCourse": "اختر دورة",
+    "selectProgram": "اختر برنامجًا"
   },
   "faq_data": {
     "title": "الأسئلة المتكررة",
@@ -95,11 +116,69 @@
       "support": "هل تحتاج مساعدة؟",
       "supportText": "تواصل مع فريق الدعم لدينا",
       "sendMessage": "إرسال رسالة",
-      "settings": "الإعدادات"
+      "settings": "الإعدادات",
+      "applications": "الطلبات",
+      "certificates": "شهاداتي",
+      "landingPage": "الصفحة الرئيسية",
+      "myLearning": "تعلّمي",
+      "myPrograms": "دراستي في الخارج",
+      "payments": "كل المدفوعات",
+      "serviceApplications": "طلبات الخدمات"
     },
     "pendingApplications": "طلبات قيد الانتظار",
     "enrolledCourses": "دوراتي المسجلة",
-    "enrolledPrograms": "برامجي المسجلة"
+    "enrolledPrograms": "برامجي المسجلة",
+    "active": "نشط",
+    "allVideosWatched": "تمت مشاهدة جميع الفيديوهات",
+    "applicationProgress": "تقدّم الطلب",
+    "applicationRejected": "تم رفض هذا الطلب",
+    "applications": "طلبات",
+    "applyCourses": "التقديم على الدورات",
+    "applyPrograms": "التقديم على البرامج",
+    "browseCourses": "تصفّح الدورات",
+    "browsePrograms": "تصفّح البرامج",
+    "certificates": "شهادات",
+    "certified": "حاصل على شهادة",
+    "completed": "مكتمل",
+    "course": "دورة",
+    "courses": "دورات",
+    "deadline": "آخر أجل",
+    "deleted": "محذوف",
+    "deletedCourseSupport": "تم حذف هذه الدورة. تواصل مع الدعم بخصوص أي استفسار حول تسجيلك.",
+    "deletedProgramSupport": "تم حذف هذا البرنامج. تواصل مع الدعم بخصوص أي استفسار حول تسجيلك.",
+    "earnedCertificates": "الشهادات المحصّلة",
+    "endDate": "تاريخ الانتهاء",
+    "enrolledOn": "مسجّل منذ",
+    "loadError": "تعذّر تحميل بيانات لوحة التحكم",
+    "myLearning": "تعلّمي",
+    "myLearningSubtitle": "دوراتك وتقدّمك فيها",
+    "myPrograms": "دراستي في الخارج",
+    "myProgramsSubtitle": "برامج الدراسة في الخارج التي قدّمت عليها",
+    "noCertificates": "لا توجد شهادات بعد",
+    "noCertificatesDescription": "أكمل الدورات واجتز الاختبارات للحصول على شهادات.",
+    "noEnrolledCourses": "لا توجد دورات مسجّلة",
+    "noEnrolledCoursesDescription": "ابدأ التعلّم بالتسجيل في إحدى الدورات.",
+    "noEnrolledPrograms": "لا توجد برامج مسجّلة",
+    "noEnrolledProgramsDescription": "قدّم على برامج المنح لتطوير مسارك المهني.",
+    "noPendingApplications": "لا توجد طلبات معلّقة",
+    "noPendingApplicationsDescription": "قدّم على الدورات والبرامج لتبدأ رحلتك.",
+    "opened": "مفتوح",
+    "pending": "قيد الانتظار",
+    "pendingStart": "بانتظار البدء",
+    "price": "السعر",
+    "program": "برنامج",
+    "programs": "برامج",
+    "progress": "التقدّم",
+    "quizPassed": "تم اجتياز الاختبار",
+    "rejected": "مرفوض",
+    "startDate": "تاريخ البداية",
+    "startLearning": "ابدأ التعلّم",
+    "submittedOn": "أُرسل في",
+    "viewAllApplications": "عرض كل الطلبات",
+    "viewAllCertificates": "عرض كل الشهادات",
+    "viewAllCourses": "عرض كل دوراتي",
+    "viewAllPrograms": "عرض كل برامجي",
+    "viewCertificate": "عرض الشهادة"
   },
   "Home_nav": "الرئيسية",
   "UserDashboard_nav": "فضائي",
@@ -144,7 +223,20 @@
     "study_domain": "تخصص الدراسة",
     "phone": "الهاتف",
     "completed_courses": "دورات مكتملة",
-    "in_progress_courses": "دورات قيد التقدم"
+    "in_progress_courses": "دورات قيد التقدم",
+    "academicAverage": "المعدّل الدراسي",
+    "academicStatus": "الوضع الأكاديمي",
+    "avatarAlt": "صورة الملف الشخصي",
+    "currentAcademicLevel": "المستوى الدراسي الحالي",
+    "currentJobTitle": "المنصب الحالي",
+    "notProvided": "غير محدّد",
+    "professionalStatus": "الوضع المهني",
+    "redoubledYear": "سنة معادة",
+    "specialty": "التخصص",
+    "studentProfileInformation": "معلومات الملف الطلابي",
+    "studyDomain": "مجال الدراسة",
+    "university": "الجامعة",
+    "yearsOfExperience": "سنوات الخبرة"
   },
   "course_data": {
     "no_prerequisites": "لا توجد متطلبات مسبقة",
@@ -198,7 +290,11 @@
     "ApplicationRejected": "الطلب مرفوض",
     "free": "مجاني",
     "content": "محتوى الدورة",
-    "whatYouLearn": "ما ستتعلمه"
+    "whatYouLearn": "ما ستتعلمه",
+    "course_reviews": "آراء حول الدورة",
+    "applicationPending": "الطلب قيد المراجعة",
+    "enrolled": "مسجّل",
+    "applicationRejected": "تم رفض الطلب"
   },
   "programs": {
     "title": "البرامج التعليمية",
@@ -387,7 +483,16 @@
     "noOptionsFound": "لم تُعثر على خيارات",
     "error": "خطأ",
     "filter": "تصفية",
-    "sort": "ترتيب"
+    "sort": "ترتيب",
+    "backToDashboard": "العودة إلى لوحة التحكم",
+    "browsePrograms": "تصفّح البرامج",
+    "close": "إغلاق",
+    "delete": "حذف",
+    "free": "مجاني",
+    "general": "عام",
+    "message": "رسالة",
+    "refresh": "تحديث",
+    "back": "رجوع"
   },
   "Programs": "  البرامج المتاحة",
   "Courses": "الدورات",
@@ -621,7 +726,26 @@
         "transactionId": "معرّف المعاملة:",
         "amount": "المبلغ:"
       }
-    }
+    },
+    "academicStatus": "الوضع الأكاديمي",
+    "cancelNotice": {
+      "text": "أُلغي من طرف الإدارة",
+      "title": "تم إلغاء الدفعة السابقة"
+    },
+    "deleteNotice": {
+      "text": "حُذف من طرف الإدارة",
+      "title": "تم حذف الدفعة السابقة"
+    },
+    "editProfileInfo": "لتعديل هذه المعلومات، حرّر ملفك الشخصي",
+    "notProvided": "غير محدّد",
+    "professionalStatus": "الوضع المهني",
+    "profileInformation": "معلومات الملف الشخصي",
+    "rejectionNotice": {
+      "noReason": "بدون سبب",
+      "reason": "السبب",
+      "title": "تم رفض الدفع"
+    },
+    "university": "الجامعة / المؤسسة"
   },
   "rejectionNotice": {
     "title": "تم رفض الدفع السابق",
@@ -666,7 +790,8 @@
     "sendSupportMessage": "إرسال رسالة دعم",
     "contactSupport": "التواصل مع الدعم",
     "paymentContextCourse": "سيتم وسم رسالتك كدعم دفع للدورة.",
-    "paymentContextProgram": "سيتم وسم رسالتك كدعم دفع للبرنامج."
+    "paymentContextProgram": "سيتم وسم رسالتك كدعم دفع للبرنامج.",
+    "exploreCourse": "استكشف الدورة"
   },
   "processing": "جاري المعالجة...",
   "completePayment": "إتمام الدفع",
@@ -684,7 +809,11 @@
   "Search courses...": "البحث عن الدورات...",
   "Highest Price": "أعلى سعر",
   "Lowest Price": "أقل سعر",
-  "course": "دورة",
+  "course": {
+    "freePreview": "معاينة مجانية",
+    "rating": "التقييم",
+    "faq_count": "{{count}} سؤالًا"
+  },
   "found": "تم العثور عليها",
   "for": "لـ",
   "Showing": "عرض",
@@ -697,7 +826,28 @@
   "profile": {
     "professional_member": "عضو محترف",
     "name": "الاسم",
-    "email": "البريد الإلكتروني"
+    "email": "البريد الإلكتروني",
+    "bio": "نبذة",
+    "bioPlaceholder": "عرّفنا بنفسك...",
+    "cancel": "إلغاء",
+    "certificates": "الشهادات",
+    "city": "المدينة",
+    "country": "البلد",
+    "coursesCompleted": "الدورات المكتملة",
+    "dateOfBirth": "تاريخ الميلاد",
+    "edit": "تعديل الملف الشخصي",
+    "firstName": "الاسم",
+    "lastName": "اللقب",
+    "loading": "جارٍ تحميل الملف الشخصي...",
+    "notProvided": "غير محدّد",
+    "personalInfo": "المعلومات الشخصية",
+    "phone": "رقم الهاتف",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "subtitle": "أدر معلوماتك الشخصية",
+    "title": "ملفي الشخصي",
+    "completed_courses": "دورات مكتملة",
+    "in_progress_courses": "دورات قيد التقدّم"
   },
   "courses_data": {
     "title": "دوراتك",
@@ -723,13 +873,53 @@
       "under_review": "قيد المراجعة",
       "rejected": "مرفوض",
       "unknown": "حالة غير معروفة"
-    }
+    },
+    "adminResponse": "رد الإدارة",
+    "applicationId": "رقم الطلب",
+    "appliedOn": "تاريخ التقديم",
+    "browseCourses": "تصفّح الدورات",
+    "browsePrograms": "تصفّح البرامج",
+    "courseSubtitle": "تابع طلبات التسجيل في الدورات وحالتها",
+    "courseTitle": "طلباتي للدورات",
+    "courses": "طلبات الدورات",
+    "enrolledOn": "تاريخ التسجيل",
+    "loading": "جارٍ تحميل الطلبات...",
+    "message": "رسالة الطلب",
+    "noCourseApplications": "لا توجد طلبات دورات",
+    "noCourseApplicationsText": "لم تقدّم طلبًا لأي دورة بعد.",
+    "noProgramApplications": "لا توجد طلبات برامج",
+    "noProgramApplicationsText": "لم تقدّم طلبًا لأي برنامج بعد.",
+    "paymentHistory": "سجل المدفوعات",
+    "programSubtitle": "تابع طلبات البرامج وحالتها",
+    "programTitle": "طلباتي للبرامج",
+    "programs": "طلبات البرامج",
+    "reviewedOn": "تاريخ المراجعة",
+    "startCourse": "ابدأ الدورة",
+    "subtitle": "تابع طلباتك للدورات والبرامج",
+    "view": "عرض التفاصيل",
+    "viewProgram": "عرض البرنامج"
   },
   "certificates": {
     "title": "شهاداتي",
     "issued_by": "صادر عن",
     "view_official": "عرض الشهادة الرسمية",
-    "view_all": "عرض جميع الشهادات"
+    "view_all": "عرض جميع الشهادات",
+    "browseCourses": "تصفّح الدورات",
+    "certificateOf": "شهادة إتمام",
+    "completed": "مكتملة",
+    "download": "عرض",
+    "downloading": "جارٍ الفتح...",
+    "grade": "التقدير",
+    "issued": "صدرت في",
+    "loading": "جارٍ تحميل الشهادات...",
+    "noCertificates": "لا توجد شهادات بعد",
+    "noCertificatesText": "أكمل الدورات للحصول على شهادات تُبرز إنجازاتك.",
+    "noDescription": "وصف الدورة غير متوفر",
+    "number": "رقم الشهادة",
+    "share": "مشاركة",
+    "subtitle": "شهاداتك وإنجازاتك",
+    "totalCertificates": "شهادة محصّلة",
+    "viewCourse": "عرض الدورة"
   },
   "notifications": {
     "title": "الإشعارات",
@@ -757,7 +947,14 @@
     "markAsUnread": "تعيين كغير مقروء",
     "delete": "حذف",
     "takeAction": "اتخاذ إجراء",
-    "dismiss": "تجاهل"
+    "dismiss": "تجاهل",
+    "confirmDelete": "سيتم حذف هذا الإشعار نهائيًا.",
+    "confirmDeleteTitle": "حذف الإشعار؟",
+    "loading": "جارٍ تحميل الإشعارات...",
+    "markAllRead": "تعليم الكل كمقروء",
+    "noNotifications": "لا توجد إشعارات",
+    "noNotificationsText": "كل شيء محدّث. لا توجد إشعارات جديدة.",
+    "subtitle": "ابقَ على اطلاع بآخر نشاطاتك"
   },
   "editProfile": {
     "title": "تعديل الحساب الشخصي",
@@ -786,7 +983,20 @@
     "graduated": "متخرج",
     "saveChanges": "حفظ التغييرات",
     "cancel": "إلغاء",
-    "saving": "جاري الحفظ..."
+    "saving": "جاري الحفظ...",
+    "academicAverage": "المعدّل الدراسي",
+    "academicAverageHint": "من 0 إلى 20",
+    "currentAcademicLevel": "المستوى الدراسي الحالي",
+    "currentAcademicLevelPlaceholder": "مثال: سنة ثالثة، ماستر 1، مقيم",
+    "currentJobTitle": "المنصب الحالي",
+    "currentJobTitlePlaceholder": "مثال: صيدلي",
+    "redoubledYear": "سنة معادة",
+    "specialty": "التخصص",
+    "specialtyPlaceholder": "مثال: طب، صيدلة، طب أسنان",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح!",
+    "uploadSuccess": "تم رفع صورة الملف الشخصي بنجاح!",
+    "yearsOfExperience": "سنوات الخبرة",
+    "yearsOfExperiencePlaceholder": "مثال: 3"
   },
   "register": {
     "title": "التسجيل",
@@ -812,7 +1022,9 @@
     "student": "طالب",
     "other": "آخر",
     "back": "رجوع",
-    "finish": "إنهاء"
+    "finish": "إنهاء",
+    "noCountriesAvailable": "لم تُضبط قائمة البلدان بعد. يرجى المحاولة لاحقًا.",
+    "noSpecialtiesAvailable": "لم تُضبط مجالات الدراسة بعد. يرجى المحاولة لاحقًا."
   },
   "dashboard_data": {
     "voir_profile": "عرض الملف الشخصي",
@@ -878,7 +1090,26 @@
     "general": "استفسار عام",
     "generalDesc": "أسئلة أخرى أو تعليقات حول خدماتنا",
     "responseTime": "وقت الرد",
-    "responseTimeDesc": "نحن عادة ما نرد خلال 24 ساعة خلال أيام العمل."
+    "responseTimeDesc": "نحن عادة ما نرد خلال 24 ساعة خلال أيام العمل.",
+    "conversation": "المحادثة",
+    "generalInquiry": "استفسار عام",
+    "loading": "جارٍ تحميل الرسائل...",
+    "loadingThread": "جارٍ تحميل المحادثة...",
+    "messageDetails": "تفاصيل الرسالة",
+    "reply": "رد",
+    "replyPlaceholder": "اكتب ردّك...",
+    "respondedAt": "تم الرد في",
+    "send": "إرسال",
+    "sending": "جارٍ الإرسال...",
+    "sent": "أُرسلت",
+    "sentText": "تم إرسال رسالتك بنجاح.",
+    "status": {
+      "read": "مقروءة",
+      "responded": "تم الرد",
+      "unread": "جديدة"
+    },
+    "support": "الدعم",
+    "you": "أنت"
   },
   "faq": {
     "all": "الكل",
@@ -889,7 +1120,10 @@
     "loginToVote": "قم بتسجيل الدخول للتصويت",
     "pleaseLoginToVote": "يرجى تسجيل الدخول للتصويت على الأسئلة الشائعة.",
     "alreadyVoted": "لقد قمت بالتصويت على هذا السؤال بالفعل.",
-    "failedToVote": "فشل في إرسال التصويت. يرجى المحاولة مرة أخرى."
+    "failedToVote": "فشل في إرسال التصويت. يرجى المحاولة مرة أخرى.",
+    "description": "أسئلة شائعة حول هذا البرنامج",
+    "filterByCategory": "تصفية حسب الفئة",
+    "noFaqsInCategory": "لا توجد أسئلة في هذه الفئة"
   },
   "video_player": {
     "Watch Course": "شاهد الدورة",
@@ -952,7 +1186,9 @@
       "errorTitle": "خطأ في الدفع!",
       "errorText": "تعذر معالجة دفعتك. يرجى التحقق من بياناتك والمحاولة مرة أخرى.",
       "tryAgain": "حاول مرة أخرى",
-      "goBack": "رجوع"
+      "goBack": "رجوع",
+      "accessRemovedText": "تم سحب صلاحية الوصول من طرف مسؤول. يمكنك إرسال دفعة جديدة لإعادة التسجيل.",
+      "accessRemovedTitle": "تم سحب الوصول"
     },
     "certificate": {
       "generatingTitle": "جاري إنشاء الشهادة",
@@ -1046,7 +1282,19 @@
     "level": "المستوى",
     "from": "من",
     "scholarship": "منحة",
-    "deadline": "آخر موعد"
+    "deadline": "آخر موعد",
+    "addedOn": "أُضيف في",
+    "browsePrograms": "تصفّح البرامج",
+    "confirmRemove": "هل تريد فعلاً إزالة هذا العنصر من المفضّلة؟",
+    "loading": "جارٍ تحميل المفضّلة...",
+    "noCourses": "لا توجد دورات مفضّلة",
+    "noCoursesText": "لم تُضِف أي دورة إلى المفضّلة بعد.",
+    "noPrograms": "لا توجد برامج مفضّلة",
+    "noProgramsText": "لم تُضِف أي برنامج إلى المفضّلة بعد.",
+    "remove": "إزالة",
+    "students": "طالبًا",
+    "subtitle": "الدورات والبرامج التي حفظتها",
+    "view": "عرض"
   },
   "quiz_page": {
     "true": "صحيح",
@@ -1112,7 +1360,6 @@
     "checkNow": "تحقق الآن",
     "contactSupport": "تواصل مع الدعم"
   },
-
   "deleted": {
     "title": "تم حذف الحساب",
     "message": "تم حذف حسابك نهائيًا من هذه المنصة من قبل المسؤول. يرجى التواصل مع الدعم للمزيد من المعلومات.",
@@ -1158,22 +1405,19 @@
     "noFileUploaded": "لم يتم تحديد ملف. يرجى اختيار ملف للرفع.",
     "unknown": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
   },
-
   "enrolled course": "دورة مسجّلة",
   "Continue Learning": "مواصلة التعلّم",
-
   "certificate": {
     "realNameTitle": "اسمك على الشهادة",
     "realNameWarning": "سيظهر اسمك الكامل على الشهادة تمامًا كما أدخلته. تأكّد من صحّته.",
     "noName": "اسمك",
     "goSetName": "تعيين الاسم من الملف الشخصي",
     "proceed": "احصل على الشهادة",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "notAvailable": "هذه الدورة لا تمنح شهادة"
   },
-
   "report_desc": "صِف المشكلة التي واجهتها في هذا الدرس أو المحتوى.",
   "report_placeholder": "مثال: الفيديو لا يعمل، الصوت غير متزامن، خطأ في الترجمة…",
-
   "forgot_password": {
     "title": "استعادة كلمة المرور",
     "subtitle": "أدخل بريدك الإلكتروني لاستعادة حسابك",
@@ -1210,9 +1454,10 @@
     "request_received": "تم استقبال الطلب",
     "admin_will_help": "تم تقديم طلب استعادة كلمة المرور الخاص بك. سيتواصل معك المسؤول قريبًا على",
     "timeline": "الجدول الزمني:",
-    "timeline_desc": "يجب أن تسمع منا خلال 24 ساعة في أيام العمل."
+    "timeline_desc": "يجب أن تسمع منا خلال 24 ساعة في أيام العمل.",
+    "resend_error": "تعذّر إعادة إرسال البريد",
+    "resent_success": "تمت إعادة إرسال البريد بنجاح!"
   },
-
   "reset_password": {
     "title": "إعادة تعيين كلمة مرورك",
     "subtitle": "أدخل كلمة مرور جديدة لحسابك",
@@ -1240,7 +1485,6 @@
     "request_new_link": "طلب رابط إعادة تعيين جديد",
     "back_to_login": "العودة إلى تسجيل الدخول"
   },
-
   "homepage": {
     "hero": {
       "badge": "استكشف الفرص",
@@ -1349,7 +1593,6 @@
     "descriptionTitle": "وصف الخدمة",
     "descriptionSubtitle": "تفاصيل تم إعدادها عبر لوحة التحكم.",
     "descriptionFallback": "تساعدك خدمة إنشاء السيرة الذاتية لدينا على إعداد سيرة قوية ومقنعة. شارك معلوماتك ودع خبراءنا ينشئون سيرة احترافية مناسبة لمجالك.",
-
     "appStatusTitle": "حالة الطلب",
     "goToMyApplications": "عرض طلباتي",
     "status": "الحالة",
@@ -1358,7 +1601,6 @@
     "acceptedText": "تم قبول طلب السيرة الذاتية. سيتواصل معك فريقنا قريبًا للخطوات التالية.",
     "acceptedHint": "يرجى التحقق من بريدك الإلكتروني لمعلومات التواصل.",
     "rejectionReason": "سبب الرفض",
-
     "formTitleNew": "إرسال طلب السيرة الذاتية",
     "formTitleUpdate": "تحديث طلب السيرة الذاتية",
     "formSubtitle": "شارك معلوماتك وتفاصيلك المهنية، وسيستخدمها فريقنا لإعداد سيرتك الذاتية.",
@@ -1370,7 +1612,6 @@
     "submitting": "جارٍ الإرسال...",
     "update": "تحديث الطلب",
     "submit": "إرسال الطلب",
-
     "serviceUnavailableTitle": "الخدمة غير متاحة",
     "serviceUnavailableText": "هذه الخدمة غير متاحة حاليًا. يرجى المحاولة لاحقًا.",
     "loginRequired": "تسجيل الدخول مطلوب",
@@ -1381,13 +1622,16 @@
     "updated": "تم تحديث طلب السيرة الذاتية",
     "submitted": "تم إرسال طلب السيرة الذاتية بنجاح",
     "error": "خطأ",
-    "submitFailed": "فشل إرسال الطلب"
+    "submitFailed": "فشل إرسال الطلب",
+    "days": "أيام",
+    "deliveryIn": "يُسلّم خلال",
+    "payNow": "ادفع الآن",
+    "paymentPending": "هذه الخدمة مدفوعة. يبقى طلبك معلّقًا حتى استلام الدفع والموافقة عليه."
   },
   "internshipDetailPage": {
     "loading": "جارٍ تحميل تفاصيل التدريب...",
     "notFound": "التدريب غير موجود",
     "backToInternships": "العودة إلى فرص التدريب",
-
     "company": "الشركة",
     "location": "الموقع",
     "type": "النوع",
@@ -1400,7 +1644,6 @@
     "contactPerson": "مسؤول التواصل",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
-
     "applyTitle": "التقديم على هذه الفرصة",
     "applySubtitle": "اكتب لماذا تهتم بهذه الفرصة ولماذا ستكون مناسبًا لها.",
     "applicationLetter": "رسالة التقديم / الدافع",
@@ -1408,7 +1651,6 @@
     "cancel": "إلغاء",
     "submitting": "جارٍ الإرسال...",
     "submit": "إرسال الطلب",
-
     "alreadyAppliedTitle": "تم التقديم مسبقًا",
     "alreadyAppliedText": "لقد قمت بالتقديم على هذه الفرصة بالفعل",
     "alreadyAppliedBanner": "لقد قمت بالتقديم على هذه الفرصة بالفعل",
@@ -1416,14 +1658,249 @@
     "status": "الحالة",
     "goToMyApplications": "عرض طلباتي",
     "rejectionReason": "سبب الرفض",
-
     "loginRequiredTitle": "تسجيل الدخول مطلوب",
     "loginRequiredText": "يرجى تسجيل الدخول لإرسال طلب التدريب.",
-
     "success": "تم",
     "submitted": "تم إرسال طلبك بنجاح",
     "submitFailed": "فشل إرسال الطلب",
     "loadFailed": "فشل تحميل تفاصيل التدريب",
-    "checkApplicationFailed": "فشل التحقق من حالة طلبك"
-  }
+    "checkApplicationFailed": "فشل التحقق من حالة طلبك",
+    "payNow": "ادفع الآن",
+    "paymentPending": "هذا التدريب مدفوع. يبقى طلبك معلّقًا حتى استلام الدفع والموافقة عليه."
+  },
+  "cvListPage": {
+    "back": "العودة إلى الخدمات",
+    "delivery": "{{days}} يومًا",
+    "empty": "لا توجد خدمات سيرة ذاتية متاحة بعد.",
+    "free": "مجاني",
+    "loading": "جارٍ تحميل الخدمات...",
+    "search": "ابحث عن خدمة",
+    "subtitle": "اختر الخدمة المناسبة لاحتياجك، وفريقنا يتكفّل بالباقي.",
+    "title": "خدمات السيرة الذاتية",
+    "view": "عرض التفاصيل"
+  },
+  "enrolledProgram": {
+    "followUs": "تابعنا",
+    "myApplications": "طلباتي",
+    "noContactInfo": "لأي استفسار، استخدم نظام الرسائل لدينا.",
+    "noEnrollment": "أنت غير مسجّل في هذا البرنامج. الصفحة متاحة للمسجّلين فقط.",
+    "noNotes": "لا توجد رسائل بعد. تواصل مع الدعم إن كان لديك أي سؤال.",
+    "openMessages": "فتح الرسائل",
+    "paymentAccepted": "تم قبول الدفع والتحقق منه",
+    "paymentMethod": "طريقة الدفع",
+    "paymentProof": "إثبات الدفع",
+    "paymentReceipt": "وصل الدفع",
+    "price": "سعر البرنامج",
+    "quickActions": "إجراءات سريعة",
+    "startDate": "تاريخ بداية البرنامج",
+    "status": "الحالة",
+    "viewFullImage": "عرض الصورة كاملة",
+    "viewProgram": "عرض البرنامج",
+    "accessDenied": "الوصول مرفوض",
+    "communication": "التواصل والملاحظات",
+    "contactInfo": "معلومات الاتصال",
+    "description": "حول هذا البرنامج",
+    "details": "تفاصيل البرنامج",
+    "endDate": "تاريخ نهاية البرنامج",
+    "enrollmentDate": "تاريخ التسجيل",
+    "enrollmentStatus": "حالة التسجيل"
+  },
+  "orders": {
+    "all": "الكل",
+    "approved": "مقبولة",
+    "attempt": "محاولة",
+    "browse": "تصفّح المنصة",
+    "cancel": "إلغاء",
+    "cancelTitle": "إلغاء هذا الطلب؟",
+    "cancelYes": "نعم، ألغِه",
+    "ccpRequired": "أدخل رقم الحساب البريدي الذي تمّ الدفع منه",
+    "ccpTitle": "رقم حسابك البريدي",
+    "empty": "لم تطلب أي شيء بعد.",
+    "free": "مجاني",
+    "itemGone": "هذا العنصر",
+    "keptNote": "لا يُحذف أي شيء هنا. الطلب المرفوض يحتفظ بوصله وبسبب الرفض، وإرسال وصل جديد يفتح محاولة جديدة بدل استبدال القديمة.",
+    "open": "افتحه",
+    "pending": "قيد المراجعة",
+    "refunded": "مُسترجع",
+    "rejected": "يتطلّب وصلاً جديدًا",
+    "send": "إرسال",
+    "sendAnother": "أرسل وصلاً جديدًا",
+    "sendReceipt": "أرسل وصل الدفع",
+    "sent": "تم إرسال الوصل",
+    "subtitle": "كل ما طلبته، وأين وصل كل طلب.",
+    "title": "طلباتي",
+    "waiting": "استلمنا وصلك. سنُعلمك بالنتيجة في كل الأحوال.",
+    "status": {
+      "pending": "قيد المراجعة",
+      "approved": "مقبول",
+      "rejected": "مرفوض",
+      "cancelled": "ملغى",
+      "refunded": "مُسترجع"
+    }
+  },
+  "settings": {
+    "changePassword": "تغيير كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "currentPassword": "كلمة المرور الحالية",
+    "currentPasswordRequired": "كلمة المرور الحالية مطلوبة.",
+    "dangerSubtitle": "إجراءات لا رجعة فيها على الحساب",
+    "dangerZone": "منطقة الخطر",
+    "deleteAccountBtn": "طلب حذف الحساب",
+    "deleteAccountDesc": "سيُرسل هذا الطلب إلى مسؤول. يبقى حسابك نشطًا حتى تتم مراجعته. وبعد الموافقة، ستُحذف جميع بياناتك — التسجيلات والشهادات والتقدّم — نهائيًا.",
+    "deleteAccountTitle": "طلب حذف الحساب؟",
+    "deleteAccountWarning": "سيُرسل طلب الحذف إلى الإدارة. يبقى حسابك نشطًا حتى تتم مراجعة الطلب والموافقة عليه.",
+    "deleteFailed": "تعذّر إرسال طلب الحذف.",
+    "deleteManualNote": "هذه العملية يدوية. سيراجع أحد المسؤولين طلبك وقد يتواصل معك قبل المتابعة.",
+    "deletePendingText": "لديك طلب حذف قيد الانتظار. يرجى انتظار مراجعة الإدارة.",
+    "deleteRequestSent": "تم إرسال الطلب",
+    "deleteRequestSentText": "تم إرسال طلب حذف حسابك.<br><br>سيراجعه أحد المسؤولين وسيتواصل معك عند الحاجة. يبقى حسابك نشطًا في هذه الأثناء.",
+    "error": "خطأ",
+    "firstNameMin": "يجب ألا يقل الاسم عن 3 أحرف.",
+    "hide": "إخفاء",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صالح.",
+    "lastNameMin": "يجب ألا يقل اللقب عن 3 أحرف.",
+    "newPassword": "كلمة المرور الجديدة",
+    "passwordChangeFailed": "تعذّر تغيير كلمة المرور.",
+    "passwordChanged": "تم تغيير كلمة المرور بنجاح.",
+    "passwordHint": "يُنصح بـ 8 أحرف على الأقل.",
+    "passwordMin": "يجب ألا تقل كلمة المرور الجديدة عن 8 أحرف.",
+    "passwordMismatch": "كلمتا المرور الجديدتان غير متطابقتين.",
+    "profileSaved": "تم تحديث الملف الشخصي بنجاح.",
+    "profileSection": "معلومات الملف الشخصي",
+    "profileSubtitle": "حدّث معلوماتك الشخصية",
+    "pwdFair": "متوسطة",
+    "pwdGood": "جيدة",
+    "pwdStrong": "قوية",
+    "pwdWeak": "ضعيفة",
+    "requestAlreadyPending": "طلب قيد الانتظار مسبقًا",
+    "saveFailed": "تعذّر حفظ التعديلات.",
+    "saved": "تم الحفظ!",
+    "saving": "جارٍ الحفظ...",
+    "securitySection": "الأمان",
+    "securitySubtitle": "غيّر كلمة المرور",
+    "show": "إظهار",
+    "strength": "القوة",
+    "submitting": "جارٍ الإرسال...",
+    "subtitle": "أدر تفضيلات حسابك وإعدادات الأمان.",
+    "title": "الإعدادات",
+    "typeDeleteLabel": "اكتب «DELETE» لتفعيل الزر",
+    "typeDeleteToConfirm": "يرجى كتابة «DELETE» للتأكيد.",
+    "validationError": "خطأ في التحقق",
+    "yesRequestDelete": "نعم، اطلب الحذف"
+  },
+  "timeAgo": {
+    "justNow": "الآن",
+    "yesterday": "أمس",
+    "hoursAgo": "قبل {{hours}} ساعة",
+    "daysAgo": "قبل {{days}} يوم"
+  },
+  "Applying": {
+    "": {
+      "": {
+        "": "جارٍ إرسال الطلب..."
+      }
+    }
+  },
+  "Content will appear here once the instructor publishes lessons": {
+    "": "سيظهر المحتوى هنا بمجرد أن ينشر المدرّب الدروس."
+  },
+  "Course data is incomplete": {
+    " Please try again": {
+      "": "بيانات الدورة غير مكتملة. يرجى المحاولة مجددًا."
+    }
+  },
+  "Course details and learning content on healthpathglobal": {
+    "": "تفاصيل الدورة والمحتوى التعليمي على healthpathglobal."
+  },
+  "Loading": {
+    "": {
+      "": {
+        "": "جارٍ التحميل..."
+      }
+    }
+  },
+  "Program details and enrollment on healthpathglobal": {
+    "": "تفاصيل البرنامج والتسجيل على healthpathglobal."
+  },
+  "Quiz failed": {
+    " Try again": {
+      "": "لم تجتز الاختبار. حاول مرة أخرى."
+    }
+  },
+  "Quiz passed! Great job": {
+    "": "اجتزت الاختبار! أحسنت."
+  },
+  "Refreshing": {
+    "": {
+      "": {
+        "": "جارٍ التحديث..."
+      }
+    }
+  },
+  "Search courses": {
+    "": {
+      "": {
+        "": "ابحث عن دورة..."
+      }
+    }
+  },
+  "Search programs": {
+    "": {
+      "": {
+        "": "ابحث عن برنامج..."
+      }
+    }
+  },
+  "Sending": {
+    "": {
+      "": {
+        "": "جارٍ الإرسال..."
+      }
+    }
+  },
+  "Something went wrong while loading the course details": {
+    "": "حدث خطأ أثناء تحميل تفاصيل الدورة."
+  },
+  "The course you're looking for doesn't exist or has been removed": {
+    "": "الدورة التي تبحث عنها غير موجودة أو تم حذفها."
+  },
+  "There are currently no programs available": {
+    " Please check back later": {
+      "": "لا توجد برامج متاحة حاليًا. يرجى العودة لاحقًا."
+    }
+  },
+  "There are no PDF resources available for this course yet": {
+    "": "لا توجد ملفات PDF متاحة لهذه الدورة بعد."
+  },
+  "This program doesn't exist or has been removed": {
+    "": "هذا البرنامج غير موجود أو تم حذفه."
+  },
+  "Tip: use Free/Paid, or set Min/Max for a custom range": {
+    "": "نصيحة: استخدم مجاني/مدفوع، أو حدّد الحد الأدنى والأقصى لنطاق مخصّص."
+  },
+  "Updating results": {
+    "": {
+      "": {
+        "": "جارٍ تحديث النتائج..."
+      }
+    }
+  },
+  "Updating": {
+    "": {
+      "": {
+        "": "جارٍ التحديث..."
+      }
+    }
+  },
+  "Your message about this course": {
+    "": {
+      "": {
+        "": "رسالتك بخصوص هذه الدورة..."
+      }
+    }
+  },
+  "faq_description": "هذه أكثر الأسئلة شيوعًا حول منصّتنا.",
+  "NoProgramFound": "لم يُعثر على أي برنامج",
+  "notifications ": "الإشعارات",
+  "heures": "ساعات"
 }

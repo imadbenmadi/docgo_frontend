@@ -1,0 +1,12 @@
+{
+  "faqDescription": { "en": "These are the questions we get asked most about healthpathglobal. Can't find what you're looking for?" },
+  "faq_description": { "ar": "هذه أكثر الأسئلة شيوعًا حول منصّتنا." },
+  "course_data.applicationPending": { "ar": "الطلب قيد المراجعة" },
+  "course_data.enrolled": { "ar": "مسجّل" },
+  "course_data.applicationRejected": { "ar": "تم رفض الطلب" },
+  "NoProgramFound": { "ar": "لم يُعثر على أي برنامج" },
+  "notifications ": { "ar": "الإشعارات" },
+  "heures": { "ar": "ساعات" },
+  "profile.completed_courses": { "ar": "دورات مكتملة" },
+  "profile.in_progress_courses": { "ar": "دورات قيد التقدّم" }
+}

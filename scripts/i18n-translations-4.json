@@ -1,0 +1,4 @@
+{
+  "timeAgo.hoursAgo": { "en": "{{hours}}h ago", "fr": "il y a {{hours}} h", "ar": "قبل {{hours}} ساعة" },
+  "timeAgo.daysAgo": { "en": "{{days}}d ago", "fr": "il y a {{days}} j", "ar": "قبل {{days}} يوم" }
+}

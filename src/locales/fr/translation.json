@@ -47,9 +47,12 @@
     "signingIn": "Connexion en cours...",
     "loginError": "Une erreur s'est produite lors de la connexion",
     "emailPlaceholder": "vous@exemple.com",
-    "passwordPlaceholder": "••••••••"
+    "passwordPlaceholder": "••••••••",
+    "back": "Retour",
+    "completeProfile": "Complétez votre profil",
+    "completeProfileSubtitle": "Aidez-nous à personnaliser votre parcours d'apprentissage",
+    "createAccount": "Créer un compte"
   },
-
   "contact": {
     "supportTitle": "Support",
     "supportDesc": "Disponible 7j/7 pour répondre à vos questions",
@@ -76,9 +79,26 @@
     "errorSending": "Échec de l'envoi du message. Veuillez réessayer.",
     "richTextEnabled": "Formatage de texte enrichi disponible",
     "phone": "Téléphone",
-    "address": "Adresse"
+    "address": "Adresse",
+    "chooseCourse": "Choisissez un cours",
+    "chooseProgram": "Choisissez un programme",
+    "concernCourse": "Un cours",
+    "concernGeneral": "Assistance générale",
+    "concernProgram": "Un programme",
+    "concernType": "Objet de la demande",
+    "course": "Cours",
+    "courseHelp": "Besoin d'aide sur ce cours ?",
+    "courseSubtitle": "Posez vos questions sur le contenu, les prérequis ou tout autre point.",
+    "dashboardSubtitle": "Notre équipe est là pour répondre à vos questions.",
+    "generalSupport": "Contacter le support",
+    "landingSubtitle": "Nous serions ravis de vous lire. Envoyez-nous un message et nous vous répondrons dans les meilleurs délais.",
+    "loading": "Chargement...",
+    "program": "Programme",
+    "programHelp": "Des questions sur ce programme ?",
+    "programSubtitle": "Obtenez des réponses sur les conditions, la procédure de candidature ou les bourses.",
+    "selectCourse": "Sélectionner un cours",
+    "selectProgram": "Sélectionner un programme"
   },
-
   "faq_data": {
     "title": "Questions Fréquemment Posées",
     "intro": "Trouvez des réponses aux questions courantes sur nos cours et programmes."
@@ -96,18 +116,75 @@
       "support": "Besoin d'aide ?",
       "supportText": "Contactez notre équipe d'assistance",
       "sendMessage": "Envoyer un message",
-      "settings": "Paramètres"
+      "settings": "Paramètres",
+      "applications": "Candidatures",
+      "certificates": "Mes certificats",
+      "landingPage": "Page d'accueil",
+      "myLearning": "Mes apprentissages",
+      "myPrograms": "Mes études à l'étranger",
+      "payments": "Tous les paiements",
+      "serviceApplications": "Demandes de services"
     },
     "pendingApplications": "Candidatures en attente",
     "enrolledCourses": "Mes cours inscrits",
-    "enrolledPrograms": "Mes programmes inscrits"
+    "enrolledPrograms": "Mes programmes inscrits",
+    "active": "Actif",
+    "allVideosWatched": "Toutes les vidéos ont été visionnées",
+    "applicationProgress": "Avancement de la candidature",
+    "applicationRejected": "Cette candidature a été refusée",
+    "applications": "candidatures",
+    "applyCourses": "Postuler à des cours",
+    "applyPrograms": "Postuler à des programmes",
+    "browseCourses": "Parcourir les cours",
+    "browsePrograms": "Parcourir les programmes",
+    "certificates": "certificats",
+    "certified": "Certifié",
+    "completed": "Terminé",
+    "course": "Cours",
+    "courses": "cours",
+    "deadline": "Date limite",
+    "deleted": "Supprimé",
+    "deletedCourseSupport": "Ce cours a été supprimé. Contactez le support pour toute question concernant votre inscription.",
+    "deletedProgramSupport": "Ce programme a été supprimé. Contactez le support pour toute question concernant votre inscription.",
+    "earnedCertificates": "Certificats obtenus",
+    "endDate": "Date de fin",
+    "enrolledOn": "Inscrit le",
+    "loadError": "Impossible de charger le tableau de bord",
+    "myLearning": "Mes apprentissages",
+    "myLearningSubtitle": "Vos cours et votre progression",
+    "myPrograms": "Mes études à l'étranger",
+    "myProgramsSubtitle": "Les programmes d'études à l'étranger auxquels vous avez postulé",
+    "noCertificates": "Aucun certificat pour l'instant",
+    "noCertificatesDescription": "Terminez des cours et réussissez les quiz pour obtenir des certificats.",
+    "noEnrolledCourses": "Aucun cours suivi",
+    "noEnrolledCoursesDescription": "Commencez à apprendre en vous inscrivant à un cours.",
+    "noEnrolledPrograms": "Aucun programme suivi",
+    "noEnrolledProgramsDescription": "Postulez à des programmes de bourses pour faire avancer votre carrière.",
+    "noPendingApplications": "Aucune candidature en attente",
+    "noPendingApplicationsDescription": "Postulez à des cours et à des programmes pour commencer votre parcours.",
+    "opened": "Ouvert",
+    "pending": "En attente",
+    "pendingStart": "Démarrage en attente",
+    "price": "Prix",
+    "program": "Programme",
+    "programs": "programmes",
+    "progress": "Progression",
+    "quizPassed": "Quiz réussi",
+    "rejected": "Refusé",
+    "startDate": "Date de début",
+    "startLearning": "Commencer à apprendre",
+    "submittedOn": "Soumis le",
+    "viewAllApplications": "Voir toutes les candidatures",
+    "viewAllCertificates": "Voir tous les certificats",
+    "viewAllCourses": "Voir tous mes cours",
+    "viewAllPrograms": "Voir tous mes programmes",
+    "viewCertificate": "Voir le certificat"
   },
   "Home_nav": "Accueil",
   "UserDashboard_nav": "Mon Espace",
   "Programs_nav": "Études à l’étranger",
   "Courses_nav": "Apprentissage",
   "Profile_nav": "Profil",
-
   "FAQ": "FAQ",
   "MyLearning": "Mon apprentissage",
   "MyPrograms": "Mes études à l’étranger",
@@ -143,7 +220,20 @@
     "country": "Pays",
     "study_field": "Domaine d'études",
     "study_domain": "Spécialité",
-    "phone": "Téléphone"
+    "phone": "Téléphone",
+    "academicAverage": "Moyenne académique",
+    "academicStatus": "Statut académique",
+    "avatarAlt": "Photo de profil",
+    "currentAcademicLevel": "Niveau d'études actuel",
+    "currentJobTitle": "Poste actuel",
+    "notProvided": "Non renseigné",
+    "professionalStatus": "Statut professionnel",
+    "redoubledYear": "Année redoublée",
+    "specialty": "Spécialité",
+    "studentProfileInformation": "Informations du profil étudiant",
+    "studyDomain": "Domaine d'études",
+    "university": "Université",
+    "yearsOfExperience": "Années d'expérience"
   },
   "course_data": {
     "no_prerequisites": "Aucune condition préalable",
@@ -197,7 +287,8 @@
     "applicationRejected": "Candidature rejetée",
     "free": "Gratuit",
     "whatYouLearn": "Ce que vous apprendrez",
-    "content": "Contenu du cours"
+    "content": "Contenu du cours",
+    "course_reviews": "Avis sur le cours"
   },
   "programs": {
     "title": "Programmes Éducatifs",
@@ -382,7 +473,14 @@
     "markAsUnread": "Marquer comme non lu",
     "delete": "Supprimer",
     "takeAction": "Agir",
-    "dismiss": "Ignorer"
+    "dismiss": "Ignorer",
+    "confirmDelete": "Cette notification sera définitivement supprimée.",
+    "confirmDeleteTitle": "Supprimer la notification ?",
+    "loading": "Chargement des notifications...",
+    "markAllRead": "Tout marquer comme lu",
+    "noNotifications": "Aucune notification",
+    "noNotificationsText": "Vous êtes à jour. Aucune nouvelle notification.",
+    "subtitle": "Restez informé de votre activité récente"
   },
   "common": {
     "retry": "Réessayer",
@@ -415,7 +513,15 @@
     "noOptionsFound": "Aucune option trouvée",
     "error": "Erreur",
     "filter": "Filtre",
-    "sort": "Trier"
+    "sort": "Trier",
+    "backToDashboard": "Retour au tableau de bord",
+    "browsePrograms": "Parcourir les programmes",
+    "close": "Fermer",
+    "delete": "Supprimer",
+    "free": "Gratuit",
+    "general": "Général",
+    "message": "Message",
+    "refresh": "Actualiser"
   },
   "Courses": "Cours",
   "Programs": "Programmes",
@@ -484,7 +590,6 @@
   "contactUs": "Entrer en contact",
   "wewillcontactyou": "Nous vous contacterons",
   "wewillcontactyoudesc": "S'agissant des étapes suivantes, de la demande de visa et de la préparation des documents nécessaires, nous vous recontacterons.",
-
   "faqQuestion1": "Comment commencer le processus pour étudier à l'étranger ?",
   "faqAnswer1": "Il vous suffit de vous inscrire sur notre plateforme, de remplir vos coordonnées, et notre équipe vous guidera tout au long du processus de candidature et de visa.",
   "faqQuestion2": "Quels documents sont nécessaires pour postuler ?",
@@ -650,7 +755,26 @@
         "transactionId": "ID de transaction:",
         "amount": "Montant:"
       }
-    }
+    },
+    "academicStatus": "Statut académique",
+    "cancelNotice": {
+      "text": "annulé par l'administrateur",
+      "title": "Paiement précédent annulé"
+    },
+    "deleteNotice": {
+      "text": "supprimé par l'administrateur",
+      "title": "Paiement précédent supprimé"
+    },
+    "editProfileInfo": "Pour modifier ces informations, veuillez éditer votre profil",
+    "notProvided": "Non renseigné",
+    "professionalStatus": "Statut professionnel",
+    "profileInformation": "Informations du profil",
+    "rejectionNotice": {
+      "noReason": "Aucun motif",
+      "reason": "Motif",
+      "title": "Paiement refusé"
+    },
+    "university": "Université / Établissement"
   },
   "rejectionNotice": {
     "title": "Paiement précédent rejeté",
@@ -671,7 +795,33 @@
   "invalidExpiryFormat": "Format MM/AA",
   "expiredCard": "Carte expirée",
   "invalidCVV": "CVV invalide",
-  "paymentSuccess": "Paiement réussi!",
+  "paymentSuccess": {
+    "titleCompleted": "Paiement réussi !",
+    "titlePending": "Paiement soumis !",
+    "ccpSubmitted": "Votre paiement CCP a été soumis pour vérification.",
+    "ccpImportant": "Important",
+    "ccpVerifyTime": "Nous vérifierons votre paiement sous 24 heures. Vous recevrez une confirmation par e-mail une fois vérifié.",
+    "courseEnrolled": "Cours inscrit",
+    "programApplied": "Programme postulé",
+    "paymentDetails": "Détails du paiement",
+    "paymentId": "ID de paiement",
+    "method": "Méthode",
+    "amount": "Montant",
+    "status": "Statut",
+    "startLearning": "Commencer l'apprentissage",
+    "autoRedirect": "Redirection automatique dans {{countdown}} secondes...",
+    "viewCourseDetails": "Voir les détails du cours",
+    "saveReceipt": "Enregistrer le reçu",
+    "viewApplications": "Voir mes candidatures",
+    "browseMoreCourses": "Parcourir plus de cours",
+    "browseMorePrograms": "Parcourir plus de programmes",
+    "needHelp": "Besoin d'aide ? Contactez notre équipe de support :",
+    "sendSupportMessage": "Envoyer un message de support",
+    "contactSupport": "Contacter le support",
+    "paymentContextCourse": "Votre message sera marqué comme support paiement pour le cours.",
+    "paymentContextProgram": "Votre message sera marqué comme support paiement pour le programme.",
+    "exploreCourse": "Découvrir le cours"
+  },
   "processing": "Traitement...",
   "completePayment": "Terminer le paiement",
   "RechercherUnCours": "Rechercher un cours...",
@@ -688,24 +838,45 @@
   "Search courses...": "Rechercher des cours...",
   "Highest Price": "Prix le plus élevé",
   "Lowest Price": "Prix le plus bas",
-  "course": "cours",
+  "course": {
+    "freePreview": "Aperçu gratuit",
+    "rating": "Note",
+    "faq_count": "{{count}} questions"
+  },
   "found": "trouvé(s)",
   "for": "pour",
   "Showing": "Affichage",
   "of": "sur",
   "Filters": "Filtres",
   "heure": "heure",
-
   "cours": "cours",
   "heures": "heures",
   "Completezvotreeducation": "Complétez votre éducation",
-
   "profile": {
     "professional_member": "Membre professionnel",
     "completed_courses": "cours terminés",
     "in_progress_courses": "cours en cours",
     "name": "Nom",
-    "email": "Email"
+    "email": "Email",
+    "bio": "Biographie",
+    "bioPlaceholder": "Parlez-nous de vous...",
+    "cancel": "Annuler",
+    "certificates": "Certificats",
+    "city": "Ville",
+    "country": "Pays",
+    "coursesCompleted": "Cours terminés",
+    "dateOfBirth": "Date de naissance",
+    "edit": "Modifier le profil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "loading": "Chargement du profil...",
+    "notProvided": "Non renseigné",
+    "personalInfo": "Informations personnelles",
+    "phone": "Numéro de téléphone",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "subtitle": "Gérez vos informations personnelles",
+    "title": "Mon profil"
   },
   "courses_data": {
     "title": "Vos cours",
@@ -731,13 +902,53 @@
       "under_review": "En cours d'examen",
       "rejected": "Rejeté",
       "unknown": "Statut inconnu"
-    }
+    },
+    "adminResponse": "Réponse de l'administrateur",
+    "applicationId": "N° de candidature",
+    "appliedOn": "Candidature déposée",
+    "browseCourses": "Parcourir les cours",
+    "browsePrograms": "Parcourir les programmes",
+    "courseSubtitle": "Suivez vos candidatures aux cours et leur statut",
+    "courseTitle": "Mes candidatures aux cours",
+    "courses": "Candidatures aux cours",
+    "enrolledOn": "Inscrit le",
+    "loading": "Chargement des candidatures...",
+    "message": "Message de candidature",
+    "noCourseApplications": "Aucune candidature à un cours",
+    "noCourseApplicationsText": "Vous n'avez encore postulé à aucun cours.",
+    "noProgramApplications": "Aucune candidature à un programme",
+    "noProgramApplicationsText": "Vous n'avez encore postulé à aucun programme.",
+    "paymentHistory": "Historique des paiements",
+    "programSubtitle": "Suivez vos candidatures aux programmes et leur statut",
+    "programTitle": "Mes candidatures aux programmes",
+    "programs": "Candidatures aux programmes",
+    "reviewedOn": "Examinée le",
+    "startCourse": "Commencer le cours",
+    "subtitle": "Suivez vos candidatures aux cours et aux programmes",
+    "view": "Voir les détails",
+    "viewProgram": "Voir le programme"
   },
   "certificates": {
     "title": "Mes certificats",
     "issued_by": "Délivré par",
     "view_official": "Voir le certificat officiel",
-    "view_all": "Voir tous les certificats"
+    "view_all": "Voir tous les certificats",
+    "browseCourses": "Parcourir les cours",
+    "certificateOf": "Certificat de réussite",
+    "completed": "Terminé",
+    "download": "Voir",
+    "downloading": "Ouverture...",
+    "grade": "Note",
+    "issued": "Délivré le",
+    "loading": "Chargement des certificats...",
+    "noCertificates": "Aucun certificat pour l'instant",
+    "noCertificatesText": "Terminez des cours pour obtenir des certificats et mettre en valeur vos réussites.",
+    "noDescription": "Description du cours non disponible",
+    "number": "N° du certificat",
+    "share": "Partager",
+    "subtitle": "Vos certificats et vos réussites",
+    "totalCertificates": "certificats obtenus",
+    "viewCourse": "Voir le cours"
   },
   "notificationsWord": "Notifications",
   "editProfile": {
@@ -767,7 +978,20 @@
     "graduated": "Diplômé",
     "saveChanges": "Enregistrer les modifications",
     "cancel": "Annuler",
-    "saving": "Enregistrement en cours..."
+    "saving": "Enregistrement en cours...",
+    "academicAverage": "Moyenne académique",
+    "academicAverageHint": "0 à 20",
+    "currentAcademicLevel": "Niveau d'études actuel",
+    "currentAcademicLevelPlaceholder": "ex. L3, M1, Interne",
+    "currentJobTitle": "Poste actuel",
+    "currentJobTitlePlaceholder": "ex. Pharmacien",
+    "redoubledYear": "Année redoublée",
+    "specialty": "Spécialité",
+    "specialtyPlaceholder": "ex. Médecine, Pharmacie, Dentaire",
+    "updateSuccess": "Profil mis à jour avec succès !",
+    "uploadSuccess": "Photo de profil téléversée avec succès !",
+    "yearsOfExperience": "Années d'expérience",
+    "yearsOfExperiencePlaceholder": "ex. 3"
   },
   "register": {
     "title": "S'inscrire",
@@ -793,7 +1017,9 @@
     "student": "Étudiant",
     "other": "Autre",
     "back": "Retour",
-    "finish": "Finaliser"
+    "finish": "Finaliser",
+    "noCountriesAvailable": "Les pays ne sont pas encore configurés. Merci de réessayer plus tard.",
+    "noSpecialtiesAvailable": "Les domaines d'études ne sont pas encore configurés. Merci de réessayer plus tard."
   },
   "dashboard_data": {
     "voir_profile": "Voir le profil",
@@ -839,7 +1065,6 @@
     "context": "Contexte",
     "ourResponse": "Notre réponse",
     "sentOn": "Envoyé le",
-
     "title": "Mes Messages",
     "subtitle": "Gérer vos messages avec notre équipe de support",
     "noMessages": "Aucun message",
@@ -859,7 +1084,26 @@
     "general": "Demande Générale",
     "generalDesc": "Autres questions ou commentaires sur nos services",
     "responseTime": "Temps de Réponse",
-    "responseTimeDesc": "Nous répondons généralement dans les 24 heures pendant les jours ouvrables."
+    "responseTimeDesc": "Nous répondons généralement dans les 24 heures pendant les jours ouvrables.",
+    "conversation": "Conversation",
+    "generalInquiry": "Demande générale",
+    "loading": "Chargement des messages...",
+    "loadingThread": "Chargement de la conversation...",
+    "messageDetails": "Détails du message",
+    "reply": "Répondre",
+    "replyPlaceholder": "Écrivez votre réponse...",
+    "respondedAt": "Répondu le",
+    "send": "Envoyer",
+    "sending": "Envoi...",
+    "sent": "Envoyé",
+    "sentText": "Votre message a bien été envoyé.",
+    "status": {
+      "read": "Lu",
+      "responded": "Répondu",
+      "unread": "Nouveau"
+    },
+    "support": "Support",
+    "you": "Vous"
   },
   "faq": {
     "all": "Tous",
@@ -870,7 +1114,10 @@
     "loginToVote": "Connectez-vous pour voter",
     "pleaseLoginToVote": "Veuillez vous connecter pour voter sur les FAQ.",
     "alreadyVoted": "Vous avez déjà voté sur cette FAQ.",
-    "failedToVote": "Échec de l'envoi du vote. Veuillez réessayer."
+    "failedToVote": "Échec de l'envoi du vote. Veuillez réessayer.",
+    "description": "Questions fréquentes sur ce programme",
+    "filterByCategory": "Filtrer par catégorie",
+    "noFaqsInCategory": "Aucune question dans cette catégorie"
   },
   "video_player": {
     "Watch Course": "Regarder le cours",
@@ -933,7 +1180,9 @@
       "errorTitle": "Erreur de paiement!",
       "errorText": "Impossible de traiter votre paiement. Veuillez vérifier vos données et réessayer.",
       "tryAgain": "Réessayer",
-      "goBack": "Retour"
+      "goBack": "Retour",
+      "accessRemovedText": "Votre accès a été retiré par un administrateur. Vous pouvez envoyer un nouveau paiement pour vous réinscrire.",
+      "accessRemovedTitle": "Accès retiré"
     },
     "certificate": {
       "generatingTitle": "Génération du certificat",
@@ -1009,34 +1258,6 @@
       "sentText": "Votre message a été envoyé avec succès."
     }
   },
-
-  "paymentSuccess": {
-    "titleCompleted": "Paiement réussi !",
-    "titlePending": "Paiement soumis !",
-    "ccpSubmitted": "Votre paiement CCP a été soumis pour vérification.",
-    "ccpImportant": "Important",
-    "ccpVerifyTime": "Nous vérifierons votre paiement sous 24 heures. Vous recevrez une confirmation par e-mail une fois vérifié.",
-    "courseEnrolled": "Cours inscrit",
-    "programApplied": "Programme postulé",
-    "paymentDetails": "Détails du paiement",
-    "paymentId": "ID de paiement",
-    "method": "Méthode",
-    "amount": "Montant",
-    "status": "Statut",
-    "startLearning": "Commencer l'apprentissage",
-    "autoRedirect": "Redirection automatique dans {{countdown}} secondes...",
-    "viewCourseDetails": "Voir les détails du cours",
-    "saveReceipt": "Enregistrer le reçu",
-    "viewApplications": "Voir mes candidatures",
-    "browseMoreCourses": "Parcourir plus de cours",
-    "browseMorePrograms": "Parcourir plus de programmes",
-    "needHelp": "Besoin d'aide ? Contactez notre équipe de support :",
-    "sendSupportMessage": "Envoyer un message de support",
-    "contactSupport": "Contacter le support",
-    "paymentContextCourse": "Votre message sera marqué comme support paiement pour le cours.",
-    "paymentContextProgram": "Votre message sera marqué comme support paiement pour le programme."
-  },
-
   "favorites": {
     "title": "Mes Favoris",
     "savedCourses": "Vos cours et programmes enregistrés",
@@ -1055,9 +1276,20 @@
     "level": "Niveau",
     "from": "Depuis",
     "scholarship": "Bourse",
-    "deadline": "Date limite"
+    "deadline": "Date limite",
+    "addedOn": "Ajouté le",
+    "browsePrograms": "Parcourir les programmes",
+    "confirmRemove": "Voulez-vous vraiment retirer cet élément de vos favoris ?",
+    "loading": "Chargement des favoris...",
+    "noCourses": "Aucun cours favori",
+    "noCoursesText": "Vous n'avez encore ajouté aucun cours à vos favoris.",
+    "noPrograms": "Aucun programme favori",
+    "noProgramsText": "Vous n'avez encore ajouté aucun programme à vos favoris.",
+    "remove": "Retirer",
+    "students": "étudiants",
+    "subtitle": "Vos cours et programmes enregistrés",
+    "view": "Voir"
   },
-
   "quiz_page": {
     "true": "Vrai",
     "false": "Faux",
@@ -1072,7 +1304,6 @@
     "textPlaceholder": "Écrivez votre réponse ici...",
     "description": "Description"
   },
-
   "myApplicationsPage": {
     "title": "Mes Candidatures",
     "noApplications": "Aucune candidature pour le moment",
@@ -1088,7 +1319,6 @@
       "rejected": "Rejeté"
     }
   },
-
   "courseInfo": {
     "courseStatistics": "Statistiques du cours",
     "totalStudents": "Total des étudiants",
@@ -1109,7 +1339,6 @@
     "instructor": "Instructeur",
     "courseInstructor": "Instructeur du cours"
   },
-
   "blocked": {
     "title": "Compte bloqué",
     "message": "Votre compte a été temporairement suspendu par un administrateur. Si vous pensez que c'est une erreur, veuillez contacter le support.",
@@ -1125,7 +1354,6 @@
     "checkNow": "Vérifier maintenant",
     "contactSupport": "Contacter le support"
   },
-
   "deleted": {
     "title": "Compte supprimé",
     "message": "Votre compte a été définitivement supprimé de cette plateforme par un administrateur. Veuillez contacter le support pour plus d'informations.",
@@ -1142,7 +1370,6 @@
     "checkNow": "Vérifier maintenant",
     "contactSupport": "Contacter le support"
   },
-
   "errorPage": {
     "title": "Oups ! Une erreur s'est produite",
     "message": "Quelque chose s'est mal passé sur cette page.",
@@ -1150,7 +1377,6 @@
     "goBack": "Veuillez retourner à la",
     "homePage": "page d'accueil"
   },
-
   "apiErrors": {
     "serverError": "Une erreur serveur s'est produite. Veuillez réessayer.",
     "notFound": "La ressource demandée est introuvable.",
@@ -1173,19 +1399,17 @@
     "noFileUploaded": "Aucun fichier sélectionné. Veuillez choisir un fichier.",
     "unknown": "Une erreur inattendue s'est produite. Veuillez réessayer."
   },
-
   "certificate": {
     "realNameTitle": "Votre nom sur le certificat",
     "realNameWarning": "Votre nom complet apparaîtra sur le certificat exactement tel que vous l'avez saisi. Assurez-vous qu'il est correct.",
     "noName": "votre nom",
     "goSetName": "Définir votre nom dans le profil",
     "proceed": "Obtenir le certificat",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "notAvailable": "Ce cours ne délivre pas de certificat"
   },
-
   "report_desc": "Décrivez le problème rencontré avec cette leçon ou ce contenu.",
   "report_placeholder": "Ex. : La vidéo ne se lance pas, l'audio est désynchronisé, erreur de sous-titre…",
-
   "forgot_password": {
     "title": "Récupération du mot de passe",
     "subtitle": "Entrez votre adresse e-mail pour récupérer votre compte",
@@ -1222,9 +1446,10 @@
     "request_received": "Demande reçue",
     "admin_will_help": "Votre demande de récupération de mot de passe a été soumise. Un administrateur vous contactera bientôt à l'adresse",
     "timeline": "Délai:",
-    "timeline_desc": "Vous devriez entendre parler de nous dans les 24 heures pendant les jours ouvrables."
+    "timeline_desc": "Vous devriez entendre parler de nous dans les 24 heures pendant les jours ouvrables.",
+    "resend_error": "Échec du renvoi de l'e-mail",
+    "resent_success": "E-mail renvoyé avec succès !"
   },
-
   "reset_password": {
     "title": "Réinitialiser votre mot de passe",
     "subtitle": "Entrez un nouveau mot de passe pour votre compte",
@@ -1252,7 +1477,6 @@
     "request_new_link": "Demander un nouveau lien de réinitialisation",
     "back_to_login": "Retour à la connexion"
   },
-
   "homepage": {
     "hero": {
       "badge": "Explorez les opportunités",
@@ -1361,7 +1585,6 @@
     "descriptionTitle": "Description du service",
     "descriptionSubtitle": "Détails configurés par notre équipe dans le tableau de bord.",
     "descriptionFallback": "Notre service de création de CV vous aide à rédiger un CV convaincant qui se démarque. Partagez vos informations et laissez nos experts créer un CV professionnel adapté à votre secteur.",
-
     "appStatusTitle": "Statut de la demande",
     "goToMyApplications": "Voir mes candidatures",
     "status": "Statut",
@@ -1370,7 +1593,6 @@
     "acceptedText": "Votre demande de CV a été acceptée. Notre équipe vous contactera bientôt pour les prochaines étapes.",
     "acceptedHint": "Veuillez vérifier votre e-mail pour les informations de contact.",
     "rejectionReason": "Motif du refus",
-
     "formTitleNew": "Soumettre votre demande de CV",
     "formTitleUpdate": "Mettre à jour votre demande de CV",
     "formSubtitle": "Partagez vos informations et détails professionnels. Notre équipe les utilisera pour créer votre CV.",
@@ -1382,7 +1604,6 @@
     "submitting": "Envoi...",
     "update": "Mettre à jour",
     "submit": "Soumettre",
-
     "serviceUnavailableTitle": "Service indisponible",
     "serviceUnavailableText": "Ce service est actuellement indisponible. Veuillez réessayer plus tard.",
     "loginRequired": "Connexion requise",
@@ -1393,13 +1614,16 @@
     "updated": "Votre demande de CV a été mise à jour",
     "submitted": "Votre demande de CV a été soumise avec succès",
     "error": "Erreur",
-    "submitFailed": "Échec de l'envoi de la demande"
+    "submitFailed": "Échec de l'envoi de la demande",
+    "days": "jours",
+    "deliveryIn": "Livré en",
+    "payNow": "Payer maintenant",
+    "paymentPending": "Ce service est payant. Votre demande reste en attente jusqu'à la réception et la validation du paiement."
   },
   "internshipDetailPage": {
     "loading": "Chargement des détails du stage...",
     "notFound": "Stage introuvable",
     "backToInternships": "Retour aux stages",
-
     "company": "Entreprise",
     "location": "Lieu",
     "type": "Type",
@@ -1412,7 +1636,6 @@
     "contactPerson": "Personne de contact",
     "email": "Email",
     "phone": "Téléphone",
-
     "applyTitle": "Postuler à ce stage",
     "applySubtitle": "Dites-nous pourquoi cette opportunité vous intéresse et pourquoi vous seriez un excellent candidat.",
     "applicationLetter": "Lettre de motivation",
@@ -1420,7 +1643,6 @@
     "cancel": "Annuler",
     "submitting": "Envoi...",
     "submit": "Envoyer la candidature",
-
     "alreadyAppliedTitle": "Déjà postulé",
     "alreadyAppliedText": "Vous avez déjà postulé à ce stage",
     "alreadyAppliedBanner": "Vous avez déjà postulé à ce stage",
@@ -1428,14 +1650,245 @@
     "status": "Statut",
     "goToMyApplications": "Voir mes candidatures",
     "rejectionReason": "Motif du refus",
-
     "loginRequiredTitle": "Connexion requise",
     "loginRequiredText": "Veuillez vous connecter pour soumettre votre candidature.",
-
     "success": "Succès",
     "submitted": "Votre candidature a été envoyée avec succès",
     "submitFailed": "Échec de l'envoi de la candidature",
     "loadFailed": "Échec du chargement des détails du stage",
-    "checkApplicationFailed": "Impossible de vérifier le statut de votre candidature"
+    "checkApplicationFailed": "Impossible de vérifier le statut de votre candidature",
+    "payNow": "Payer maintenant",
+    "paymentPending": "Ce stage est payant. Votre candidature reste en attente jusqu'à la réception et la validation du paiement."
+  },
+  "cvListPage": {
+    "back": "Retour aux services",
+    "delivery": "{{days}} jours",
+    "empty": "Aucun service de CV n'est disponible pour le moment.",
+    "free": "Gratuit",
+    "loading": "Chargement des services...",
+    "search": "Rechercher un service",
+    "subtitle": "Choisissez le service qui correspond à votre besoin, notre équipe s'occupe du reste.",
+    "title": "Services CV",
+    "view": "Voir les détails"
+  },
+  "enrolledProgram": {
+    "followUs": "Suivez-nous",
+    "myApplications": "Mes candidatures",
+    "noContactInfo": "Pour toute question, utilisez notre messagerie.",
+    "noEnrollment": "Vous n'êtes pas inscrit à ce programme. Seuls les inscrits peuvent accéder à cette page.",
+    "noNotes": "Aucun message pour l'instant. Contactez le support si vous avez des questions.",
+    "openMessages": "Ouvrir la messagerie",
+    "paymentAccepted": "Paiement accepté et vérifié",
+    "paymentMethod": "Moyen de paiement",
+    "paymentProof": "Preuve de paiement",
+    "paymentReceipt": "Reçu de paiement",
+    "price": "Prix du programme",
+    "quickActions": "Actions rapides",
+    "startDate": "Date de début du programme",
+    "status": "Statut",
+    "viewFullImage": "Voir l'image en entier",
+    "viewProgram": "Voir le programme",
+    "accessDenied": "Accès refusé",
+    "communication": "Communication et notes",
+    "contactInfo": "Coordonnées",
+    "description": "À propos de ce programme",
+    "details": "Détails du programme",
+    "endDate": "Date de fin du programme",
+    "enrollmentDate": "Date d'inscription",
+    "enrollmentStatus": "Statut de l'inscription"
+  },
+  "orders": {
+    "all": "Toutes",
+    "approved": "Acquises",
+    "attempt": "tentative",
+    "browse": "Faire un tour",
+    "cancel": "Annuler",
+    "cancelTitle": "Annuler cette commande ?",
+    "cancelYes": "Oui, annuler",
+    "ccpRequired": "Indiquez le numéro CCP depuis lequel le paiement a été fait",
+    "ccpTitle": "Votre numéro CCP",
+    "empty": "Vous n'avez encore rien commandé.",
+    "free": "Gratuit",
+    "itemGone": "Cet élément",
+    "keptNote": "Rien n'est jamais supprimé ici. Une commande refusée conserve son reçu et son motif, et en envoyer un nouveau ouvre une nouvelle tentative au lieu de remplacer l'ancienne.",
+    "open": "Ouvrir",
+    "pending": "En cours de vérification",
+    "refunded": "Remboursé",
+    "rejected": "Nouveau reçu requis",
+    "send": "Envoyer",
+    "sendAnother": "Envoyer un nouveau reçu",
+    "sendReceipt": "Envoyer votre reçu",
+    "sent": "Reçu envoyé",
+    "subtitle": "Tout ce que vous avez demandé, et où chaque demande en est.",
+    "title": "Mes commandes",
+    "waiting": "Nous avons votre reçu. Vous serez informé dans tous les cas.",
+    "status": {
+      "pending": "En cours de vérification",
+      "approved": "Acceptée",
+      "rejected": "Refusée",
+      "cancelled": "Annulée",
+      "refunded": "Remboursée"
+    }
+  },
+  "settings": {
+    "changePassword": "Changer le mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "currentPasswordRequired": "Le mot de passe actuel est obligatoire.",
+    "dangerSubtitle": "Actions irréversibles sur le compte",
+    "dangerZone": "Zone sensible",
+    "deleteAccountBtn": "Demander la suppression du compte",
+    "deleteAccountDesc": "Cette demande sera transmise à un administrateur. Votre compte reste actif jusqu'à son examen. Une fois approuvée, toutes vos données — inscriptions, certificats et progression — seront définitivement supprimées.",
+    "deleteAccountTitle": "Demander la suppression du compte ?",
+    "deleteAccountWarning": "Une demande de suppression sera envoyée à l'administrateur. Votre compte restera actif jusqu'à son examen.",
+    "deleteFailed": "Échec de l'envoi de la demande de suppression.",
+    "deleteManualNote": "Cette procédure est manuelle. Un administrateur examinera votre demande et pourra vous contacter avant de poursuivre.",
+    "deletePendingText": "Une demande de suppression est déjà en attente. Merci de patienter le temps de son examen.",
+    "deleteRequestSent": "Demande envoyée",
+    "deleteRequestSentText": "Votre demande de suppression de compte a bien été envoyée.<br><br>Un administrateur l'examinera et vous contactera si nécessaire. Votre compte reste actif entre-temps.",
+    "error": "Erreur",
+    "firstNameMin": "Le prénom doit comporter au moins 3 caractères.",
+    "hide": "Masquer",
+    "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
+    "lastNameMin": "Le nom doit comporter au moins 3 caractères.",
+    "newPassword": "Nouveau mot de passe",
+    "passwordChangeFailed": "Échec du changement de mot de passe.",
+    "passwordChanged": "Mot de passe modifié avec succès.",
+    "passwordHint": "8 caractères minimum recommandés.",
+    "passwordMin": "Le nouveau mot de passe doit comporter au moins 8 caractères.",
+    "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas.",
+    "profileSaved": "Profil mis à jour avec succès.",
+    "profileSection": "Informations du profil",
+    "profileSubtitle": "Mettez à jour vos informations personnelles",
+    "pwdFair": "Moyen",
+    "pwdGood": "Bon",
+    "pwdStrong": "Fort",
+    "pwdWeak": "Faible",
+    "requestAlreadyPending": "Demande déjà en attente",
+    "saveFailed": "Échec de l'enregistrement des modifications.",
+    "saved": "Enregistré !",
+    "saving": "Enregistrement...",
+    "securitySection": "Sécurité",
+    "securitySubtitle": "Modifiez votre mot de passe",
+    "show": "Afficher",
+    "strength": "Robustesse",
+    "submitting": "Envoi...",
+    "subtitle": "Gérez vos préférences et la sécurité de votre compte.",
+    "title": "Paramètres",
+    "typeDeleteLabel": "Tapez « DELETE » pour activer le bouton",
+    "typeDeleteToConfirm": "Veuillez taper « DELETE » pour confirmer.",
+    "validationError": "Erreur de validation",
+    "yesRequestDelete": "Oui, demander la suppression"
+  },
+  "timeAgo": {
+    "justNow": "À l'instant",
+    "yesterday": "Hier",
+    "hoursAgo": "il y a {{hours}} h",
+    "daysAgo": "il y a {{days}} j"
+  },
+  "Applying": {
+    "": {
+      "": {
+        "": "Envoi de la candidature..."
+      }
+    }
+  },
+  "Content will appear here once the instructor publishes lessons": {
+    "": "Le contenu apparaîtra ici dès que le formateur aura publié des leçons."
+  },
+  "Course data is incomplete": {
+    " Please try again": {
+      "": "Les données du cours sont incomplètes. Veuillez réessayer."
+    }
+  },
+  "Course details and learning content on healthpathglobal": {
+    "": "Détails du cours et contenu pédagogique sur healthpathglobal."
+  },
+  "Loading": {
+    "": {
+      "": {
+        "": "Chargement..."
+      }
+    }
+  },
+  "Program details and enrollment on healthpathglobal": {
+    "": "Détails du programme et inscription sur healthpathglobal."
+  },
+  "Quiz failed": {
+    " Try again": {
+      "": "Quiz échoué. Réessayez."
+    }
+  },
+  "Quiz passed! Great job": {
+    "": "Quiz réussi ! Bravo."
+  },
+  "Refreshing": {
+    "": {
+      "": {
+        "": "Actualisation..."
+      }
+    }
+  },
+  "Search courses": {
+    "": {
+      "": {
+        "": "Rechercher un cours..."
+      }
+    }
+  },
+  "Search programs": {
+    "": {
+      "": {
+        "": "Rechercher un programme..."
+      }
+    }
+  },
+  "Sending": {
+    "": {
+      "": {
+        "": "Envoi..."
+      }
+    }
+  },
+  "Something went wrong while loading the course details": {
+    "": "Une erreur est survenue lors du chargement des détails du cours."
+  },
+  "The course you're looking for doesn't exist or has been removed": {
+    "": "Le cours que vous cherchez n'existe pas ou a été supprimé."
+  },
+  "There are currently no programs available": {
+    " Please check back later": {
+      "": "Aucun programme n'est disponible pour le moment. Revenez plus tard."
+    }
+  },
+  "There are no PDF resources available for this course yet": {
+    "": "Aucune ressource PDF n'est encore disponible pour ce cours."
+  },
+  "This program doesn't exist or has been removed": {
+    "": "Ce programme n'existe pas ou a été supprimé."
+  },
+  "Tip: use Free/Paid, or set Min/Max for a custom range": {
+    "": "Astuce : utilisez Gratuit/Payant, ou définissez Min/Max pour une plage personnalisée."
+  },
+  "Updating results": {
+    "": {
+      "": {
+        "": "Mise à jour des résultats..."
+      }
+    }
+  },
+  "Updating": {
+    "": {
+      "": {
+        "": "Mise à jour..."
+      }
+    }
+  },
+  "Your message about this course": {
+    "": {
+      "": {
+        "": "Votre message à propos de ce cours..."
+      }
+    }
   }
 }
