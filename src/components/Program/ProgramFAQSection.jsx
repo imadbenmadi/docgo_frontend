@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ChevronDownIcon,
@@ -12,8 +12,43 @@ import RichTextDisplay from "../Common/RichTextDisplay";
 import { showSimpleInfo, showSimpleError } from "../../utils/sweetAlertHelper";
 import apiClient from "../../utils/apiClient";
 
-const ProgramFAQSection = ({ faqs = [] }) => {
+/**
+ * The FAQs for one programme.
+ *
+ * It used to take a `faqs` array, and ProgramDetails passes `programId` - so
+ * the array defaulted to empty on every render and the section never showed a
+ * single question, whatever was in the database.
+ *
+ * It fetches them itself now, from the endpoint that has always been there:
+ * /faqs/public/program?programId=... returns the programme's own questions
+ * plus the global ones, in the current language, ordered.
+ */
+const ProgramFAQSection = ({ programId, faqs: providedFaqs }) => {
   const { t, i18n } = useTranslation();
+  const [fetchedFaqs, setFetchedFaqs] = useState([]);
+
+  useEffect(() => {
+    // A caller that already has them can still pass them in.
+    if (providedFaqs || !programId) return undefined;
+
+    let cancelled = false;
+    apiClient
+      .get(`/faqs/public/program?programId=${programId}`)
+      .then(({ data }) => {
+        if (!cancelled) setFetchedFaqs(data?.data || data?.faqs || []);
+      })
+      .catch(() => {
+        // A programme with no FAQs and a failed request look the same to a
+        // visitor: no section. Not worth an error message.
+        if (!cancelled) setFetchedFaqs([]);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [programId, providedFaqs]);
+
+  const faqs = providedFaqs || fetchedFaqs;
   const { user } = useAppContext();
   const [openItems, setOpenItems] = useState(new Set());
   const [voteStates, setVoteStates] = useState({}); // Track voting states for each FAQ
@@ -271,6 +306,9 @@ const ProgramFAQSection = ({ faqs = [] }) => {
 };
 
 ProgramFAQSection.propTypes = {
+  programId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  // Optional: a caller that already has them can pass them rather than
+  // making the component fetch again.
   faqs: PropTypes.arrayOf(PropTypes.object),
 };
 
