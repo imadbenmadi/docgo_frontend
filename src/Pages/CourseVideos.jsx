@@ -1353,7 +1353,7 @@ export function CourseVideos() {
                       {resolvedVideoUrl ? (
                         <>
                           <video
-                            className="w-full aspect-video object-contain"
+                            className="max-h-[70vh] w-full aspect-video object-contain"
                             ref={videoRef}
                             src={resolvedVideoUrl}
                             onTimeUpdate={handleTimeUpdate}

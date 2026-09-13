@@ -314,7 +314,7 @@ export default function CVService() {
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="h-64 bg-gray-100">
                   <video
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-black"
                     controls
                     preload="metadata"
                     // By service id, not by the stored path: the file

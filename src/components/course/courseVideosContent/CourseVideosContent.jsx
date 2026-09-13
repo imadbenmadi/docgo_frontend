@@ -410,9 +410,12 @@ export function CourseVideosContent() {
 
           {/* Video Player */}
           <div className="py-6">
-            <div className="relative mx-auto mt-6 h-64 w-full max-w-[860px] overflow-hidden rounded-[48px] bg-gray-200 shadow-md transition duration-300 hover:shadow-lg md:h-80 lg:h-[420px]">
+            <div className="relative mx-auto mt-6 h-64 max-h-[70vh] w-full max-w-[860px] overflow-hidden rounded-[48px] bg-black shadow-md transition duration-300 hover:shadow-lg md:h-80 lg:h-[420px]">
               <video
-                className="h-full w-full object-cover"
+                // Contain, not cover. Cover crops whatever does not fit the
+                // box - including, on a tall video, the part of the frame the
+                // browser draws its controls over.
+                className="h-full w-full object-contain"
                 ref={videoRef}
                 src={courseData.url}
                 poster={courseData.thumbnail}

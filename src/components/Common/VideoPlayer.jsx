@@ -20,6 +20,17 @@ const VideoPlayer = ({
   controls = true,
   width = "100%",
   height = "auto",
+  /**
+   * The tallest the player may be.
+   *
+   * This is the whole bug. `height: auto` let the box take the video's own
+   * height, so a large or portrait video made the player taller than the
+   * window - and the controls are pinned to the bottom of that box, which put
+   * them below the fold with no way to reach them. Capping the height and
+   * letting the video letterbox inside (it is already object-contain) keeps
+   * the controls on screen whatever the file turns out to be.
+   */
+  maxHeight = "min(72vh, 720px)",
   crossOrigin,
   onTimeUpdate,
   onDurationChange,
@@ -48,13 +59,16 @@ const VideoPlayer = ({
   // Hide controls after inactivity
   useEffect(() => {
     let timer;
-    if (isPlaying) {
+    // Only while it is actually playing, and never with the settings menu
+    // open - fading the controls out from under someone's cursor mid-choice
+    // is how you lose the menu you just opened.
+    if (isPlaying && !showSettings) {
       timer = setTimeout(() => {
         setShowControls(false);
       }, 3000);
     }
     return () => clearTimeout(timer);
-  }, [isPlaying, showControls]);
+  }, [isPlaying, showControls, showSettings]);
 
   // Format time display
   const formatTime = (time) => {
@@ -211,6 +225,15 @@ const VideoPlayer = ({
     }
   };
 
+  // The browser owns this state: Escape and the F11 key both leave
+  // fullscreen without going through our button, and we were not listening -
+  // so the icon stayed wrong and the height cap stayed off.
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       videoRef.current?.parentElement?.requestFullscreen?.();
@@ -295,7 +318,11 @@ const VideoPlayer = ({
     return (
       <div
         className={`bg-gray-900 rounded-lg flex items-center justify-center ${className}`}
-        style={{ width, height: height === "auto" ? "400px" : height }}
+        style={{
+          width,
+          height: height === "auto" ? "400px" : height,
+          maxHeight,
+        }}
       >
         <div className="text-center text-white p-8">
           <div className="text-red-500 mb-4">
@@ -327,10 +354,23 @@ const VideoPlayer = ({
   return (
     <div
       className={`relative bg-black rounded-lg overflow-hidden group ${className}`}
-      style={{ width, height }}
+      style={{
+        width,
+        height,
+        // In fullscreen the element IS the screen, so a cap would letterbox it
+        // twice. Everywhere else the cap is what keeps the controls reachable.
+        maxHeight: isFullscreen ? "100vh" : maxHeight,
+        // Without an explicit height the box had no shape of its own and took
+        // the video's. 16:9 is the shape almost every video is, and
+        // object-contain letterboxes the ones that are not.
+        aspectRatio: height === "auto" ? "16 / 9" : undefined,
+      }}
       onMouseEnter={() => setShowControls(true)}
       onMouseMove={() => setShowControls(true)}
       onMouseLeave={() => isPlaying && setShowControls(false)}
+      // A phone has no hover. Once the controls faded there was no way to
+      // bring them back, so a tap anywhere on the player does it.
+      onTouchStart={() => setShowControls(true)}
     >
       {/* Video Element */}
       <video
@@ -383,8 +423,8 @@ const VideoPlayer = ({
       {/* Controls */}
       {controls && (
         <div
-          className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent transition-opacity duration-300 ${
-            showControls ? "opacity-100" : "opacity-0"
+          className={`absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black via-black/60 to-transparent transition-opacity duration-300 ${
+            showControls ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
         >
           {/* Progress Bar */}
@@ -404,8 +444,8 @@ const VideoPlayer = ({
           </div>
 
           {/* Control Buttons */}
-          <div className="flex items-center justify-between px-4 py-2">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-between gap-2 px-2 py-2 sm:px-4">
+            <div className="flex min-w-0 items-center gap-1 sm:gap-2">
               {/* Play/Pause */}
               <button
                 onClick={togglePlay}
@@ -459,12 +499,12 @@ const VideoPlayer = ({
               </div>
 
               {/* Time Display */}
-              <span className="text-white text-sm">
+              <span className="whitespace-nowrap text-xs tabular-nums text-white sm:text-sm">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-shrink-0 items-center gap-1 sm:gap-2">
               {/* Settings */}
               <div className="relative">
                 <button
@@ -475,7 +515,7 @@ const VideoPlayer = ({
                 </button>
 
                 {showSettings && (
-                  <div className="absolute bottom-8 right-0 bg-black bg-opacity-90 rounded-lg p-2 min-w-32">
+                  <div className="absolute bottom-8 right-0 z-20 max-h-48 min-w-32 overflow-y-auto rounded-lg bg-black bg-opacity-90 p-2">
                     <div className="text-white text-sm">
                       <div className="mb-2 font-semibold">Speed</div>
                       {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
