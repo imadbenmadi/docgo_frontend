@@ -6,7 +6,7 @@ import apiClient from "../../utils/apiClient";
 import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
-import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
 import { formatEuro, formatPrice } from "../../utils/money";
 import AskQuestion from "../../components/contact/AskQuestion";
 
@@ -317,7 +317,10 @@ export default function CVService() {
                     className="w-full h-full object-cover"
                     controls
                     preload="metadata"
-                    src={buildApiUrl(cvService.introductoryVideo)}
+                    // By service id, not by the stored path: the file
+                    // sits in a bucket nothing serves directly, which is why
+                    // this video never played.
+                    src={introMediaUrl("cv", serviceId)}
                   />
                 </div>
               </div>

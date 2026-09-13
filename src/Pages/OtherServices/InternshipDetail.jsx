@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { useTranslation } from "react-i18next";
-import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
 import { formatEuro, formatPrice } from "../../utils/money";
 import AskQuestion from "../../components/contact/AskQuestion";
 
@@ -261,6 +261,25 @@ export default function InternshipDetail() {
             alt={internship.title}
             className="w-full h-64 object-cover rounded-lg mb-8"
           />
+        )}
+
+        {/* Introductory video. An internship could always carry one - the
+            admin form uploads it and the column stores it - but no screen ever
+            showed it, so it went nowhere. */}
+        {internship.introductoryVideo && (
+          <div className="mb-8 overflow-hidden rounded-lg bg-black shadow-md">
+            <video
+              className="h-64 w-full object-contain"
+              controls
+              preload="metadata"
+              poster={
+                internship.introductoryImage
+                  ? buildApiUrl(internship.introductoryImage)
+                  : undefined
+              }
+              src={introMediaUrl("internship", id)}
+            />
+          </div>
         )}
 
         {/* Title and Meta */}

@@ -35,3 +35,25 @@ export const buildApiUrl = (path) => {
   const normalizedPath = value.startsWith("/") ? value : `/${value}`;
   return `${base}${normalizedPath}`;
 };
+
+/**
+ * The URL of a product's introductory video or image.
+ *
+ * Addressed by product and id, never by the stored filename. The stored path
+ * says where the file was put, which is not the same question as where it can
+ * be read from: a video uploaded while the platform was storing to Bunny lives
+ * on the CDN behind a signed URL, and one uploaded before that is on the
+ * server's disk. The server answers this route by asking the row, so the page
+ * does not have to know or care which.
+ *
+ * It also sidesteps a second problem: the old URLs pointed into /storage,
+ * which Apache refuses outright in production.
+ *
+ * @param {"course"|"program"|"cv"|"internship"} product
+ * @param {string|number} id
+ * @param {"video"|"image"} kind
+ */
+export const introMediaUrl = (product, id, kind = "video") => {
+  if (!product || id === undefined || id === null || id === "") return null;
+  return buildApiUrl(`/public/intro/${product}/${encodeURIComponent(id)}/${kind}`);
+};

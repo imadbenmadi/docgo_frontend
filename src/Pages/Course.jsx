@@ -25,7 +25,7 @@ import apiClient from "../utils/apiClient";
 import { formatEuro } from "../utils/money";
 import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
-import { buildApiUrl, getApiBaseUrl } from "../utils/apiBaseUrl";
+import { buildApiUrl, getApiBaseUrl, introMediaUrl } from "../utils/apiBaseUrl";
 
 // Import component parts
 import VideoPlayer from "../components/Common/VideoPlayer";
@@ -384,7 +384,12 @@ export const Course = () => {
     courseDescription ||
     "";
   const courseSeoImage = course.Image ? buildApiUrl(course.Image) : null;
-  const introVideoUrl = getVideoUrl({ videoUrl: course.videoUrl });
+  // Asked for by course id, not by the path on the row: the server knows
+  // whether the file is on disk or on Bunny and answers either way, and the
+  // old /storage URL is refused outright in production.
+  const introVideoUrl = course.videoUrl
+    ? introMediaUrl("course", courseId)
+    : getVideoUrl({ videoUrl: course.videoUrl });
   const seoDescription = courseSeoDescription
     ? courseSeoDescription.length > 160
       ? `${courseSeoDescription.slice(0, 157)}...`

@@ -23,7 +23,7 @@ import { formatEuro } from "../utils/money";
 import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { useEffect } from "react";
-import { buildApiUrl, getApiBaseUrl } from "../utils/apiBaseUrl";
+import { buildApiUrl, introMediaUrl } from "../utils/apiBaseUrl";
 // Import component parts
 import ProgramContent from "../components/Program/ProgramContent";
 import ProgramFAQSection from "../components/Program/ProgramFAQSection";
@@ -114,49 +114,17 @@ export const ProgramDetails = () => {
         return;
       }
 
+      // An external link is already a playable URL.
       if (String(videoUrl).startsWith("http")) {
         if (isActive) setResolvedVideoUrl(videoUrl);
         return;
       }
 
-      const normalizedPath = String(videoUrl).trim();
-      const filename = normalizedPath
-        .split("?")[0]
-        .split("#")[0]
-        .split("/")
-        .filter(Boolean)
-        .pop();
-
-      if (!filename) {
-        if (isActive) setResolvedVideoUrl(buildApiUrl(normalizedPath));
-        return;
-      }
-
-      const requiresProtectedStream =
-        normalizedPath.startsWith("/Courses_Videos/");
-
-      if (!requiresProtectedStream) {
-        if (isActive) setResolvedVideoUrl(buildApiUrl(normalizedPath));
-        return;
-      }
-
-      try {
-        const response = await apiClient.get(
-          `/media/signed-url/video/${filename}`,
-        );
-        if (isActive) {
-          setResolvedVideoUrl(
-            response.data?.url ||
-              `${getApiBaseUrl()}/media/stream/video/${encodeURIComponent(filename)}`,
-          );
-        }
-      } catch {
-        if (isActive) {
-          setResolvedVideoUrl(
-            `${getApiBaseUrl()}/media/stream/video/${encodeURIComponent(filename)}`,
-          );
-        }
-      }
+      // Everything else is asked for by program id. Picking the filename out
+      // of the stored path and guessing which of three endpoints might serve
+      // it was three guesses too many - and the /storage one it usually landed
+      // on is refused outright in production.
+      if (isActive) setResolvedVideoUrl(introMediaUrl("program", programId));
     };
 
     resolveProgramVideoUrl();

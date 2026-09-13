@@ -20,7 +20,7 @@ import toast from "react-hot-toast";
 import { EnrollmentAPI } from "../API/Enrollment";
 import reviewsAPI from "../API/Reviews";
 import apiClient from "../services/apiClient";
-import WordViewer from "../components/Common/WordViewer";
+import FilePreview from "../components/Common/FilePreview";
 import VideoPlayer from "../components/Common/VideoPlayer";
 import RichTextDisplay from "../components/Common/RichTextEditor/RichTextDisplay";
 import { useAppContext } from "../AppContext";
@@ -428,41 +428,22 @@ function PdfViewer({ item, onComplete, isCompleted }) {
     }
   };
 
-  // Resolve through /media/signed-url, exactly like the video player does.
+  // The PDF is fetched, not linked to.
   //
-  // This previously pointed <iframe src> straight at /media/stream/pdf/<file>
-  // with no token, which only worked because the stream endpoint falls back to
-  // reading the session cookie. A cross-origin iframe does not reliably send
-  // cookies (Chrome's third-party cookie phase-out kills it outright), so the
-  // PDF would 403 in production while working locally. The signed URL carries
-  // its own short-lived token and needs no cookie.
+  // Three attempts at this failed the same way: an <iframe src> pointed at the
+  // API is a subresource request, it does not carry the session cookie
+  // cross-origin, and the 401 it gets back is an HTML page with
+  // X-Frame-Options on it - so the browser reported a framing refusal and
+  // everyone went looking at frame policy. FilePreview fetches through the API
+  // client, which authenticates like every other call, and renders the bytes
+  // from a blob URL that no origin policy applies to.
   const url = item.pdfUrl;
-  const _pdfBasename = url?.split("/").pop();
-  const [embedUrl, setEmbedUrl] = useState(null);
-
-  useEffect(() => {
-    if (!url) return;
-    if (url.startsWith("http")) {
-      setEmbedUrl(url);
-      return;
-    }
-    if (!_pdfBasename) {
-      setEmbedUrl(buildApiUrl(url));
-      return;
-    }
-    let cancelled = false;
-    apiClient
-      .get(`/media/signed-url/pdf/${encodeURIComponent(_pdfBasename)}`)
-      .then((res) => {
-        if (!cancelled) setEmbedUrl(res.data?.url || null);
-      })
-      .catch(() => {
-        if (!cancelled) setEmbedUrl(null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [url, _pdfBasename]);
+  const pdfBasename = url?.split("/").pop();
+  const pdfPath = url
+    ? url.startsWith("http")
+      ? null
+      : `/media/stream/pdf/${encodeURIComponent(pdfBasename || "")}`
+    : null;
 
   return (
     <div className="flex flex-col gap-4">
@@ -485,11 +466,11 @@ function PdfViewer({ item, onComplete, isCompleted }) {
         <p className="text-gray-600 text-sm">{item.description}</p>
       )}
       {url ? (
-        <iframe
-          src={embedUrl}
-          className="w-full rounded-xl border border-gray-200 shadow-sm"
-          style={{ height: "75vh" }}
-          title={item.title}
+        <FilePreview
+          path={pdfPath}
+          name={item.title || pdfBasename}
+          mimeType="application/pdf"
+          height="75vh"
         />
       ) : (
         <div className="flex items-center justify-center h-64 bg-gray-50 rounded-xl border border-gray-200 text-gray-500">
@@ -548,7 +529,21 @@ function WordItemViewer({ item, onComplete, isCompleted }) {
       {item.description && (
         <p className="text-gray-600 text-sm">{item.description}</p>
       )}
-      <WordViewer wordUrl={item.wordUrl} title={item.title} />
+      {/* Same fetch-and-render path as the PDF. WordViewer did its own
+          version of this; one component doing it for every file type is one
+          place to fix it when it breaks. */}
+      <FilePreview
+        path={
+          item.wordUrl
+            ? `/media/stream/word/${encodeURIComponent(
+                String(item.wordUrl).split("/").pop(),
+              )}`
+            : null
+        }
+        name={item.title}
+        mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        height="75vh"
+      />
     </div>
   );
 }

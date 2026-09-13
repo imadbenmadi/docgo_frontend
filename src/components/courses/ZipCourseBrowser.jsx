@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import apiClient from "../../utils/apiClient";
-import { buildApiUrl } from "../../utils/apiBaseUrl";
+import FilePreview from "../Common/FilePreview";
 import "../../styles/ZipCourseBrowser.css";
 
 /**
@@ -18,8 +18,6 @@ export const ZipCourseBrowser = ({ courseId }) => {
   const [error, setError] = useState("");
   const [courseInfo, setCourseInfo] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [textPreview, setTextPreview] = useState("");
-  const [textLoading, setTextLoading] = useState(false);
 
   const currentPath =
     breadcrumb.length > 0 ? breadcrumb[breadcrumb.length - 1].path : null;
@@ -29,11 +27,6 @@ export const ZipCourseBrowser = ({ courseId }) => {
     return `/courses/${courseId}/files/${selectedFile.id}/content`;
   }, [courseId, selectedFile?.id]);
 
-  const selectedContentUrl = useMemo(() => {
-    if (!selectedContentPath) return null;
-    return buildApiUrl(selectedContentPath);
-  }, [selectedContentPath]);
-
   // Fetch files when path changes
   useEffect(() => {
     fetchFiles();
@@ -42,7 +35,9 @@ export const ZipCourseBrowser = ({ courseId }) => {
   const fetchFiles = async () => {
     try {
       setLoading(true);
-      const query = currentPath ? `?parentPath=${currentPath}` : "";
+      const query = currentPath
+        ? `?parentPath=${encodeURIComponent(currentPath)}`
+        : "";
       const res = await apiClient.get(`/courses/${courseId}/files${query}`);
 
       if (res.data.success) {
@@ -83,75 +78,6 @@ export const ZipCourseBrowser = ({ courseId }) => {
       setSelectedFile(file);
     }
   };
-
-  const getExtension = (name = "") => {
-    const idx = name.lastIndexOf(".");
-    if (idx === -1) return "";
-    return name.slice(idx + 1).toLowerCase();
-  };
-
-  const isProbablyText = (file) => {
-    const mime = String(file?.mimeType || "").toLowerCase();
-    if (mime.startsWith("text/")) return true;
-    const ext = getExtension(file?.name);
-    return ["txt", "md", "csv", "json", "log", "xml", "yml", "yaml"].includes(
-      ext,
-    );
-  };
-
-  const getPreviewKind = (file) => {
-    const mime = String(file?.mimeType || "").toLowerCase();
-    const ext = getExtension(file?.name);
-
-    if (mime.startsWith("video/") || ["mp4", "webm", "mov"].includes(ext)) {
-      return "video";
-    }
-    if (mime === "application/pdf" || ext === "pdf") {
-      return "pdf";
-    }
-    if (
-      mime.startsWith("image/") ||
-      ["png", "jpg", "jpeg", "gif", "webp"].includes(ext)
-    ) {
-      return "image";
-    }
-    if (isProbablyText(file)) {
-      return "text";
-    }
-    if (["doc", "docx"].includes(ext)) {
-      return "doc";
-    }
-    return "unknown";
-  };
-
-  useEffect(() => {
-    const loadTextPreview = async () => {
-      setTextPreview("");
-      if (!selectedFile || selectedFile.isDirectory) return;
-      if (!selectedContentPath) return;
-
-      const kind = getPreviewKind(selectedFile);
-      if (kind !== "text") return;
-
-      setTextLoading(true);
-      try {
-        const res = await apiClient.get(selectedContentPath, {
-          responseType: "text",
-          transformResponse: [(data) => data],
-        });
-        setTextPreview(String(res.data || ""));
-      } catch (err) {
-        const message =
-          err.response?.data?.message ||
-          t("failedLoadFiles", "Failed to load files");
-        setTextPreview(message);
-      } finally {
-        setTextLoading(false);
-      }
-    };
-
-    loadTextPreview();
-  }, [selectedContentPath, selectedContentUrl, selectedFile, t]);
 
   const getFileIcon = (file) => {
     if (file.isDirectory) return "📁";
@@ -281,114 +207,23 @@ export const ZipCourseBrowser = ({ courseId }) => {
           </div>
         )}
 
-        {/* Inline Preview */}
+        {/* The file itself.
+
+            Everything used to be pointed at by URL - an <iframe>, an <img>, a
+            link - and none of it worked, because the content endpoint checks
+            who is asking and a subresource request does not carry the session.
+            FilePreview fetches through the API client and renders from a blob
+            instead, which also gets Word documents rendering rather than
+            downloading. */}
         {!loading && !error && selectedFile && !selectedFile.isDirectory && (
-          <div className="browser-info" style={{ marginTop: "16px" }}>
-            <p>
-              <strong>{t("preview", "Preview")}:</strong> {selectedFile.name}
-            </p>
-
-            {selectedContentUrl &&
-              (() => {
-                const kind = getPreviewKind(selectedFile);
-
-                if (kind === "video") {
-                  return (
-                    <video
-                      src={selectedContentUrl}
-                      controls
-                      style={{ width: "100%", marginTop: "10px" }}
-                    />
-                  );
-                }
-
-                if (kind === "pdf") {
-                  return (
-                    <iframe
-                      title={selectedFile.name}
-                      src={selectedContentUrl}
-                      style={{
-                        width: "100%",
-                        height: "520px",
-                        marginTop: "10px",
-                      }}
-                    />
-                  );
-                }
-
-                if (kind === "image") {
-                  return (
-                    <img
-                      src={selectedContentUrl}
-                      alt={selectedFile.name}
-                      style={{ width: "100%", marginTop: "10px" }}
-                    />
-                  );
-                }
-
-                if (kind === "text") {
-                  return textLoading ? (
-                    <p style={{ marginTop: "10px" }}>
-                      {t("loading", "Loading...")}
-                    </p>
-                  ) : (
-                    <pre
-                      style={{
-                        marginTop: "10px",
-                        whiteSpace: "pre-wrap",
-                        wordBreak: "break-word",
-                        maxHeight: "520px",
-                        overflow: "auto",
-                        background: "#f8fafc",
-                        border: "1px solid #e5e7eb",
-                        borderRadius: "8px",
-                        padding: "12px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {textPreview}
-                    </pre>
-                  );
-                }
-
-                if (kind === "doc") {
-                  return (
-                    <div style={{ marginTop: "10px" }}>
-                      <p>
-                        {t(
-                          "docPreviewNotAvailable",
-                          "DOC/DOCX preview isn't available in the browser. Download the file.",
-                        )}
-                      </p>
-                      <a
-                        href={selectedContentUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {t("download", "Download")}
-                      </a>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div style={{ marginTop: "10px" }}>
-                    <p>
-                      {t(
-                        "unsupportedPreview",
-                        "This file type isn't supported for preview.",
-                      )}
-                    </p>
-                    <a
-                      href={selectedContentUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {t("open", "Open")}
-                    </a>
-                  </div>
-                );
-              })()}
+          <div style={{ marginTop: "16px" }}>
+            <FilePreview
+              path={selectedContentPath}
+              name={selectedFile.name}
+              mimeType={selectedFile.mimeType}
+              size={selectedFile.size}
+              height="70vh"
+            />
           </div>
         )}
       </div>
