@@ -101,7 +101,12 @@
     "askQuestion": "Poser une question",
     "screenshot": "Capture d'écran (facultatif)",
     "removeScreenshot": "retirer",
-    "signInForScreenshot": "Connectez-vous pour joindre une capture d'écran."
+    "signInForScreenshot": "Connectez-vous pour joindre une capture d'écran.",
+    "kind": "De quoi s'agit-il ?",
+    "kindQuestion": "Une question",
+    "kindSupport": "Un problème technique",
+    "kindBug": "Signaler un bug",
+    "kindHelp": "Votre message ouvrira un ticket. Une capture d'écran aide beaucoup."
   },
   "faq_data": {
     "title": "Questions Fréquemment Posées",

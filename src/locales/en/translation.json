@@ -101,7 +101,12 @@
     "askQuestion": "Ask a question",
     "screenshot": "Screenshot (optional)",
     "removeScreenshot": "remove",
-    "signInForScreenshot": "Sign in to attach a screenshot."
+    "signInForScreenshot": "Sign in to attach a screenshot.",
+    "kind": "What is this about?",
+    "kindQuestion": "A question",
+    "kindSupport": "A technical problem",
+    "kindBug": "Report a bug",
+    "kindHelp": "Your message will open a ticket. A screenshot helps a lot."
   },
   "faq_data": {
     "title": "Frequently Asked Questions",

@@ -101,7 +101,12 @@
     "askQuestion": "اطرح سؤالاً",
     "screenshot": "لقطة شاشة (اختياري)",
     "removeScreenshot": "إزالة",
-    "signInForScreenshot": "سجّل الدخول لإرفاق لقطة شاشة."
+    "signInForScreenshot": "سجّل الدخول لإرفاق لقطة شاشة.",
+    "kind": "عن ماذا تسأل؟",
+    "kindQuestion": "سؤال",
+    "kindSupport": "مشكلة تقنية",
+    "kindBug": "الإبلاغ عن خلل",
+    "kindHelp": "ستفتح رسالتك تذكرة دعم. لقطة الشاشة تساعد كثيراً."
   },
   "faq_data": {
     "title": "الأسئلة المتكررة",

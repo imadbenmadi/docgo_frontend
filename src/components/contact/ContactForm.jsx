@@ -33,6 +33,14 @@ const ContactForm = ({
   // JSON only. "It looks wrong on my screen" is most of what people write in
   // about, and a picture saves three messages working out which screen.
   const [screenshot, setScreenshot] = useState(null);
+  // A question, a technical problem, or a bug.
+  //
+  // The help desk shows messages whose subjectType is 'support' or 'bug', and
+  // until now nothing on the site could produce one - so the ticket queue was
+  // empty by construction, not because nobody had a problem. A signed-in user
+  // picks here; the message still goes to the same inbox either way, it just
+  // arrives on the right screen.
+  const [kind, setKind] = useState("question");
   const [availableCourses, setAvailableCourses] = useState([]);
   const [availablePrograms, setAvailablePrograms] = useState([]);
 
@@ -149,7 +157,13 @@ const ContactForm = ({
       if (effectiveContext === "program" && effectiveProgramId) {
         payload.programId = effectiveProgramId;
       }
-      if (subjectType && subjectId) {
+      if (user && kind !== "question") {
+        // support and bug are what put it in the help desk queue. The page it
+        // was sent from still travels in `context`, so a bug reported from the
+        // payment page still says so.
+        payload.subjectType = kind;
+        payload.subjectId = subjectId ? String(subjectId) : null;
+      } else if (subjectType && subjectId) {
         payload.subjectType = subjectType;
         payload.subjectId = String(subjectId);
       }
@@ -172,6 +186,7 @@ const ContactForm = ({
 
       setSuccess(true);
       setScreenshot(null);
+      setKind("question");
       setFormData({
         name: user ? `${user.firstName} ${user.lastName}` : "",
         email: user?.email || "",
@@ -444,7 +459,44 @@ const ContactForm = ({
           </div>
         </div>
 
-        {(context === "dashboard" ||
+        {user && (
+          <div>
+            <label
+              htmlFor="messageKind"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              {t("contact.kind", "De quoi s'agit-il ?")}
+            </label>
+            <select
+              id="messageKind"
+              value={kind}
+              onChange={(e) => setKind(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              disabled={loading}
+            >
+              <option value="question">
+                {t("contact.kindQuestion", "Une question")}
+              </option>
+              <option value="support">
+                {t("contact.kindSupport", "Un problème technique")}
+              </option>
+              <option value="bug">
+                {t("contact.kindBug", "Signaler un bug")}
+              </option>
+            </select>
+            {kind !== "question" && (
+              <p className="mt-1 text-xs text-gray-500">
+                {t(
+                  "contact.kindHelp",
+                  "Votre message ouvrira un ticket. Une capture d'écran aide beaucoup.",
+                )}
+              </p>
+            )}
+          </div>
+        )}
+
+        {(user ||
+          context === "dashboard" ||
           context === "course" ||
           context === "program") && (
           <div>

@@ -166,3 +166,69 @@ body {
   max-height: 90vh !important;
   overflow: auto !important;
 }
+
+/* ── Modals that fit on the screen ────────────────────────────────────────────
+ *
+ * Nearly every dialog on the site is built the same way: a full-screen overlay
+ * that centres one panel.
+ *
+ *     <div class="fixed inset-0 flex items-center justify-center p-4">
+ *       <div class="bg-white rounded-xl ...">…</div>
+ *     </div>
+ *
+ * That is fine until the panel is taller than the window - a long form, a
+ * ticket with a screenshot, a payment with a receipt. The overlay is fixed at
+ * the viewport's height and does not scroll, so the panel simply hangs off the
+ * top and the bottom with no way to reach either end. Zooming the browser out
+ * was the only way to read the rest, which is what people were doing.
+ *
+ * Two things fix it, together:
+ *
+ *   overflow-y: auto      lets the overlay scroll when its panel is too tall.
+ *   align-items: safe center
+ *                         keeps the panel centred while it fits, and stops
+ *                         centring the moment it does not. Plain `center` on a
+ *                         scrolling flex container pushes the overflow above
+ *                         the scroll origin, so the top of a tall panel
+ *                         becomes unreachable - the exact bug this is meant to
+ *                         cure. `safe` is the keyword that says "centre unless
+ *                         that would hide something".
+ *
+ * This targets only overlays that centre their content, so the sidebar and
+ * drawer backdrops - which are `fixed inset-0` with no centring - are left
+ * alone.
+ *
+ * Written here rather than added class-by-class to forty components because
+ * the next dialog someone writes should get it too, without having to know.
+ */
+.fixed.inset-0.flex.items-center.justify-center {
+    overflow-y: auto;
+    align-items: safe center;
+    /* Breathing room so a tall panel never touches the window edge. */
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* Older engines ignore `safe`, and would clip the top. Margin auto centres a
+ * flex item without the clipping behaviour, so it is the fallback. */
+@supports not (align-items: safe center) {
+    .fixed.inset-0.flex.items-center.justify-center {
+        align-items: flex-start;
+    }
+    .fixed.inset-0.flex.items-center.justify-center > *:not([class*="absolute"]) {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+/*
+ * A panel that caps its own height has to be able to scroll inside that cap,
+ * or the cap just cuts the content off. Scoped to the panel of a modal, so
+ * this cannot turn some unrelated capped box into a scroll container and clip
+ * a dropdown inside it. Panels that already say how they scroll are untouched;
+ * this only supplies the missing half.
+ */
+.fixed.inset-0.flex.items-center.justify-center
+    > [class*="max-h-["]:not([class*="overflow"]) {
+    overflow-y: auto;
+}
