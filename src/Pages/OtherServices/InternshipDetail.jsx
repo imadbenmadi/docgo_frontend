@@ -6,6 +6,7 @@ import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { useTranslation } from "react-i18next";
 import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
+import FavoriteHeart from "../../components/Common/FavoriteHeart";
 import { formatEuro, formatPrice } from "../../utils/money";
 import AskQuestion from "../../components/contact/AskQuestion";
 
@@ -284,9 +285,17 @@ export default function InternshipDetail() {
 
         {/* Title and Meta */}
         <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            {internship.title}
-          </h1>
+          <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+            <h1 className="text-4xl font-bold text-gray-800">
+              {internship.title}
+            </h1>
+            <FavoriteHeart
+              item={{ ...internship, id }}
+              type="internship"
+              withLabel
+              className="border border-gray-200 px-3"
+            />
+          </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div>

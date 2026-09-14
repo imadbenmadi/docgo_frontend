@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
+import FavoriteHeart from "../../components/Common/FavoriteHeart";
 import { formatEuro, formatPrice } from "../../utils/money";
 import AskQuestion from "../../components/contact/AskQuestion";
 
@@ -226,6 +227,12 @@ export default function CVService() {
               */}
               {cvService && (
                 <p className="mt-3 flex flex-wrap items-center gap-3">
+                  <FavoriteHeart
+                    item={{ ...cvService, id: serviceId }}
+                    type="cv"
+                    withLabel
+                    className="border border-gray-200 px-3"
+                  />
                   {cvService.isPaid === false || !Number(cvService.price) ? (
                     <span className="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700 ring-1 ring-emerald-200">
                       {t("common.free", "Free")}

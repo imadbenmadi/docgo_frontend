@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { clientCoursesAPI } from "../API/Courses";
-import { clientProgramsAPI } from "../API/Programs";
 import { useAppContext } from "../AppContext";
 import { useFavorites } from "../hooks/useFavorite";
 import MainLoading from "../MainLoading";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
+import Price from "../components/Common/Price";
+import { buildApiUrl } from "../utils/apiBaseUrl";
 
 const FavoritesPage = () => {
   const { t } = useTranslation();
@@ -15,18 +15,20 @@ const FavoritesPage = () => {
   const { user } = useAppContext();
   const [activeTab, setActiveTab] = useState("all");
 
-  const filterFavorites = () => {
-    switch (activeTab) {
-      case "courses":
-        return favorites.courses;
-      case "programs":
-        return favorites.programs;
-      default:
-        return [...favorites.courses, ...favorites.programs];
-    }
-  };
+  // The four, and what to call each on the tab. Driving the tabs from a list
+  // rather than writing one button per product is what stopped CV services
+  // and internships being left out again.
+  const TABS = [
+    ["course", t("favorites.courses", "Apprentissage")],
+    ["program", t("favorites.programs", "Études à l'étranger")],
+    ["cv", t("favorites.cv", "Services CV")],
+    ["internship", t("favorites.internships", "Stages")],
+  ];
 
-  const filteredFavorites = filterFavorites();
+  const filteredFavorites =
+    activeTab === "all"
+      ? TABS.flatMap(([type]) => favorites[type] || [])
+      : favorites[activeTab] || [];
 
   if (loading) {
     return <MainLoading />;
@@ -51,7 +53,7 @@ const FavoritesPage = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-1 mb-8 bg-gray-100 p-1 rounded-lg w-full max-w-lg">
+        <div className="mb-8 flex flex-wrap gap-1 rounded-lg bg-gray-100 p-1">
           <button
             onClick={() => setActiveTab("all")}
             className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
@@ -62,28 +64,19 @@ const FavoritesPage = () => {
           >
             {t("favorites.all", "All")} ({totalCount})
           </button>
-          <button
-            onClick={() => setActiveTab("courses")}
-            className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === "courses"
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
-            }`}
-          >
-            {t("favorites.courses", "Apprentissage")} (
-            {favorites.courses.length})
-          </button>
-          <button
-            onClick={() => setActiveTab("programs")}
-            className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === "programs"
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
-            }`}
-          >
-            {t("favorites.programs", "Études à l’étranger")} (
-            {favorites.programs.length})
-          </button>
+          {TABS.map(([type, label]) => (
+            <button
+              key={type}
+              onClick={() => setActiveTab(type)}
+              className={`flex-1 py-3 px-4 rounded-md text-sm font-medium transition-colors ${
+                activeTab === type
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              {label} ({favorites[type]?.length || 0})
+            </button>
+          ))}
         </div>
 
         {/* Content */}
@@ -120,14 +113,9 @@ const FavoritesPage = () => {
               // Handle different ID field names
               const itemId = item.id || item.ID || item.Id;
 
-              // When using context-processed favorites, items may not include `type`
-              const resolvedType =
-                item.type ||
-                (favorites.programs.some(
-                  (p) => (p.id || p.ID || p.Id) === itemId,
-                )
-                  ? "program"
-                  : "course");
+              // Every favourite now carries its own type, so there is no
+              // longer anything to guess at.
+              const resolvedType = item.type || "course";
 
               return (
                 <FavoriteCard
@@ -144,243 +132,112 @@ const FavoritesPage = () => {
   );
 };
 
+/**
+ * One saved item.
+ *
+ * It used to re-fetch each course or programme in full just to draw a card,
+ * which is one request per tile and only ever knew those two products. The
+ * list endpoint now returns the same handful of fields for all four, so the
+ * card draws what it was handed and a CV service looks like everything else.
+ */
 const FavoriteCard = ({ item, type }) => {
   const { t } = useTranslation();
-  const isProgram = type === "program";
-  const [fullData, setFullData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  // Handle different ID field names
-  const itemId = item?.id || item?.ID || item?.Id;
+  const itemId = item?.id ?? item?.ID ?? item?.Id;
+  if (!item || !itemId) return null;
 
-  // Fetch full program/course data
-  useEffect(() => {
-    const fetchFullData = async () => {
-      if (!itemId) return;
+  const LABEL = {
+    course: t("favorites.badgeCourse", "Cours"),
+    program: t("favorites.badgeProgram", "Programme"),
+    cv: t("favorites.badgeCv", "Service CV"),
+    internship: t("favorites.badgeInternship", "Stage"),
+  };
 
-      try {
-        setLoading(true);
+  const BADGE = {
+    course: "bg-blue-100 text-blue-800",
+    program: "bg-purple-100 text-purple-800",
+    cv: "bg-cyan-100 text-cyan-800",
+    internship: "bg-emerald-100 text-emerald-800",
+  };
 
-        let data;
-        if (isProgram) {
-          const response = await clientProgramsAPI.getProgramDetails(itemId);
-          // Program returns {success: true, program: {...}}
-          data = response.program || response.data || response;
-        } else {
-          const response = await clientCoursesAPI.getCourseDetails(itemId);
-          // Course returns {success: true, data: {course: {...}, userStatus: {...}, ...}}
-          data =
-            response.data?.course ||
-            response.course ||
-            response.data ||
-            response;
-        }
+  const PATH = {
+    course: `/Courses/${itemId}`,
+    program: `/programs/${itemId}`,
+    cv: `/other-services/cv/${itemId}`,
+    internship: `/other-services/internships/${itemId}`,
+  };
 
-        setFullData(data);
-      } catch (error) {
-        // Fallback to original item data if fetch fails
-        setFullData(item);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFullData();
-  }, [itemId, isProgram, type, item]);
-
-  // Use fullData if available, otherwise fallback to item
-  const dataToUse = fullData || item;
-
-  // Handle different field name variations
-  const title =
-    dataToUse?.Title || dataToUse?.title || dataToUse?.name || dataToUse?.Name;
-  const shortDescription =
-    dataToUse?.shortDescription ||
-    dataToUse?.short_description ||
-    dataToUse?.description ||
-    dataToUse?.Description;
-  const category = dataToUse?.Category || dataToUse?.category;
-  const level = dataToUse?.Level || dataToUse?.level;
-  const price = dataToUse?.Price ?? dataToUse?.price;
-  const discountPrice =
-    dataToUse?.discountPrice ??
-    dataToUse?.discount_price ??
-    dataToUse?.DiscountPrice;
-  const currency = dataToUse?.Currency || dataToUse?.currency || "DZD";
-  const image =
-    dataToUse?.Image ||
-    dataToUse?.image ||
-    dataToUse?.thumbnail ||
-    dataToUse?.Thumbnail;
-
-  // Don't render if no valid item or ID
-  if (!item || !itemId) {
-    return null;
-  }
-
-  // Show loading skeleton while fetching
-  if (loading) {
-    return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden animate-pulse">
-        <div className="aspect-video bg-gray-200"></div>
-        <div className="p-5 space-y-3">
-          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-200 rounded w-full"></div>
-          <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-        </div>
-      </div>
-    );
-  }
+  const title = item.title || item.Title || item.name;
+  const description = String(item.description || "").replace(/<[^>]*>/g, "");
+  const image = item.image || item.Image;
+  const href = item.path || PATH[type] || PATH.course;
 
   return (
-    <div
-      className="bg-white rounded-xl shadow-sm border
-         border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
-    >
-      {/* Image */}
+    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
       <div className="relative aspect-video bg-gradient-to-br from-blue-50 to-indigo-100">
-        {image ? (
-          <ImageWithFallback
-            type={isProgram ? "program" : "course"}
-            src={import.meta.env.VITE_API_URL + image}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <ImageWithFallback
-            type={isProgram ? "program" : "course"}
-            src={null}
-            alt={title}
-            className="w-full h-full"
-          />
-        )}
-
-        {/* Favorite Button */}
-        {/* <div className="absolute top-3 right-3">
-                    <FavoriteButton
-                        item={item}
-                        type={type}
-                        className="bg-white/95 backdrop-blur-sm p-2 rounded-full hover:bg-white shadow-sm"
-                        size="w-5 h-5"
-                    />
-                </div> */}
-
-        {/* Type Badge */}
-        <div className="absolute top-3 left-3">
+        <ImageWithFallback
+          type={type === "program" ? "program" : "course"}
+          src={image ? buildApiUrl(image) : null}
+          alt={title}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute left-3 top-3">
           <span
-            className={`px-3 py-1 text-xs font-semibold rounded-full backdrop-blur-sm ${
-              isProgram
-                ? "bg-purple-500/90 text-white"
-                : "bg-blue-500/90 text-white"
+            className={`rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm ${
+              BADGE[type] || BADGE.course
             }`}
           >
-            {isProgram
-              ? t("favorites.programs", "Études à l’étranger")
-              : t("favorites.courses", "Apprentissage")}
+            {LABEL[type] || LABEL.course}
           </span>
         </div>
-
-        {/* Featured Badge */}
-        {item.isFeatured && (
-          <div className="absolute bottom-3 left-3">
-            <span className="px-3 py-1 text-xs font-semibold bg-yellow-400/90 text-yellow-900 rounded-full backdrop-blur-sm">
-              â Featured
-            </span>
-          </div>
-        )}
       </div>
 
-      {/* Content */}
       <div className="p-5">
-        <div className="mb-3">
-          <h3 className="font-bold text-gray-900 text-lg line-clamp-2 mb-2 leading-tight">
-            {title}
-          </h3>
-          {shortDescription && (
-            <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-              {shortDescription}
-            </p>
-          )}
-        </div>
+        <h3 className="mb-2 line-clamp-2 text-lg font-semibold text-gray-900">
+          {title}
+        </h3>
+        {description && (
+          <p className="mb-4 line-clamp-2 text-sm text-gray-600">
+            {description}
+          </p>
+        )}
 
-        {/* Meta Info */}
-        <div className="flex items-center justify-between text-sm mb-3">
-          {category && (
-            <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-              {category}
-            </span>
-          )}
-          {level && (
-            <span className="capitalize text-gray-500 font-medium">
-              {level}
-            </span>
-          )}
-        </div>
-
-        {/* Rating */}
-        {item.rating && (
-          <div className="flex items-center mb-3">
-            <div className="flex items-center">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <svg
-                  key={star}
-                  className={`w-4 h-4 ${
-                    star <= Math.floor(item.rating.average)
-                      ? "text-yellow-400"
-                      : "text-gray-300"
-                  }`}
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
-            </div>
-            {/* <span className="ml-2 text-sm text-gray-600">
-                            {item.rating.average} ({item.rating.totalReviews})
-                        </span> */}
+        {(item.category || item.level) && (
+          <div className="mb-4 flex flex-wrap gap-2 text-xs text-gray-500">
+            {item.category && (
+              <span className="rounded-full bg-gray-100 px-2 py-1">
+                {item.category}
+              </span>
+            )}
+            {item.level && (
+              <span className="rounded-full bg-gray-100 px-2 py-1">
+                {item.level}
+              </span>
+            )}
           </div>
         )}
 
-        {/* Price */}
-        {price !== undefined && (
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-2">
-              {discountPrice ? (
-                <>
-                  <span className="text-xl font-bold text-green-600">
-                    {currency} {discountPrice}
-                  </span>
-                  <span className="text-sm text-gray-500 line-through">
-                    {currency} {price}
-                  </span>
-                </>
-              ) : price === 0 ? (
-                <span className="text-xl font-bold text-green-600">
-                  {t("favorites.free", "Free")}
-                </span>
-              ) : (
-                <span className="text-xl font-bold text-gray-900">
-                  {currency} {price}
-                </span>
-              )}
-            </div>
-          </div>
-        )}
+        {/* Free reads "Gratuit", not "DZD 0.00" - which is what a free course
+            said here, and is not a price anyone should have to parse. */}
+        <div className="mb-4">
+          <Price
+            amount={item.price}
+            currency={item.currency}
+            amountClassName="text-xl font-bold text-gray-900"
+          />
+        </div>
 
-        {/* Action Button */}
         <Link
-          to={isProgram ? `/programs/${itemId}` : `/Courses/${itemId}`}
-          className="block w-full text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+          to={href}
+          className="block w-full rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-3 text-center font-medium text-white shadow-sm transition-all duration-200 hover:from-blue-700 hover:to-blue-800 hover:shadow-md"
         >
-          {isProgram
-            ? t("favorites.viewProgram", "View Program")
-            : t("favorites.viewCourse", "View Course")}
+          {t("favorites.view", "Voir")}
         </Link>
       </div>
     </div>
   );
 };
+
 
 FavoriteCard.propTypes = {
   item: PropTypes.object.isRequired,

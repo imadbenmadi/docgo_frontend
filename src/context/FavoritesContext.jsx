@@ -1,170 +1,129 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useAppContext } from "../AppContext";
 import {
+  FAVORITE_TYPES,
+  addToLocalFavorites,
   favoritesService,
   getFavoritesFromStorage,
-  addToLocalFavorites,
-  removeFromLocalFavorites,
   isInLocalFavorites,
+  removeFromLocalFavorites,
 } from "../services/favoritesService";
-import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 
-const FavoritesContext = createContext();
+/**
+ * Saved items, for all four products.
+ *
+ * The state used to be `{ courses: [], programs: [] }`, so a CV service or an
+ * internship had nowhere to live and the heart on those pages could not work.
+ * It is now keyed by product type, which means the four are handled by the
+ * same three lines rather than by a branch each.
+ */
 
-export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
-  if (!context) {
-    throw new Error("useFavorites must be used within a FavoritesProvider");
-  }
-  return context;
-};
+const FavoritesContext = createContext(null);
+
+const emptyBag = () => ({ course: [], program: [], cv: [], internship: [] });
 
 export const FavoritesProvider = ({ children }) => {
   const { user } = useAppContext();
-  const [favorites, setFavorites] = useState({ courses: [], programs: [] });
+  const [favorites, setFavorites] = useState(emptyBag);
   const [loading, setLoading] = useState(false);
 
   const loadFavorites = useCallback(async () => {
     setLoading(true);
     try {
-      if (user) {
-        // Authenticated user - fetch from server
-        const payload = await favoritesService.getFavorites();
-        const serverFavorites = payload?.data?.favorites || [];
-
-        // Process server favorites into our format
-        const processedFavorites = {
-          courses: serverFavorites
-            .filter((fav) => fav.type === "course")
-            .map((fav) => ({
-              ...fav.Course,
-              type: "course",
-              favoriteId: fav.id,
-              addedAt: fav.createdAt,
-            })),
-          programs: serverFavorites
-            .filter((fav) => fav.type === "program")
-            .map((fav) => ({
-              ...fav.Program,
-              type: "program",
-              favoriteId: fav.id,
-              addedAt: fav.createdAt,
-            })),
-        };
-
-        setFavorites(processedFavorites);
-      } else {
-        // Guest user - get from local storage
-        const localFavorites = getFavoritesFromStorage();
-        setFavorites(localFavorites);
-      }
-    } catch (error) {
-      // Fallback to local storage on error
       if (!user) {
-        const localFavorites = getFavoritesFromStorage();
-        setFavorites(localFavorites);
+        setFavorites(getFavoritesFromStorage());
+        return;
       }
+
+      const payload = await favoritesService.getFavorites();
+      const rows = payload?.data?.favorites || [];
+      const bag = emptyBag();
+
+      for (const row of rows) {
+        if (!FAVORITE_TYPES.includes(row.type)) continue;
+        // `item` is the server's one shape for all four products, so a card
+        // does not have to know which table the row came from.
+        bag[row.type].push({
+          ...(row.item || {}),
+          id: row.itemId ?? row.item?.id,
+          type: row.type,
+          path: row.path,
+          favoriteId: row.id,
+          addedAt: row.savedAt ?? row.createdAt,
+        });
+      }
+
+      setFavorites(bag);
+    } catch {
+      // A failed fetch should not empty the screen for a guest who has a
+      // perfectly good local list.
+      if (!user) setFavorites(getFavoritesFromStorage());
     } finally {
       setLoading(false);
     }
   }, [user]);
 
-  // Load favorites on mount and when user changes
   useEffect(() => {
     loadFavorites();
   }, [loadFavorites]);
 
   const addToFavorites = async (item, type) => {
+    if (!FAVORITE_TYPES.includes(type)) {
+      return { success: false, error: `Unknown type ${type}` };
+    }
+    const id = item?.id ?? item?.ID ?? item?.Id;
+    if (!id) return { success: false, error: "Missing item id" };
+
     try {
       if (user) {
-        // Authenticated user - save to server
-        const courseId = type === "course" ? item.id : null;
-        const programId = type === "program" ? item.id : null;
-
-        await favoritesService.addToFavorites(courseId, programId, type);
-
-        // Update local state
+        await favoritesService.addToFavorites(id, type);
         setFavorites((prev) => ({
           ...prev,
-          [type === "course" ? "courses" : "programs"]: [
-            ...prev[type === "course" ? "courses" : "programs"],
-            {
-              ...item,
-              type,
-              addedAt: new Date().toISOString(),
-            },
-          ],
+          [type]: prev[type].some((f) => String(f.id) === String(id))
+            ? prev[type]
+            : [...prev[type], { ...item, id, type }],
         }));
       } else {
-        // Guest user - save to local storage
-        const updatedFavorites = addToLocalFavorites(item, type);
-        setFavorites(updatedFavorites);
+        setFavorites(addToLocalFavorites(item, type));
       }
-
       return { success: true };
     } catch (error) {
-      return {
-        success: false,
-        error: getApiErrorMessage(error) || "Failed to add to favorites",
-      };
+      return { success: false, error: error?.message || "Failed" };
     }
   };
 
   const removeFromFavorites = async (id, type) => {
+    if (!FAVORITE_TYPES.includes(type)) {
+      return { success: false, error: `Unknown type ${type}` };
+    }
     try {
       if (user) {
-        // Authenticated user - remove from server
-        const courseId = type === "course" ? id : null;
-        const programId = type === "program" ? id : null;
-
-        await favoritesService.removeFromFavorites(courseId, programId, type);
-
-        // Update local state
+        await favoritesService.removeFromFavorites(id, type);
         setFavorites((prev) => ({
           ...prev,
-          [type === "course" ? "courses" : "programs"]: prev[
-            type === "course" ? "courses" : "programs"
-          ].filter((item) => item.id !== id),
+          [type]: prev[type].filter((f) => String(f.id) !== String(id)),
         }));
       } else {
-        // Guest user - remove from local storage
-        const updatedFavorites = removeFromLocalFavorites(id, type);
-        setFavorites(updatedFavorites);
+        setFavorites(removeFromLocalFavorites(id, type));
       }
-
       return { success: true };
     } catch (error) {
-      return {
-        success: false,
-        error: getApiErrorMessage(error) || "Failed to remove from favorites",
-      };
+      return { success: false, error: error?.message || "Failed" };
     }
   };
 
   const isFavorite = (id, type) => {
-    if (user) {
-      // For authenticated users, check the current state
-      const key = type === "course" ? "courses" : "programs";
-      return favorites[key].some((item) => item.id === id);
-    } else {
-      // For guest users, check local storage
-      return isInLocalFavorites(id, type);
-    }
+    if (!FAVORITE_TYPES.includes(type) || !id) return false;
+    if (!user) return isInLocalFavorites(id, type);
+    // Compared as strings: a course id is a UUID and an internship id is a
+    // number, and === would quietly say no for the second.
+    return favorites[type].some((f) => String(f.id) === String(id));
   };
 
   const getFavoriteCount = (type = null) => {
-    if (type) {
-      const key = type === "course" ? "courses" : "programs";
-      return favorites[key].length;
-    }
-    return favorites.courses.length + favorites.programs.length;
+    if (type) return favorites[type]?.length || 0;
+    return FAVORITE_TYPES.reduce((n, t) => n + (favorites[t]?.length || 0), 0);
   };
 
   const value = {
@@ -186,4 +145,13 @@ export const FavoritesProvider = ({ children }) => {
 
 FavoritesProvider.propTypes = {
   children: PropTypes.node.isRequired,
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useFavorites = () => {
+  const ctx = useContext(FavoritesContext);
+  if (!ctx) {
+    throw new Error("useFavorites must be used inside a FavoritesProvider");
+  }
+  return ctx;
 };
