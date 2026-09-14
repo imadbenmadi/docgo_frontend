@@ -60,17 +60,22 @@ export const courseService = {
     }
   },
 
-  // Enroll in a free course
+  /**
+   * Enrol in a free course.
+   *
+   * Through /orders, like everything else. This used to call
+   * /enrollment/courses/enroll-free, which writes to course_applications and
+   * course_enrollments and nothing else - so a free enrolment left no order,
+   * appeared in no queue, and counted toward no figure on the finance screen.
+   * The platform has one way in: an order, which for a free item is approved
+   * on the spot with the enrolment made in the same transaction.
+   */
   enrollFreeCourse: async (courseId) => {
-    try {
-      const response = await api.post(`/enrollment/courses/enroll-free`, {
-        courseId: courseId,
-      });
-
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+    const response = await api.post(`/orders`, {
+      itemType: "course",
+      itemId: courseId,
+    });
+    return response.data;
   },
 
   // Get user's course applications

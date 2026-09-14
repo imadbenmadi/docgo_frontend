@@ -199,12 +199,16 @@ export const useProgram = (programId) => {
     try {
       setApplying(true);
 
-      const response = await apiClient.post(
-        "/enrollment/programs/enroll-free",
-        {
-          programId: programId,
-        },
-      );
+      // Through /orders, like every other way into any of the four products.
+      // /enrollment/programs/enroll-free writes to program_applications and
+      // program_enrollments and nothing else, so a free enrolment left no
+      // order, showed up in no admin queue, and counted toward no figure on
+      // the finance screen. A free item is an order that is approved on the
+      // spot, with the enrolment made in the same transaction.
+      const response = await apiClient.post("/orders", {
+        itemType: "program",
+        itemId: programId,
+      });
 
       if (!response.data.success) {
         throw new Error(response.data.message || "Failed to enroll");
