@@ -21,6 +21,11 @@ Options -MultiViews
     RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
     RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
+    # 1c. The sitemap is built live by the API from the database, so it
+    #     lists a course the moment it is published. Anything asking the
+    #     site for it is sent there; robots.txt names it directly.
+    RewriteRule ^sitemap\.xml$ https://backend.healthpathglobal.com/sitemap.xml [R=301,L]
+
     # 2. SPA fallback — only runs on HTTPS requests (HTTP was already redirected).
     #    Serve index.html for any path that is not a real file or directory.
     RewriteCond %{REQUEST_FILENAME} !-f

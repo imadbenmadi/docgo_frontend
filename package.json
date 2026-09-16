@@ -9,15 +9,14 @@
   "scripts": {
     "dev": "vite",
     "check:imports": "node scripts/check-import-casing.mjs",
-    "build": "node scripts/generate-sitemap.mjs && npm run check:imports && vite build",
+    "build": "npm run check:imports && vite build",
     "lint": "eslint .",
     "check": "npm run build",
     "check:all": "npm run lint && npm run build",
     "preview": "vite preview",
     "i18n:audit": "node scripts/i18n-audit.cjs",
     "i18n:fill-en": "node scripts/i18n-audit.cjs --write",
-    "i18n:merge": "node scripts/i18n-merge.cjs",
-    "sitemap": "node scripts/generate-sitemap.mjs"
+    "i18n:merge": "node scripts/i18n-merge.cjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -13,4 +13,4 @@ Disallow: /courses/*/resources
 Disallow: /courses/*/watch/quiz
 Disallow: /courses/*/watch/certificate
 
-Sitemap: https://healthpathglobal.com/sitemap.xml
+Sitemap: https://backend.healthpathglobal.com/sitemap.xml
