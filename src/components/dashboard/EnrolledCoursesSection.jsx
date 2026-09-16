@@ -233,7 +233,10 @@ const EnrolledCoursesSection = ({ enrollments }) => {
 EnrolledCoursesSection.propTypes = {
   enrollments: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      // A course id is a UUID and an internship id is an integer, so an
+      // enrolment id is one or the other depending on what it is for.
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
       CourseId: PropTypes.number.isRequired,
       status: PropTypes.string.isRequired,
       enrollmentDate: PropTypes.string.isRequired,

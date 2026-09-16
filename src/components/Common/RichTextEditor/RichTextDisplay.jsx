@@ -14,8 +14,38 @@ const RichTextDisplay = ({
     const sanitizedContent = useMemo(() => {
         if (!content) return "";
 
+        // A few of the columns this renders are JSON, not HTML.
+        // programs.requiredDocuments is a JSON array, and handing an array
+        // straight to DOMPurify stringifies it - the page showed
+        // "[object Object]" where a list of documents belongs. Turn a list
+        // into a list, and an object into its readable fields, before
+        // sanitising.
+        const asHtml = (value) => {
+            if (typeof value === "string") return value;
+            if (Array.isArray(value)) {
+                const items = value
+                    .map((v) =>
+                        typeof v === "string"
+                            ? v
+                            : [v?.name, v?.title, v?.label, v?.description]
+                                  .filter(Boolean)
+                                  .join(" - "),
+                    )
+                    .filter(Boolean);
+                return items.length
+                    ? `<ul>${items.map((i) => `<li>${i}</li>`).join("")}</ul>`
+                    : "";
+            }
+            if (value && typeof value === "object") {
+                return String(
+                    value.html ?? value.text ?? value.description ?? "",
+                );
+            }
+            return String(value);
+        };
+
         // Sanitize the HTML content to prevent XSS attacks
-        const cleanContent = DOMPurify.sanitize(content, {
+        const cleanContent = DOMPurify.sanitize(asHtml(content), {
             ALLOWED_TAGS: [
                 "p",
                 "br",
@@ -78,7 +108,13 @@ const RichTextDisplay = ({
 };
 
 RichTextDisplay.propTypes = {
-    content: PropTypes.string,
+    // JSON columns reach this too, so an array or an object is
+    // legitimate input, not a mistake.
+    content: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array,
+        PropTypes.object,
+    ]),
     className: PropTypes.string,
     textClassName: PropTypes.string,
     maxLength: PropTypes.number,
