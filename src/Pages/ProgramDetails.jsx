@@ -24,6 +24,7 @@ import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { useEffect } from "react";
 import { buildApiUrl, introMediaUrl } from "../utils/apiBaseUrl";
+import ContactForm from "../components/contact/ContactForm";
 // Import component parts
 import ProgramContent from "../components/Program/ProgramContent";
 import ProgramFAQSection from "../components/Program/ProgramFAQSection";
@@ -44,12 +45,6 @@ export const ProgramDetails = () => {
   const [showVideo, setShowVideo] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [contactForm, setContactForm] = useState({
-    subject: "",
-    message: "",
-    name: user ? `${user.firstName} ${user.lastName}` : "",
-    email: user?.email || "",
-  });
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const {
@@ -140,58 +135,6 @@ export const ProgramDetails = () => {
       style: "currency",
       currency: currencyCode || "DZD",
     }).format(amount);
-  };
-
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!contactForm.subject || !contactForm.message) {
-      toast.error(tGlobal("common.fillAllFields"));
-      return;
-    }
-
-    if (!user && (!contactForm.name || !contactForm.email)) {
-      toast.error(tGlobal("common.fillAllFields"));
-      return;
-    }
-
-    try {
-      setIsSubmittingContact(true);
-
-      const requestData = {
-        subject: contactForm.subject,
-        message: contactForm.message,
-        programId: programId,
-        programTitle: programData?.program?.Title || "Program",
-        ...(user
-          ? {
-              userId: user.id,
-              userName: `${user.firstName} ${user.lastName}`,
-              userEmail: user.email,
-            }
-          : {
-              name: contactForm.name,
-              email: contactForm.email,
-            }),
-      };
-
-      const response = await apiClient.post("/contact", requestData);
-
-      if (response.status === 200) {
-        toast.success(tGlobal("common.messageSentSuccess"));
-        setShowContactForm(false);
-        setContactForm({
-          subject: "",
-          message: "",
-          name: user ? `${user.firstName} ${user.lastName}` : "",
-          email: user?.email || "",
-        });
-      }
-    } catch (error) {
-      toast.error(getApiErrorMessage(error, tGlobal));
-    } finally {
-      setIsSubmittingContact(false);
-    }
   };
 
   const handleShare = async () => {
@@ -1002,124 +945,17 @@ export const ProgramDetails = () => {
         </div>
 
         {/* Contact Form Modal */}
+        {/* The shared form, like everywhere else. This page kept its own
+            copy with no ticket type, no priority and no screenshot. */}
         {showContactForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-              <div className="p-6 border-b border-gray-200">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {t("Contact Us", "Contact Us") || "Contact Us"}
-                  </h3>
-                  <button
-                    onClick={() => setShowContactForm(false)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
-                  ></button>
-                </div>
-              </div>
-              <div className="p-6">
-                <form onSubmit={handleContactSubmit} className="space-y-4">
-                  {!user && (
-                    <>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          {t("Name", "Name") || "Name"} *
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={contactForm.name}
-                          onChange={(e) =>
-                            setContactForm({
-                              ...contactForm,
-                              name: e.target.value,
-                            })
-                          }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          {t("Email", "Email") || "Email"} *
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={contactForm.email}
-                          onChange={(e) =>
-                            setContactForm({
-                              ...contactForm,
-                              email: e.target.value,
-                            })
-                          }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                    </>
-                  )}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("Subject", "Subject") || "Subject"} *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={contactForm.subject}
-                      onChange={(e) =>
-                        setContactForm({
-                          ...contactForm,
-                          subject: e.target.value,
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t("Message", "Message") || "Message"} *
-                    </label>
-                    <textarea
-                      required
-                      rows={4}
-                      value={contactForm.message}
-                      onChange={(e) =>
-                        setContactForm({
-                          ...contactForm,
-                          message: e.target.value,
-                        })
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    />
-                  </div>
-                  <div className="flex gap-3 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => setShowContactForm(false)}
-                      className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      {t("Cancel", "Cancel") || "Cancel"}
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmittingContact}
-                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                    >
-                      {isSubmittingContact ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          {t("Sending...", "Sending...") || "Sending..."}
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          {t("Send Message", "Send Message") || "Send Message"}
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+          <ContactForm
+            context="program"
+            programId={programId}
+            subjectType="program"
+            subjectId={programId}
+            title={t("Contact about this program", "Une question ?")}
+            onSuccess={() => setTimeout(() => setShowContactForm(false), 2500)}
+          />
         )}
       </div>
     </>

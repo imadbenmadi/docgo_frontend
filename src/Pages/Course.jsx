@@ -26,6 +26,7 @@ import { formatEuro } from "../utils/money";
 import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { buildApiUrl, getApiBaseUrl, introMediaUrl } from "../utils/apiBaseUrl";
+import ContactForm from "../components/contact/ContactForm";
 
 // Import component parts
 import VideoPlayer from "../components/Common/VideoPlayer";
@@ -47,13 +48,6 @@ export const Course = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [showContactForm, setShowContactForm] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [contactForm, setContactForm] = useState({
-    subject: "",
-    message: "",
-    name: user ? `${user.firstName} ${user.lastName}` : "",
-    email: user?.email || "",
-  });
-  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const {
     courseData,
@@ -79,62 +73,6 @@ export const Course = () => {
       style: "currency",
       currency: "DZD",
     }).format(amount);
-  };
-
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-
-    // Validate required fields
-    if (!contactForm.subject || !contactForm.message) {
-      toast.error(
-        t("common.fillAllFields", "Please fill all required fields."),
-      );
-      return;
-    }
-
-    // For non-authenticated users, validate name and email
-    if (!user && (!contactForm.name || !contactForm.email)) {
-      toast.error(
-        t("common.fillAllFields", "Please fill all required fields."),
-      );
-      return;
-    }
-
-    try {
-      setIsSubmittingContact(true);
-
-      const requestData = {
-        subject: contactForm.subject,
-        message: contactForm.message,
-        relatedType: "course",
-        relatedId: courseId,
-      };
-
-      // For non-authenticated users, include name and email
-      if (!user) {
-        requestData.name = contactForm.name;
-        requestData.email = contactForm.email;
-      }
-
-      const endpoint = user ? "/contact" : "/contact";
-      await apiClient.post(endpoint, requestData);
-
-      toast.success(
-        t("common.messageSentSuccess", "Message sent successfully!"),
-      );
-
-      setContactForm({
-        subject: "",
-        message: "",
-        name: user ? `${user.firstName} ${user.lastName}` : "",
-        email: user?.email || "",
-      });
-      setShowContactForm(false);
-    } catch (error) {
-      toast.error(getApiErrorMessage(error, t));
-    } finally {
-      setIsSubmittingContact(false);
-    }
   };
 
   const handleShare = async () => {
@@ -763,131 +701,22 @@ export const Course = () => {
             {/* Right Column - Sidebar */}
             <div className="lg:col-span-1 space-y-4 lg:space-y-6 order-1 lg:order-2">
               {/* Contact Form */}
+              {/* The same form every other page uses.
+                  This page had its own copy - no ticket type, no priority and
+                  no screenshot - so a problem reported from a course page
+                  arrived with less on it than one reported from anywhere
+                  else, and could not open a help desk ticket at all. */}
               {showContactForm && (
-                <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Mail className="w-5 h-5" />
-                    {t("Contact for this course", "Contact for this course") ||
-                      "Contact for this course"}
-                  </h3>
-                  <form onSubmit={handleContactSubmit} className="space-y-4">
-                    {/* Name and Email fields for non-authenticated users */}
-                    {!user && (
-                      <div className="grid grid-cols-1 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            {t("Name", "Name") || "Name"}{" "}
-                            <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={contactForm.name}
-                            onChange={(e) =>
-                              setContactForm({
-                                ...contactForm,
-                                name: e.target.value,
-                              })
-                            }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            placeholder={
-                              t("Your full name", "Your full name") ||
-                              "Your full name"
-                            }
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            {t("Email", "Email") || "Email"}{" "}
-                            <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="email"
-                            value={contactForm.email}
-                            onChange={(e) =>
-                              setContactForm({
-                                ...contactForm,
-                                email: e.target.value,
-                              })
-                            }
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            placeholder={
-                              t("Your email address", "Your email address") ||
-                              "Your email address"
-                            }
-                            required
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        {t("Subject", "Subject") || "Subject"}{" "}
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={contactForm.subject}
-                        onChange={(e) =>
-                          setContactForm({
-                            ...contactForm,
-                            subject: e.target.value,
-                          })
-                        }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder={
-                          t("Message subject", "Message subject") ||
-                          "Message subject"
-                        }
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        {t("Message", "Message") || "Message"}{" "}
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        value={contactForm.message}
-                        onChange={(e) =>
-                          setContactForm({
-                            ...contactForm,
-                            message: e.target.value,
-                          })
-                        }
-                        rows={4}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                        placeholder={
-                          t(
-                            "Your message about this course...",
-                            "Your message about this course...",
-                          ) || "Your message about this course..."
-                        }
-                        required
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        type="submit"
-                        disabled={isSubmittingContact}
-                        className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Send className="w-4 h-4" />
-                        {isSubmittingContact
-                          ? t("Sending...", "Sending...") || "Sending..."
-                          : t("Send", "Send") || "Send"}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShowContactForm(false)}
-                        className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                      >
-                        {t("Cancel", "Cancel") || "Cancel"}
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <ContactForm
+                  context="course"
+                  courseId={courseId}
+                  subjectType="course"
+                  subjectId={courseId}
+                  title={t("Contact for this course", "Une question ?")}
+                  onSuccess={() =>
+                    setTimeout(() => setShowContactForm(false), 2500)
+                  }
+                />
               )}
 
               {/* Course Card */}
