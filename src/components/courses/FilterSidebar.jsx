@@ -80,12 +80,6 @@ export function FilterSidebar({
   ];
 
   // Status options for courses
-  const statusOptions = [
-    { value: "", label: t("All Status", "All Status") || "All Status" },
-    { value: "published", label: t("Published", "Published") || "Published" },
-    { value: "draft", label: t("Draft", "Draft") || "Draft" },
-    { value: "archived", label: t("Archived", "Archived") || "Archived" },
-  ];
 
   const certificateOptions = [
     { value: "", label: t("All Courses", "All Courses") || "All Courses" },
@@ -270,24 +264,11 @@ export function FilterSidebar({
           </select>
         </div>
 
-        {/* Status Filter */}
-        <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
-          <label className="flex items-center gap-2 text-sm font-semibold text-gray-900 mb-3">
-            <Clock className="w-4 h-4 text-indigo-600" />
-            {t("Status", "Status") || "Status"}
-          </label>
-          <select
-            value={localFilters.status || ""}
-            onChange={(e) => handleLocalFilterChange("status", e.target.value)}
-            className="w-full p-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white"
-          >
-            {statusOptions.map((status) => (
-              <option key={status.value} value={status.value}>
-                {status.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* No status filter here on purpose.
+            Published, draft and archived are editorial states - they belong
+            on the admin screens, not in a shop window. Offering them here
+            invited a visitor to browse unfinished work, and the API happily
+            obliged until it was made to serve published courses only. */}
 
         {/* Certificate Filter */}
         <div className="bg-teal-50 p-4 rounded-xl border border-teal-200">
