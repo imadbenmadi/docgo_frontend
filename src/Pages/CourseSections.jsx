@@ -644,16 +644,14 @@ function VideoItemPlayer({ item, courseId, onComplete, isCompleted }) {
       .catch(() => setResolvedUrl(null));
   }, [_videoBasename, _videoPath]);
 
-  // Bunny CDN URLs are direct external URLs — the browser must NOT send
-  // credentials to them (Bunny responds with * which blocks credentialed
-  // requests). For local server stream URLs, keep crossOrigin so cookies
-  // flow and the server can do session binding.
-  const isBunnyUrl =
-    resolvedUrl &&
-    (resolvedUrl.includes(".b-cdn.net") ||
-      resolvedUrl.includes("bunnycdn.com") ||
-      resolvedUrl.includes("bunny.net"));
-  const videoCrossOrigin = isBunnyUrl ? null : "use-credentials";
+  // Never ask for CORS on the video. A backend stream URL is exactly the
+  // one that 302s to Bunny, so "use-credentials" on it failed the same way
+  // it would on a Bunny URL: Bunny answers with a wildcard origin, which a
+  // credentialed request may not accept. Without crossOrigin the browser
+  // still sends our session cookie to our own domain and follows the
+  // redirect with no CORS check - and nothing reads the frames, which is
+  // the only thing the attribute is for.
+  const videoCrossOrigin = null;
 
   const markCompleteOnce = useCallback(
     (watchedSeconds) => {
