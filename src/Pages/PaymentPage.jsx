@@ -67,6 +67,8 @@ const PaymentPage = () => {
   const [error, setError] = useState(false);
   const [filteredMethods, setFilteredMethods] = useState([]);
   const [existingPayment, setExistingPayment] = useState(null);
+  // The coupon the payment form accepted, so the summary can show it.
+  const [coupon, setCoupon] = useState(null);
   const [checkingPayment, setCheckingPayment] = useState(true);
 
   // Check if user already has a payment application for this item
@@ -366,6 +368,17 @@ const PaymentPage = () => {
   // };
 
   const price = getItemPrice();
+  // Worked out the same way the server does it.
+  const totalPrice = (() => {
+    const base = Number(price) || 0;
+    if (!coupon) return base;
+    const value = Number(coupon.discountValue) || 0;
+    const off =
+      coupon.discountType === "percentage"
+        ? Math.round(base * Math.min(Math.max(value, 0), 100)) / 100
+        : Math.min(Math.max(value, 0), base);
+    return Math.max(0, Math.round((base - off) * 100) / 100);
+  })();
   // const originalPrice = getOriginalPrice(); // Commented out - not currently used
 
   // Improved currency handling with proper fallbacks
@@ -819,6 +832,7 @@ const PaymentPage = () => {
                       onError={handlePaymentError}
                       loading={loading}
                       setLoading={setLoading}
+                      onCouponChange={setCoupon}
                     />
                   )}
                 </div>
@@ -872,6 +886,17 @@ const PaymentPage = () => {
                       </span>
                     </div>
 
+                    {coupon && (
+                      <div className="flex justify-between items-center mb-3 text-emerald-700">
+                        <span className="font-medium">
+                          {t("orders.coupon", "Coupon")} {coupon.code}
+                        </span>
+                        <span className="font-semibold">
+                          −{formatPrice(price - totalPrice, currency, i18n.language)}
+                        </span>
+                      </div>
+                    )}
+
                     <div className="border-t border-gray-300 pt-3">
                       <div className="flex justify-between items-center">
                         <span className="font-bold text-gray-900 text-lg">
@@ -879,14 +904,14 @@ const PaymentPage = () => {
                         </span>
                         <span className="flex flex-col items-end">
                           <span className="font-bold text-2xl text-blue-600">
-                            {formatPrice(price, currency, i18n.language)}
+                            {formatPrice(totalPrice, currency, i18n.language)}
                           </span>
                           {/* What that is worth in euros. The transfer is in
                               dinars - this is only so a reader abroad knows
                               what they are being asked for. */}
-                          {formatEuro(price, currency, i18n.language) && (
+                          {formatEuro(totalPrice, currency, i18n.language) && (
                             <span className="text-xs font-normal text-gray-500">
-                              {formatEuro(price, currency, i18n.language)}
+                              {formatEuro(totalPrice, currency, i18n.language)}
                             </span>
                           )}
                         </span>

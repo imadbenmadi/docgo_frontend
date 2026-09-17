@@ -50,13 +50,17 @@ const OrdersAPI = {
    * reviving the old one, so the rejection and the receipt that was refused
    * both survive - and the response carries the new order.
    */
-  sendReceipt: async (orderId, { file, ccpNumber, phoneNumber, transactionId }) => {
+  sendReceipt: async (
+    orderId,
+    { file, ccpNumber, phoneNumber, transactionId, couponCode },
+  ) => {
     try {
       const form = new FormData();
       form.append("screenShot", file);
       if (ccpNumber) form.append("CCP_number", ccpNumber);
       if (phoneNumber) form.append("phoneNumber", phoneNumber);
       if (transactionId) form.append("transactionId", transactionId);
+      if (couponCode) form.append("couponCode", couponCode);
 
       const { data } = await apiClient.post(
         `/orders/${orderId}/receipt`,

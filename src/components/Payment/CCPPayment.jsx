@@ -28,6 +28,7 @@ const CCPPayment = ({
   onError,
   loading,
   setLoading,
+  onCouponChange,
 }) => {
   const { t, i18n } = useTranslation();
   const { user } = useAppContext();
@@ -70,6 +71,11 @@ const CCPPayment = ({
     }
     return Math.max(0, num - couponResult.discountValue).toFixed(2);
   }, [amount, couponResult]);
+
+  // The order summary beside this form shows the same total.
+  useEffect(() => {
+    onCouponChange?.(couponResult);
+  }, [couponResult, onCouponChange]);
 
   const handleValidateCoupon = async () => {
     if (!couponCode.trim()) return;

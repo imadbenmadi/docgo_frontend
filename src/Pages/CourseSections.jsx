@@ -437,12 +437,12 @@ function PdfViewer({ item, onComplete, isCompleted }) {
   // everyone went looking at frame policy. FilePreview fetches through the API
   // client, which authenticates like every other call, and renders the bytes
   // from a blob URL that no origin policy applies to.
+  // The item may carry a stored path or a full (possibly signed) URL; the
+  // stream route only needs the file name either way.
   const url = item.pdfUrl;
-  const pdfBasename = url?.split("/").pop();
-  const pdfPath = url
-    ? url.startsWith("http")
-      ? null
-      : `/media/stream/pdf/${encodeURIComponent(pdfBasename || "")}`
+  const pdfBasename = url ? String(url).split("?")[0].split("/").pop() : null;
+  const pdfPath = pdfBasename
+    ? `/media/stream/pdf/${encodeURIComponent(pdfBasename)}`
     : null;
 
   return (
@@ -536,7 +536,7 @@ function WordItemViewer({ item, onComplete, isCompleted }) {
         path={
           item.wordUrl
             ? `/media/stream/word/${encodeURIComponent(
-                String(item.wordUrl).split("/").pop(),
+                String(item.wordUrl).split("?")[0].split("/").pop(),
               )}`
             : null
         }

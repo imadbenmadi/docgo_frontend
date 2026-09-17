@@ -1746,11 +1746,13 @@
       "approved": "مقبول",
       "rejected": "مرفوض",
       "cancelled": "ملغى",
-      "refunded": "مُسترجع"
+      "refunded": "مُسترجع",
+      "revoked": "تم سحب الوصول"
     },
     "coupon": "قسيمة",
     "historyTitle": "طلباتك لهذا العنصر",
-    "manage": "إدارة في طلباتي"
+    "manage": "إدارة في طلباتي",
+    "accessRemoved": "تم سحب وصولك. تواصل معنا إذا كنت تعتقد أن هذا خطأ."
   },
   "settings": {
     "changePassword": "تغيير كلمة المرور",

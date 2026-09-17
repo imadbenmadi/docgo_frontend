@@ -1823,11 +1823,13 @@
       "approved": "Approved",
       "rejected": "Rejected",
       "cancelled": "Cancelled",
-      "refunded": "Refunded"
+      "refunded": "Refunded",
+      "revoked": "Access removed"
     },
     "coupon": "Coupon",
     "historyTitle": "Your orders for this",
-    "manage": "Manage in My orders"
+    "manage": "Manage in My orders",
+    "accessRemoved": "Your access to this was removed. Contact us if you think this is a mistake."
   },
   "cvListPage": {
     "back": "Back to Services",

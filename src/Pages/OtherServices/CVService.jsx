@@ -9,7 +9,12 @@ import OrdersAPI from "../../API/Orders";
 /** An order, in the shape this page already draws. */
 const orderAsApplication = (o) => ({
   id: o.id,
-  status: o.status === "approved" ? "accepted" : o.status,
+  status:
+    o.nextStep === "access_removed"
+      ? "revoked"
+      : o.status === "approved"
+        ? "accepted"
+        : o.status,
   paymentStatus: o.nextStep === "send_receipt" ? "pending" : o.paymentStatus,
   amountPaid: o.price,
   submissionDate: o.placedAt,
@@ -77,7 +82,7 @@ export default function CVService() {
           const latest = apps[0] || null;
           // An order that is pending or approved blocks a new one.
           const latestPending =
-            apps.find((a) => a.status === "pending" || a.status === "accepted") ||
+            apps.find((a) => ["pending", "accepted", "revoked"].includes(a.status)) ||
             null;
 
           setCurrentApp(latest);
@@ -427,7 +432,7 @@ export default function CVService() {
             <p className="mb-2">
               {t("cvServicePage.status", "Status") || "Status"}:{" "}
               <span className="font-bold text-lg">
-                {currentApp.status.toUpperCase()}
+                {t(`orders.status.${currentApp.status === "accepted" ? "approved" : currentApp.status}`, currentApp.status)}
               </span>
             </p>
             <p className="text-sm text-gray-600">

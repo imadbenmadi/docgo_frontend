@@ -128,6 +128,8 @@ export const PaymentAPI = {
       file: screenshotFile,
       ccpNumber: paymentForm.ccpNumber,
       phoneNumber: paymentForm.phoneNumber,
+      // An order placed before this page gets the coupon here.
+      couponCode: order.status === "pending" ? paymentForm.couponCode : undefined,
     });
     if (!sent.success) return sent;
 

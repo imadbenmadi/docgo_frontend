@@ -16,7 +16,12 @@ const loadMyOrder = async (internshipId) => {
   if (!o) return null;
   return {
     id: o.id,
-    status: o.status === "approved" ? "accepted" : o.status,
+    status:
+      o.nextStep === "access_removed"
+        ? "revoked"
+        : o.status === "approved"
+          ? "accepted"
+          : o.status,
     paymentStatus: o.nextStep === "send_receipt" ? "pending" : o.paymentStatus,
     amountPaid: o.price,
     rejectionReason: o.rejectionReason,
@@ -25,7 +30,7 @@ const loadMyOrder = async (internshipId) => {
 };
 
 /** A pending or accepted order blocks another one. */
-const isOpen = (app) => app?.status === "pending" || app?.status === "accepted";
+const isOpen = (app) => ["pending", "accepted", "revoked"].includes(app?.status);
 import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
@@ -389,17 +394,19 @@ export default function InternshipDetail() {
           </div>
         </div>
 
-        {/* Description */}
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-4">
-            {t("internshipDetailPage.description", "Description") ||
-              "Description"}
-          </h2>
-          <RichTextDisplay
-            content={internship.description}
-            textClassName="prose max-w-none"
-          />
-        </div>
+        {/* Description, when there is one */}
+        {String(internship.description || "").replace(/<[^>]*>/g, "").trim() && (
+          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+            <h2 className="text-2xl font-bold mb-4">
+              {t("internshipDetailPage.description", "Description") ||
+                "Description"}
+            </h2>
+            <RichTextDisplay
+              content={internship.description}
+              textClassName="prose max-w-none"
+            />
+          </div>
+        )}
 
         {/* Requirements */}
         {internship.requirements && (
@@ -557,7 +564,7 @@ export default function InternshipDetail() {
                   <p className="text-sm text-gray-700 mt-1">
                     {t("internshipDetailPage.status", "Status") || "Status"}:{" "}
                     <span className="font-semibold">
-                      {String(myApplication.status).toUpperCase()}
+                      {t(`orders.status.${myApplication.status === "accepted" ? "approved" : myApplication.status}`, myApplication.status)}
                     </span>
                   </p>
                 ) : null}

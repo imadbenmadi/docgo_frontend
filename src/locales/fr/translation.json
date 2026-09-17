@@ -1738,11 +1738,13 @@
       "approved": "Acceptée",
       "rejected": "Refusée",
       "cancelled": "Annulée",
-      "refunded": "Remboursée"
+      "refunded": "Remboursée",
+      "revoked": "Accès retiré"
     },
     "coupon": "Coupon",
     "historyTitle": "Vos commandes pour ce produit",
-    "manage": "Gérer dans Mes commandes"
+    "manage": "Gérer dans Mes commandes",
+    "accessRemoved": "Votre accès a été retiré. Contactez-nous si vous pensez qu'il s'agit d'une erreur."
   },
   "settings": {
     "changePassword": "Changer le mot de passe",

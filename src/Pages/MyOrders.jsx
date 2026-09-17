@@ -300,6 +300,15 @@ const MyOrders = () => {
                       </button>
                     )}
 
+                    {o.nextStep === "access_removed" && (
+                      <p className="text-sm text-gray-500">
+                        {t(
+                          "orders.accessRemoved",
+                          "Your access to this was removed. Contact us if you think this is a mistake.",
+                        )}
+                      </p>
+                    )}
+
                     {o.nextStep === "wait_for_review" && (
                       <p className="text-sm text-gray-500">
                         {t(
