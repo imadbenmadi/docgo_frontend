@@ -2,10 +2,40 @@ import PropTypes from "prop-types";
 import { FaCheckCircle, FaDollarSign, FaPlay } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ImageWithFallback from "../../Common/ImageWithFallback";
 import CoursePaymentButton from "../../PaymentHistory/CoursePaymentButton";
 import { buildApiUrl } from "../../../utils/apiBaseUrl";
 
+
+const STR_EN = {
+  free: "Free",
+  oneTime: "One-time payment, lifetime access",
+  enrolled: "Enrolled",
+  fullAccess: "You have full access to this course",
+  progress: "Progress",
+  certAvailable: "Certificate available",
+  certText: "Congratulations! You can download your certificate.",
+  continue: "Continue learning",
+  underReview: "Payment under review",
+  underReviewText: "Our team is checking your payment.",
+  reference: "Reference:",
+  pending: "Waiting for approval",
+  rejected: "Payment rejected",
+  reason: "Reason:",
+  resubmitText: "You can send a new receipt.",
+  resubmit: "Send a new receipt",
+  removed: "Access removed",
+  removedText: "Your access to this course was removed by an administrator.",
+  newOrderText: "You can place a new order.",
+  enrollFree: "Enroll for free",
+  enrollFor: "Enroll for",
+  enrolling: "Enrolling...",
+  lifetime: "Lifetime access",
+  devices: "Mobile and desktop access",
+  certificate: "Certificate of completion",
+  downloads: "Downloadable resources",
+};
 const CourseSmallCard = ({
   course,
   userStatus,
@@ -21,7 +51,8 @@ const CourseSmallCard = ({
   paymentStatus, // Add payment status prop
 }) => {
   const navigate = useNavigate();
-  // const { t } = useTranslation(); // Translation removed as not used in this component
+  const { t } = useTranslation();
+  const T = (key) => t(`courseCard.${key}`, STR_EN[key]);
 
   return (
     <div className="bg-white rounded-2xl shadow-2xl p-8 sticky top-6 border border-gray-100">
@@ -47,7 +78,7 @@ const CourseSmallCard = ({
       <div className="text-center mb-6">
         <div className="text-4xl font-bold text-gray-900 mb-2">
           {isFree ? (
-            <span className="text-green-600">Free</span>
+            <span className="text-green-600">{T("free")}</span>
           ) : (
             <span className="flex items-center justify-center">
               {/* <FaDollarSign className="text-2xl mr-1" /> */}
@@ -57,7 +88,7 @@ const CourseSmallCard = ({
         </div>
         {!isFree && (
           <div className="text-sm text-gray-500">
-            One-time payment Lifetime access
+            {T("oneTime")}
           </div>
         )}
       </div>
@@ -70,10 +101,10 @@ const CourseSmallCard = ({
             <div className="bg-green-50 border border-green-200 rounded-xl p-4">
               <div className="flex items-center text-green-700 mb-2">
                 <FaCheckCircle className="mr-2" />
-                <span className="font-semibold">Enrolled Successfully!</span>
+                <span className="font-semibold">{T("enrolled")}</span>
               </div>
               <div className="text-sm text-green-600">
-                You have full access to this course
+                {T("fullAccess")}
               </div>
             </div>
 
@@ -81,7 +112,7 @@ const CourseSmallCard = ({
             {course?.uploadType !== "zip" && courseProgress && (
               <div className="bg-gray-50 rounded-xl p-4">
                 <div className="flex justify-between text-sm text-gray-600 mb-2">
-                  <span>Progress</span>
+                  <span>{T("progress")}</span>
                   <span>
                     {Math.round(courseProgress.OverallProgress || 0)}%
                   </span>
@@ -106,15 +137,15 @@ const CourseSmallCard = ({
               <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                 <div className="flex items-center text-yellow-700 mb-1">
                   <span className="mr-2"></span>
-                  <span className="font-semibold">Certificate Available</span>
+                  <span className="font-semibold">{T("certAvailable")}</span>
                 </div>
                 <div className="text-sm text-yellow-600">
-                  Congratulations! You can download your certificate.
+                  {T("certText")}
                 </div>
               </div>
             )}
 
-            {/* Continue Learning Button */}
+            {/* {T("continue")} Button */}
             <button
               onClick={() =>
                 navigate(
@@ -126,7 +157,7 @@ const CourseSmallCard = ({
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center"
             >
               <FaPlay className="mr-2" />
-              Continue Learning
+              {T("continue")}
             </button>
 
             {/* View Payment History Button */}
@@ -144,13 +175,13 @@ const CourseSmallCard = ({
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
               <div className="flex items-center text-yellow-700 mb-2">
                 <span className="mr-2"></span>
-                <span className="font-semibold">Payment Under Review</span>
+                <span className="font-semibold">{T("underReview")}</span>
               </div>
               <div className="text-sm text-yellow-600 mb-2">
-                Your payment is being verified by our admin team.
+                {T("underReviewText")}
               </div>
               <div className="text-xs text-yellow-500 bg-yellow-100 rounded p-2 mt-2">
-                <strong>Transaction ID:</strong> {paymentStatus.transactionId}
+                <strong>{T("reference")}</strong> {paymentStatus.transactionId}
               </div>
               <div className="text-xs text-yellow-600 mt-2">
                 Estimated time: 24-48 hours
@@ -160,7 +191,7 @@ const CourseSmallCard = ({
               disabled
               className="w-full bg-gray-300 text-gray-600 font-semibold py-4 px-6 rounded-xl cursor-not-allowed"
             >
-              Enrollment Pending Approval
+              {T("pending")}
             </button>
           </div>
         ) : paymentStatus && paymentStatus.status === "rejected" ? (
@@ -169,13 +200,13 @@ const CourseSmallCard = ({
             <div className="bg-red-50 border border-red-200 rounded-xl p-4">
               <div className="flex items-center text-red-700 mb-2">
                 <span className="mr-2"></span>
-                <span className="font-semibold">Payment Rejected</span>
+                <span className="font-semibold">{T("rejected")}</span>
               </div>
               <div className="text-sm text-red-600 mb-2">
-                <strong>Reason:</strong> {paymentStatus.rejectionReason}
+                <strong>{T("reason")}</strong> {paymentStatus.rejectionReason}
               </div>
               <div className="text-xs text-red-500">
-                You can resubmit a new payment screenshot.
+                {T("resubmitText")}
               </div>
             </div>
             <button
@@ -183,7 +214,7 @@ const CourseSmallCard = ({
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center"
             >
               <span className="mr-2"></span>
-              Resubmit Payment
+              {T("resubmit")}
             </button>
           </div>
         ) : paymentStatus && paymentStatus.status === "deleted" ? (
@@ -192,18 +223,18 @@ const CourseSmallCard = ({
             <div className="bg-gray-50 border border-gray-300 rounded-xl p-4">
               <div className="flex items-center text-gray-700 mb-2">
                 <span className="mr-2"></span>
-                <span className="font-semibold">Payment Deleted</span>
+                <span className="font-semibold">{T("removed")}</span>
               </div>
               <div className="text-sm text-gray-600 mb-2">
-                Your payment has been removed by the administrator.
+                {T("removedText")}
               </div>
               {paymentStatus.rejectionReason && (
                 <div className="text-xs text-gray-500 bg-gray-100 rounded p-2 mt-2">
-                  <strong>Reason:</strong> {paymentStatus.rejectionReason}
+                  <strong>{T("reason")}</strong> {paymentStatus.rejectionReason}
                 </div>
               )}
               <div className="text-xs text-gray-600 mt-2">
-                You can submit a new payment application.
+                {T("newOrderText")}
               </div>
             </div>
             <button
@@ -212,8 +243,8 @@ const CourseSmallCard = ({
             >
               <span className="mr-2"></span>
               {isFree
-                ? "Enroll for Free"
-                : `Enroll for ${coursePrice} ${currency}`}
+                ? T("enrollFree")
+                : `${T("enrollFor")} ${coursePrice} ${currency}`}
             </button>
           </div>
         ) : (
@@ -235,14 +266,14 @@ const CourseSmallCard = ({
             {enrolling ? (
               <>
                 <IoMdRefresh className="animate-spin mr-2" />
-                Enrolling...
+                {T("enrolling")}
               </>
             ) : (
               <>
                 <span className="mr-2">{isFree ? "" : ""}</span>
                 {isFree
-                  ? "Enroll for Free"
-                  : `Enroll for ${formatCurrency(coursePrice)}`}
+                  ? T("enrollFree")
+                  : `${T("enrollFor")} ${formatCurrency(coursePrice)}`}
               </>
             )}
           </button>
@@ -253,24 +284,20 @@ const CourseSmallCard = ({
       {/* <div className="space-y-3 text-sm text-gray-600">
         <div className="flex items-center">
           <span className="mr-3"></span>
-          <span>Lifetime access</span>
+          <span>{T("lifetime")}</span>
         </div>
         <div className="flex items-center">
           <span className="mr-3"></span>
-          <span>Mobile and desktop access</span>
+          <span>{T("devices")}</span>
         </div>
         <div className="flex items-center">
           <span className="mr-3"></span>
-          <span>Certificate of completion</span>
-        </div>
-        <div className="flex items-center">
-          <span className="mr-3"></span>
-          <span>30-day money-back guarantee</span>
+          <span>{T("certificate")}</span>
         </div>
         {userStatus?.hasDownloadAccess && (
           <div className="flex items-center">
             <span className="mr-3"></span>
-            <span>Downloadable resources</span>
+            <span>{T("downloads")}</span>
           </div>
         )}
       </div> */}

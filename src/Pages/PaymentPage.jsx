@@ -667,7 +667,7 @@ const PaymentPage = () => {
             <p className="text-gray-600 mt-2">
               {t(
                 "paymentPage.enrollmentMessage",
-                "Complete your enrollment in this course",
+                "Complete your order",
               )}
             </p>
           </div>
@@ -936,16 +936,7 @@ const PaymentPage = () => {
                     <span className="text-gray-700 leading-relaxed">
                       {t(
                         "paymentPage.instantAccess",
-                        "Instant access after payment",
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FaCheckCircle className="text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700 leading-relaxed">
-                      {t(
-                        "paymentPage.moneyBackGuarantee",
-                        "30-day money-back guarantee",
+                        "Access is given once we have checked your receipt",
                       )}
                     </span>
                   </div>

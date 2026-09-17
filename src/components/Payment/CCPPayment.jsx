@@ -557,13 +557,13 @@ const CCPPayment = ({
                 <li>
                   {t(
                     "paymentPage.ccpPaymentForm.instruction4",
-                    "We will verify your payment within 24 hours",
+                    "We check every payment and let you know the result",
                   )}
                 </li>
                 <li>
                   {t(
                     "paymentPage.ccpPaymentForm.instruction5",
-                    "You will receive course access after verification",
+                    "You get access once your payment has been checked",
                   )}
                 </li>
               </ol>
