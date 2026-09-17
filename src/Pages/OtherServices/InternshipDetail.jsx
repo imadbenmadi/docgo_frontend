@@ -62,8 +62,8 @@ export default function InternshipDetail() {
     ? "/dashboard/internships"
     : "/other-services/internships";
   const myApplicationsPath = isDashboardRoute
-    ? "/dashboard/service-applications"
-    : "/other-services/my-applications";
+    ? "/dashboard/my-orders"
+    : "/dashboard/my-orders";
   const selfPath = isDashboardRoute
     ? `/dashboard/internships/${id}`
     : `/other-services/internships/${id}`;

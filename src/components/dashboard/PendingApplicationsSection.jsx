@@ -278,7 +278,7 @@ const PendingApplicationsSection = ({ applications }) => {
       {allApplications.length > 5 && (
         <div className="mt-6 text-center">
           <button
-            onClick={() => navigate("/my-applications")}
+            onClick={() => navigate("/dashboard/my-orders")}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
           >
             {t("dashboard.viewAllApplications", "View All Applications")}

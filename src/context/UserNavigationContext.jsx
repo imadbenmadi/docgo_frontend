@@ -42,8 +42,7 @@ export const UserNavigationProvider = ({ children }) => {
       "/dashboard/my-programs": "healthpathglobal - Mes études à l’étranger",
       "/dashboard/cv": "healthpathglobal - CV Service",
       "/dashboard/internships": "healthpathglobal - Internships",
-      "/dashboard/service-applications":
-        "healthpathglobal - My Service Applications",
+      "/dashboard/my-orders": "healthpathglobal - My Orders",
     }),
     [],
   );

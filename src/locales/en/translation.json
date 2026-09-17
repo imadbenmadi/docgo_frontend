@@ -132,7 +132,8 @@
       "serviceApplications": "Service Applications",
       "certificates": "My Certificates",
       "payments": "All Payments",
-      "landingPage": "Landing Page"
+      "landingPage": "Landing Page",
+      "myOrders": "My orders"
     },
     "pendingApplications": "Pending applications",
     "enrolledCourses": "My enrolled courses",

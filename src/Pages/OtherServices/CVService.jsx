@@ -48,8 +48,8 @@ export default function CVService() {
     .startsWith("/dashboard");
   const servicesHomePath = isDashboardRoute ? "/dashboard" : "/other-services";
   const myApplicationsPath = isDashboardRoute
-    ? "/dashboard/service-applications"
-    : "/other-services/my-applications";
+    ? "/dashboard/my-orders"
+    : "/dashboard/my-orders";
   const cvListPath = isDashboardRoute ? "/dashboard/cv" : "/other-services/cv";
   const paymentPath = isDashboardRoute
     ? `/dashboard/payment/cv/${serviceId}`

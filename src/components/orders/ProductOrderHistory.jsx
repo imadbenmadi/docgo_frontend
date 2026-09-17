@@ -51,7 +51,7 @@ const ProductOrderHistory = ({ itemType, itemId, refreshKey = 0 }) => {
             {t("orders.historyTitle", "Your orders for this")}
           </h3>
           <Link
-            to="/my-orders"
+            to="/dashboard/my-orders"
             className="text-sm font-medium text-blue-600 hover:underline"
           >
             {t("orders.manage", "Manage in My orders")}

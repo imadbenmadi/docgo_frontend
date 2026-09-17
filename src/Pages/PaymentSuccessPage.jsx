@@ -84,7 +84,7 @@ const PaymentSuccessPage = () => {
           const redirectPath =
             itemType === "course"
               ? courseAccessPath || `/Courses/${courseId}/watch`
-              : `/my-applications`;
+              : `/dashboard/my-orders`;
           navigate(redirectPath);
           return 0;
         }
@@ -281,7 +281,7 @@ const PaymentSuccessPage = () => {
             ) : (
               <>
                 <Link
-                  to="/my-applications"
+                  to="/dashboard/my-orders"
                   className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200"
                 >
                   <span className="flex items-center justify-center gap-2">

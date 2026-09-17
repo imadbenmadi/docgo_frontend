@@ -50,8 +50,8 @@ const PaymentPage = () => {
   const afterPaymentPath = {
     course: `/Courses/${courseId}`,
     program: "/programs",
-    cv: "/other-services/my-applications",
-    internship: "/other-services/my-applications",
+    cv: "/dashboard/my-orders",
+    internship: "/dashboard/my-orders",
   };
   const location = useLocation();
   const navigate = useNavigate();

@@ -107,17 +107,10 @@ const UserSidebar = ({ isOpen, onClose }) => {
       badgeColor: "bg-red-500",
     },
     {
-      id: "applications",
-      name: t("dashboard.sidebar.applications", "Applications"),
-      icon: DocumentTextIcon,
-      path: "/dashboard/applications",
-      badge: null,
-    },
-    {
-      id: "service-applications",
-      name: t("dashboard.sidebar.serviceApplications", "Service Applications"),
-      icon: DocumentTextIcon,
-      path: "/dashboard/service-applications",
+      id: "my-orders",
+      name: t("dashboard.sidebar.myOrders", "My orders"),
+      icon: CreditCardIcon,
+      path: "/dashboard/my-orders",
       badge: null,
     },
     {
@@ -139,13 +132,6 @@ const UserSidebar = ({ isOpen, onClose }) => {
       name: t("dashboard.sidebar.certificates", "My Certificates"),
       icon: TrophyIcon,
       path: "/dashboard/certificates",
-      badge: null,
-    },
-    {
-      id: "all-payments",
-      name: t("dashboard.sidebar.payments", "All Payments"),
-      icon: CreditCardIcon,
-      path: "/dashboard/all-payments",
       badge: null,
     },
     {

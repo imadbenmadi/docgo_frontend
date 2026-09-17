@@ -43,7 +43,6 @@ const QuizContent = lazy(() => import("./Pages/QuizContent"));
 const UserMessages_Default = lazy(() => import("./Pages/Dashboard/Messages/Default"));
 const UserMessages = lazy(() => import("./Pages/Dashboard/Messages/UserMessages"));
 const UserMessages_new = lazy(() => import("./Pages/Dashboard/Messages/UserMessages_new"));
-const UserApplications = lazy(() => import("./Pages/Dashboard/UserApplications"));
 const UserCertificates = lazy(() => import("./Pages/Dashboard/UserCertificates"));
 const UserFavorites = lazy(() => import("./Pages/Dashboard/UserFavorites"));
 const UserNotifications = lazy(() => import("./Pages/Dashboard/UserNotifications"));
@@ -401,20 +400,14 @@ const Routers = createBrowserRouter([
             element: <UserFavorites />,
           },
           {
-            path: "applications",
-            caseSensitive: false,
-            element: <UserApplications />,
-          },
-          {
-            path: "applications/:type",
-            caseSensitive: false,
-            element: <UserApplications />,
-          },
-          {
-            path: "service-applications",
+            path: "my-orders",
             caseSensitive: false,
             element: <MyOrders />,
           },
+          // Older links to the same page.
+          { path: "applications", element: <Navigate to="/dashboard/my-orders" replace /> },
+          { path: "applications/:type", element: <Navigate to="/dashboard/my-orders" replace /> },
+          { path: "service-applications", element: <Navigate to="/dashboard/my-orders" replace /> },
           {
             path: "cv",
             caseSensitive: false,
@@ -440,11 +433,7 @@ const Routers = createBrowserRouter([
             caseSensitive: false,
             element: <UserCertificates />,
           },
-          {
-            path: "all-payments",
-            caseSensitive: false,
-            element: <MyOrders />,
-          },
+          { path: "all-payments", element: <Navigate to="/dashboard/my-orders" replace /> },
         ],
       },
     ],
