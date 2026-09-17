@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { clientCoursesAPI } from "../API/Courses";
 import PaymentAPI from "../API/PaymentInfo";
+import { PaymentAPI as OrderStatusAPI } from "../API/Payment";
 import { clientProgramsAPI } from "../API/Programs";
 import { useAppContext } from "../AppContext";
 import ccpIcon from "../assets/ccp.png";
@@ -79,9 +80,9 @@ const PaymentPage = () => {
         const itemType = subject.kind;
         if (!itemType || !itemId) return;
 
-        const response = await apiClient.get(
-          `/user-payments/check-application/${itemType}/${itemId}`,
-        );
+        const response = {
+          data: (await OrderStatusAPI.checkPaymentApplication(itemType, itemId)).data || {},
+        };
 
         if (response.data.success && response.data.hasApplication) {
           const application = response.data.application;

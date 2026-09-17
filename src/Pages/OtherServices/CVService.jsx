@@ -3,6 +3,18 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FileText, Info, ShieldAlert } from "lucide-react";
 import apiClient from "../../utils/apiClient";
+import OrdersAPI from "../../API/Orders";
+
+/** An order, in the shape this page already draws. */
+const orderAsApplication = (o) => ({
+  id: o.id,
+  status: o.status === "approved" ? "accepted" : o.status,
+  paymentStatus: o.nextStep === "send_receipt" ? "pending" : o.paymentStatus,
+  amountPaid: o.price,
+  submissionDate: o.placedAt,
+  rejectionReason: o.rejectionReason,
+  content: o.content,
+});
 import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
@@ -19,7 +31,6 @@ export default function CVService() {
   const { isAuth } = useAppContext();
   const [cvService, setCVService] = useState(null);
   const [currentApp, setCurrentApp] = useState(null);
-  const [pendingApp, setPendingApp] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [content, setContent] = useState("");
@@ -53,39 +64,33 @@ export default function CVService() {
 
       if (isAuth) {
         try {
-          const appsRes = await apiClient.get(
-            "/other-services/my-cv-applications",
-          );
-          const all = Array.isArray(appsRes.data?.data)
-            ? appsRes.data.data
-            : [];
+          const res = await OrdersAPI.mine({ itemType: "cv" });
+          if (!res.success) throw new Error(res.message);
 
-          // A user may have an application open against several services, so
-          // this page only considers the ones for the service being viewed.
-          const apps = all.filter(
-            (a) => String(a?.serviceId) === String(serviceId),
-          );
+          // Newest first; only the orders for the service on this page.
+          const apps = res.orders
+            .filter((o) => String(o.itemId) === String(serviceId))
+            .map(orderAsApplication);
 
           const latest = apps[0] || null;
+          // An order that is pending or approved blocks a new one.
           const latestPending =
-            apps.find((a) => a?.status === "pending") || null;
+            apps.find((a) => a.status === "pending" || a.status === "accepted") ||
+            null;
 
           setCurrentApp(latest);
-          setPendingApp(latestPending);
           setHasExistingApp(Boolean(latestPending));
-          setContent(latestPending?.content || "");
+          setContent("");
         } catch (err) {
           if (err.response?.status !== 404) {
             // ignore; user might not have an application yet
           }
           setCurrentApp(null);
-          setPendingApp(null);
           setHasExistingApp(false);
           setContent("");
         }
       } else {
         setCurrentApp(null);
-        setPendingApp(null);
         setHasExistingApp(false);
         setContent("");
       }
@@ -147,28 +152,32 @@ export default function CVService() {
 
     try {
       setIsSaving(true);
-      const response = await apiClient.post("/other-services/cv-application", {
-        serviceId,
+      const placed = await OrdersAPI.place({
+        itemType: "cv",
+        itemId: serviceId,
         content,
-        applicationId: pendingApp?.id,
       });
+      if (!placed.success) {
+        throw { response: { data: { message: placed.message } } };
+      }
+
+      await fetchData();
+
+      // A paid service waits for its receipt: go straight to paying.
+      if (placed.order?.nextStep === "send_receipt") {
+        navigate(paymentPath);
+        return;
+      }
 
       Swal.fire({
         icon: "success",
         title: t("cvServicePage.success", "Success") || "Success",
-        text: hasExistingApp
-          ? t(
-              "cvServicePage.updated",
-              "Your CV application has been updated",
-            ) || "Your CV application has been updated"
-          : t(
-              "cvServicePage.submitted",
-              "Your CV application has been submitted successfully",
-            ) || "Your CV application has been submitted successfully",
+        text:
+          t(
+            "cvServicePage.submitted",
+            "Your CV application has been submitted successfully",
+          ) || "Your CV application has been submitted successfully",
       });
-
-      setCurrentApp(response.data.data);
-      await fetchData();
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -503,6 +512,14 @@ export default function CVService() {
                 "cvServicePage.disabledApply",
                 "Applications are temporarily disabled.",
               ) || "Applications are temporarily disabled."}
+            </p>
+          ) : hasExistingApp ? (
+            <p className="text-gray-600 p-4 bg-gray-50 rounded-xl">
+              {t(
+                "cvServicePage.alreadyOpen",
+                "You already have a request open for this service. Its status is shown above.",
+              ) ||
+                "You already have a request open for this service. Its status is shown above."}
             </p>
           ) : (
             <>

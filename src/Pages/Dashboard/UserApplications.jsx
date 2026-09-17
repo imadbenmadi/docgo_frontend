@@ -263,7 +263,7 @@ const UserApplications = () => {
         if (itemId && type) {
           const result = await PaymentAPI.checkPaymentApplication(type, itemId);
           if (result.success && result.data) {
-            setPaymentStatus(result.data.status);
+            setPaymentStatus(result.data.application?.status || null);
           }
         }
       };

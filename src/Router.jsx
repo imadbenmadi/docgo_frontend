@@ -50,7 +50,6 @@ const UserNotifications = lazy(() => import("./Pages/Dashboard/UserNotifications
 const UserSettings = lazy(() => import("./Pages/Dashboard/UserSettings"));
 const MyLearning = lazy(() => import("./Pages/Dashboard/MyLearning"));
 const MyPrograms = lazy(() => import("./Pages/Dashboard/MyPrograms"));
-const UserAllPaymentsPage = lazy(() => import("./Pages/Dashboard/UserAllPaymentsPage"));
 const ProgramApplicationStatus = lazy(() => import("./Pages/ProgramApplicationStatus"));
 // Other Services
 const OtherServices = lazy(() => import("./Pages/OtherServices/OtherServices"));
@@ -444,7 +443,7 @@ const Routers = createBrowserRouter([
           {
             path: "all-payments",
             caseSensitive: false,
-            element: <UserAllPaymentsPage />,
+            element: <MyOrders />,
           },
         ],
       },

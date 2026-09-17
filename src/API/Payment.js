@@ -3,70 +3,53 @@ import OrdersAPI from "./Orders";
 
 // Payment API (CCP screenshot payments only for now)
 export const PaymentAPI = {
-  // =================================================================
-  // CHECK PAYMENT APPLICATION
-  // =================================================================
-
-  // Check if user has an existing payment application for an item
+  /**
+   * Where this user stands on one item, in the shape the payment screens read.
+   *
+   * An order still waiting for its receipt is not reported: the user is on
+   * the way to paying it, and the payment step reuses that order.
+   */
   checkPaymentApplication: async (itemType, itemId) => {
-    try {
-      const response = await apiClient.get(
-        `/user-payments/check-application/${itemType}/${itemId}`,
-      );
-
+    const res = await OrdersAPI.access(itemType, itemId);
+    if (!res.success) return res;
+    if (res.hasAccess) {
       return {
         success: true,
-        data: response.data,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message:
-          error.response?.data?.message ||
-          "Failed to check payment application",
+        data: {
+          success: true,
+          hasApplication: true,
+          canSubmitNew: false,
+          application: { status: "approved" },
+        },
       };
     }
+    const order = res.order;
+    if (!order || order.nextStep === "send_receipt") {
+      return { success: true, data: { success: true, hasApplication: false } };
+    }
+    return {
+      success: true,
+      data: {
+        success: true,
+        hasApplication: true,
+        canSubmitNew: order.status !== "pending",
+        application: {
+          id: order.id,
+          status: order.status,
+          rejectionReason: order.rejectionReason,
+          transactionId: order.reference,
+          amount: order.price,
+          currency: order.currency,
+          createdAt: order.placedAt,
+        },
+      },
+    };
   },
 
-  // Get all user's payments
+  /** Every order this user has placed. */
   getMyPayments: async () => {
-    try {
-      const response = await apiClient.get("/user-payments/my-payments");
-
-      return {
-        success: true,
-        data: response.data.data,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.response?.data?.message || "Failed to fetch payments",
-      };
-    }
-  },
-
-  // =================================================================
-  // ONLINE PAYMENT METHODS (DISABLED)
-  // =================================================================
-
-  // Create online payment order
-  createPayPalPayment: async (itemData) => {
-    return {
-      success: false,
-      message:
-        "Online payments are disabled. Please use CCP screenshot payment.",
-      error: "PAYPAL_DISABLED",
-    };
-  },
-
-  // Capture online payment after approval
-  capturePayPalPayment: async (orderId) => {
-    return {
-      success: false,
-      message:
-        "Online payments are disabled. Please use CCP screenshot payment.",
-      error: "PAYPAL_DISABLED",
-    };
+    const res = await OrdersAPI.mine();
+    return res.success ? { success: true, data: res.orders } : res;
   },
 
   // =================================================================
@@ -185,70 +168,6 @@ export const PaymentAPI = {
     message: "Nothing is cleaned up - the order is kept.",
   }),
 
-  // =================================================================
-  // PAYMENT HISTORY AND STATUS
-  // =================================================================
-
-  // Get user payment history
-  getUserPayments: async (params = {}) => {
-    try {
-      const response = await apiClient.get("/payment/my-payments", {
-        params,
-      });
-
-      return {
-        success: true,
-        data: response.data.data,
-        message: "Payment history fetched successfully",
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message:
-          error.response?.data?.message || "Failed to fetch payment history",
-        error: error.response?.data?.error || error.message,
-      };
-    }
-  },
-
-  // Get specific payment details
-  getPaymentDetails: async (paymentId) => {
-    try {
-      const response = await apiClient.get(`/payment/${paymentId}`);
-
-      return {
-        success: true,
-        data: response.data.data,
-        message: "Payment details fetched successfully",
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message:
-          error.response?.data?.message || "Failed to fetch payment details",
-        error: error.response?.data?.error || error.message,
-      };
-    }
-  },
-
-  // Cancel payment
-  cancelPayment: async (paymentId) => {
-    try {
-      const response = await apiClient.post(`/payment/${paymentId}/cancel`);
-
-      return {
-        success: true,
-        data: response.data.data,
-        message: "Payment cancelled successfully",
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.response?.data?.message || "Failed to cancel payment",
-        error: error.response?.data?.error || error.message,
-      };
-    }
-  },
 };
 
 export default PaymentAPI;

@@ -50,16 +50,6 @@ export const courseService = {
     }
   },
 
-  // Apply for a course
-  applyCourse: async (courseData) => {
-    try {
-      const response = await api.post(`/enrollment/courses/apply`, courseData);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
   /**
    * Enrol in a free course.
    *
@@ -76,16 +66,6 @@ export const courseService = {
       itemId: courseId,
     });
     return response.data;
-  },
-
-  // Get user's course applications
-  getUserApplications: async () => {
-    try {
-      const response = await api.get(`/Users/Courses/applications`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
   },
 
   // Get course progress

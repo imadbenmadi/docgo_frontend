@@ -28,7 +28,7 @@ import MainLoading from "../MainLoading";
 import { useAppContext } from "../AppContext";
 import apiClient from "../services/apiClient";
 import RichTextDisplay from "../components/Common/RichTextEditor/RichTextDisplay";
-import { buildApiUrl } from "../utils/apiBaseUrl";
+import FilePreview from "../components/Common/FilePreview";
 
 const statusBadgeClass = (status) => {
   const base =
@@ -375,42 +375,11 @@ export default function ProgramApplicationStatus() {
                       )}
                     </p>
                   </div>
-                  <div className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video max-h-96">
-                    <img
-                      src={buildApiUrl(
-                        `/media/stream/pdf/${application.screenShot}`,
-                      )}
-                      alt={t(
-                        "enrolledProgram.paymentReceipt",
-                        "Payment Receipt",
-                        "Payment Receipt",
-                      )}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = "none";
-                      }}
-                    />
-                    {!application.screenShot && (
-                      <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                        <FileText className="w-12 h-12 opacity-50" />
-                      </div>
-                    )}
-                  </div>
-                  <a
-                    href={buildApiUrl(
-                      `/payment-history/screenshot/${application.paymentId || application.id}/download`,
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
-                  >
-                    <Eye className="w-4 h-4" />
-                    {t(
-                      "enrolledProgram.viewFullImage",
-                      "View Full Image",
-                      "View Full Image",
-                    )}
-                  </a>
+                  <FilePreview
+                    path={`/payment_proofs/${String(application.screenShot).split("/").pop()}`}
+                    name={t("enrolledProgram.paymentReceipt", "Payment Receipt", "Payment Receipt")}
+                    height="24rem"
+                  />
                 </div>
               )}
 

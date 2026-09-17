@@ -1,6 +1,30 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../utils/apiClient";
+import OrdersAPI from "../../API/Orders";
+
+/** This user's newest order for one internship, in the shape the page draws. */
+const loadMyOrder = async (internshipId) => {
+  const res = await OrdersAPI.mine({ itemType: "internship" });
+  if (!res.success) {
+    const err = new Error(res.message);
+    err.response = { status: res.status };
+    throw err;
+  }
+  const o = res.orders.find((x) => String(x.itemId) === String(internshipId));
+  if (!o) return null;
+  return {
+    id: o.id,
+    status: o.status === "approved" ? "accepted" : o.status,
+    paymentStatus: o.nextStep === "send_receipt" ? "pending" : o.paymentStatus,
+    amountPaid: o.price,
+    rejectionReason: o.rejectionReason,
+    content: o.content,
+  };
+};
+
+/** A pending or accepted order blocks another one. */
+const isOpen = (app) => app?.status === "pending" || app?.status === "accepted";
 import Swal from "sweetalert2";
 import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
@@ -90,18 +114,9 @@ export default function InternshipDetail() {
 
       try {
         setIsCheckingApplication(true);
-        const res = await apiClient.get(
-          "/other-services/my-internship-applications",
-        );
-        const apps = Array.isArray(res.data?.data) ? res.data.data : [];
-
-        const found = apps.find((a) => {
-          const internshipId = a?.internshipId ?? a?.Internship?.id;
-          return String(internshipId) === String(id);
-        });
-
-        setMyApplication(found || null);
-        setHasApplied(Boolean(found));
+        const found = await loadMyOrder(id);
+        setMyApplication(found);
+        setHasApplied(isOpen(found));
       } catch (error) {
         if (error?.response?.status === 401) {
           setMyApplication(null);
@@ -147,13 +162,26 @@ export default function InternshipDetail() {
 
     try {
       setIsSaving(true);
-      const res = await apiClient.post(
-        "/other-services/internship-application",
-        {
-          internshipId: id,
-          content,
-        },
-      );
+      const placed = await OrdersAPI.place({
+        itemType: "internship",
+        itemId: id,
+        content,
+      });
+      if (!placed.success) {
+        const err = new Error(placed.message);
+        err.response = { status: placed.status, data: { message: placed.message } };
+        throw err;
+      }
+
+      const mine = await loadMyOrder(id);
+      setMyApplication(mine);
+      setHasApplied(isOpen(mine));
+
+      // A paid internship waits for its receipt: go straight to paying.
+      if (placed.order?.nextStep === "send_receipt") {
+        navigate(paymentPath);
+        return;
+      }
 
       Swal.fire({
         icon: "success",
@@ -168,10 +196,8 @@ export default function InternshipDetail() {
           ) || "Your application has been submitted successfully",
       });
 
-      setMyApplication(res.data?.data || { status: "pending" });
-      setHasApplied(true);
     } catch (error) {
-      if (error.response?.status === 400) {
+      if (error.response?.status === 400 || error.response?.status === 409) {
         Swal.fire({
           icon: "error",
           title:
@@ -186,16 +212,7 @@ export default function InternshipDetail() {
 
         setHasApplied(true);
         try {
-          const listRes = await apiClient.get(
-            "/other-services/my-internship-applications",
-          );
-          const apps = Array.isArray(listRes.data?.data)
-            ? listRes.data.data
-            : [];
-          const found = apps.find(
-            (a) => String(a?.internshipId ?? a?.Internship?.id) === String(id),
-          );
-          setMyApplication(found || null);
+          setMyApplication(await loadMyOrder(id));
         } catch {
           // ignore
         }

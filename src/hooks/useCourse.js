@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import { useAppContext } from "../AppContext";
 import courseService from "../services/courseService";
-import apiClient from "../utils/apiClient";
+import { PaymentAPI as OrderStatusAPI } from "../API/Payment";
 import {
   showEnrollmentSuccess,
   showEnrollmentError,
@@ -40,9 +40,9 @@ export const useCourse = (courseId) => {
     if (!isAuth || !courseId) return;
 
     try {
-      const response = await apiClient.get(
-        `/user-payments/check-application/course/${courseId}`,
-      );
+      const response = {
+        data: (await OrderStatusAPI.checkPaymentApplication("course", courseId)).data || {},
+      };
 
       if (response.data.success && response.data.hasApplication) {
         setPaymentStatus({

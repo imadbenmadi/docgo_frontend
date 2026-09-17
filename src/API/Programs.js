@@ -45,40 +45,6 @@ export const clientProgramsAPI = {
     }
   },
 
-  // Get available countries
-  getCountries: async () => {
-    try {
-      const response = await apiClient.get("/Programs/filter/countries");
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  // Get specialties for a country
-  getSpecialties: async (country) => {
-    try {
-      const response = await apiClient.get("/Programs/filter/specialties", {
-        params: { country },
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  // Get types for a specialty
-  getTypes: async (specialty) => {
-    try {
-      const response = await apiClient.get("/Programs/filter/types", {
-        params: { specialty },
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
   // Get all register options (countries, specialties, types) in one call
   getRegisterOptions: async () => {
     try {

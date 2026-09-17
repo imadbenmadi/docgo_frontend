@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { clientProgramsAPI } from "../API/Programs";
 import { useAppContext } from "../AppContext";
 import apiClient from "../utils/apiClient";
+import { PaymentAPI as OrderStatusAPI } from "../API/Payment";
 
 export const useProgram = (programId) => {
   const [programData, setProgramData] = useState(null);
@@ -24,9 +25,9 @@ export const useProgram = (programId) => {
     if (!isAuth || !programId) return;
 
     try {
-      const response = await apiClient.get(
-        `/user-payments/check-application/program/${programId}`,
-      );
+      const response = {
+        data: (await OrderStatusAPI.checkPaymentApplication("program", programId)).data || {},
+      };
 
       if (response.data.success && response.data.hasApplication) {
         setPaymentStatus({

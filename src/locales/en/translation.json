@@ -790,7 +790,9 @@
     "deleteNotice": {
       "title": "Previous Payment Deleted",
       "text": "removed by the administrator"
-    }
+    },
+    "cv": "CV service",
+    "internship": "Internship"
   },
   "rejectionNotice": {
     "title": "Previous payment rejected",

@@ -783,7 +783,9 @@
       "reason": "Motif",
       "title": "Paiement refusé"
     },
-    "university": "Université / Établissement"
+    "university": "Université / Établissement",
+    "cv": "Service CV",
+    "internship": "Stage"
   },
   "rejectionNotice": {
     "title": "Paiement précédent rejeté",
