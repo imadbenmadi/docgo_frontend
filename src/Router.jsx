@@ -14,6 +14,7 @@ const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("./Pages/Auth/ResetPassword"));
 const Courses = lazy(() => import("./Pages/Courses"));
 const FAQPage = lazy(() => import("./Pages/FAQPage"));
+const PublicForm = lazy(() => import("./Pages/PublicForm"));
 const FavoritesPage = lazy(() => import("./Pages/FavoritesPage"));
 const Home = lazy(() => import("./Pages/Home"));
 // One list of everything ordered, for all four products, with what to do
@@ -182,6 +183,10 @@ const Routers = createBrowserRouter([
         path: "faq",
         caseSensitive: false,
         element: <FAQPage />,
+      },
+      {
+        path: "forms/:slug",
+        element: <PublicForm />,
       },
       {
         path: "favorites",

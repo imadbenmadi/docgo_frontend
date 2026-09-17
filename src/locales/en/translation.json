@@ -1951,5 +1951,18 @@
   "Rating": "Rating",
   "Questions about this course?": "Questions about this course?",
   "Click the Contact button to get in touch with us": "Click the Contact button to get in touch with us",
-  "Contact Us": "Contact Us"
+  "Contact Us": "Contact Us",
+  "forms": {
+    "error": "Your answers could not be sent.",
+    "yes": "Yes",
+    "closed": "This form is closed",
+    "missing": "This form is not available",
+    "home": "Back to the home page",
+    "thanks": "Thank you",
+    "signIn": "Please sign in to fill in this form.",
+    "signInLink": "Sign in",
+    "name": "Your name",
+    "email": "Your email",
+    "send": "Send"
+  }
 }

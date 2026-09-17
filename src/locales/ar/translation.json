@@ -1953,5 +1953,18 @@
   "Rating": "التقييم",
   "Questions about this course?": "أسئلة حول هذه الدورة؟",
   "Click the Contact button to get in touch with us": "اضغط على زر التواصل للتواصل معنا",
-  "Contact Us": "تواصل معنا"
+  "Contact Us": "تواصل معنا",
+  "forms": {
+    "error": "تعذر إرسال إجاباتك.",
+    "yes": "نعم",
+    "closed": "هذا النموذج مغلق",
+    "missing": "هذا النموذج غير متاح",
+    "home": "العودة إلى الصفحة الرئيسية",
+    "thanks": "شكرًا لك",
+    "signIn": "سجّل الدخول لملء هذا النموذج.",
+    "signInLink": "تسجيل الدخول",
+    "name": "اسمك",
+    "email": "بريدك الإلكتروني",
+    "send": "إرسال"
+  }
 }

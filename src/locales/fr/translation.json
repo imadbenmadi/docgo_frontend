@@ -1941,5 +1941,18 @@
   "Rating": "Note",
   "Questions about this course?": "Des questions sur ce cours ?",
   "Click the Contact button to get in touch with us": "Cliquez sur Contact pour nous écrire",
-  "Contact Us": "Nous contacter"
+  "Contact Us": "Nous contacter",
+  "forms": {
+    "error": "Vos réponses n'ont pas pu être envoyées.",
+    "yes": "Oui",
+    "closed": "Ce formulaire est fermé",
+    "missing": "Ce formulaire n'est pas disponible",
+    "home": "Retour à l'accueil",
+    "thanks": "Merci",
+    "signIn": "Connectez-vous pour remplir ce formulaire.",
+    "signInLink": "Se connecter",
+    "name": "Votre nom",
+    "email": "Votre e-mail",
+    "send": "Envoyer"
+  }
 }

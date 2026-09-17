@@ -463,7 +463,7 @@ function PdfViewer({ item, onComplete, isCompleted }) {
         )}
       </div>
       {item.description && (
-        <p className="text-gray-600 text-sm">{item.description}</p>
+        <RichTextDisplay content={item.description} textClassName="text-gray-600 text-sm" />
       )}
       {url ? (
         <FilePreview
@@ -527,7 +527,7 @@ function WordItemViewer({ item, onComplete, isCompleted }) {
         )}
       </div>
       {item.description && (
-        <p className="text-gray-600 text-sm">{item.description}</p>
+        <RichTextDisplay content={item.description} textClassName="text-gray-600 text-sm" />
       )}
       {/* Same fetch-and-render path as the PDF. WordViewer did its own
           version of this; one component doing it for every file type is one
@@ -703,7 +703,7 @@ function VideoItemPlayer({ item, courseId, onComplete, isCompleted }) {
         )}
       </div>
       {item.description && (
-        <p className="text-gray-600 text-sm">{item.description}</p>
+        <RichTextDisplay content={item.description} textClassName="text-gray-600 text-sm" />
       )}
 
       <div className="relative mx-auto w-full max-w-[860px] overflow-hidden rounded-2xl bg-black shadow-2xl border border-gray-200">
