@@ -40,7 +40,9 @@ const PublicForm = () => {
         setForm(data.data);
         setState("ready");
       })
-      .catch((err) => setState(err?.response?.status === 410 ? "closed" : "missing"));
+      .catch((err) =>
+        setState(err?.response?.status === 410 ? "closed" : "missing"),
+      );
   }, [slug]);
 
   const set = (key, value) => setAnswers((a) => ({ ...a, [key]: value }));
@@ -50,15 +52,23 @@ const PublicForm = () => {
     setError("");
     setSending(true);
     try {
-      const { data } = await apiClient.post(`/forms/${encodeURIComponent(slug)}`, {
-        answers,
-        name: isAuth ? `${user?.firstName || ""} ${user?.lastName || ""}`.trim() : name,
-        email: isAuth ? user?.email : email,
-      });
+      const { data } = await apiClient.post(
+        `/forms/${encodeURIComponent(slug)}`,
+        {
+          answers,
+          name: isAuth
+            ? `${user?.firstName || ""} ${user?.lastName || ""}`.trim()
+            : name,
+          email: isAuth ? user?.email : email,
+        },
+      );
       setThanks(data?.message || "");
       setState("sent");
     } catch (err) {
-      setError(err?.response?.data?.message || t("forms.error", "Your answers could not be sent."));
+      setError(
+        err?.response?.data?.message ||
+          t("forms.error", "Your answers could not be sent."),
+      );
     } finally {
       setSending(false);
     }
@@ -68,13 +78,28 @@ const PublicForm = () => {
     const value = answers[f.key];
     switch (f.type) {
       case "textarea":
-        return <textarea rows={4} className={input} value={value || ""} required={f.required} onChange={(e) => set(f.key, e.target.value)} />;
+        return (
+          <textarea
+            rows={4}
+            className={input}
+            value={value || ""}
+            required={f.required}
+            onChange={(e) => set(f.key, e.target.value)}
+          />
+        );
       case "select":
         return (
-          <select className={input} value={value || ""} required={f.required} onChange={(e) => set(f.key, e.target.value)}>
+          <select
+            className={input}
+            value={value || ""}
+            required={f.required}
+            onChange={(e) => set(f.key, e.target.value)}
+          >
             <option value="">—</option>
             {optionsOf(f).map((o) => (
-              <option key={o} value={o}>{o}</option>
+              <option key={o} value={o}>
+                {o}
+              </option>
             ))}
           </select>
         );
@@ -82,8 +107,18 @@ const PublicForm = () => {
         return (
           <div className="space-y-1.5">
             {optionsOf(f).map((o) => (
-              <label key={o} className="flex items-center gap-2 text-sm text-gray-700">
-                <input type="radio" name={f.key} value={o} checked={value === o} required={f.required} onChange={() => set(f.key, o)} />
+              <label
+                key={o}
+                className="flex items-center gap-2 text-sm text-gray-700"
+              >
+                <input
+                  type="radio"
+                  name={f.key}
+                  value={o}
+                  checked={value === o}
+                  required={f.required}
+                  onChange={() => set(f.key, o)}
+                />
                 {o}
               </label>
             ))}
@@ -94,7 +129,12 @@ const PublicForm = () => {
         if (!opts.length) {
           return (
             <label className="flex items-center gap-2 text-sm text-gray-700">
-              <input type="checkbox" checked={Boolean(value)} required={f.required} onChange={(e) => set(f.key, e.target.checked)} />
+              <input
+                type="checkbox"
+                checked={Boolean(value)}
+                required={f.required}
+                onChange={(e) => set(f.key, e.target.checked)}
+              />
               {t("forms.yes", "Yes")}
             </label>
           );
@@ -103,11 +143,21 @@ const PublicForm = () => {
         return (
           <div className="space-y-1.5">
             {opts.map((o) => (
-              <label key={o} className="flex items-center gap-2 text-sm text-gray-700">
+              <label
+                key={o}
+                className="flex items-center gap-2 text-sm text-gray-700"
+              >
                 <input
                   type="checkbox"
                   checked={list.includes(o)}
-                  onChange={(e) => set(f.key, e.target.checked ? [...list, o] : list.filter((x) => x !== o))}
+                  onChange={(e) =>
+                    set(
+                      f.key,
+                      e.target.checked
+                        ? [...list, o]
+                        : list.filter((x) => x !== o),
+                    )
+                  }
                 />
                 {o}
               </label>
@@ -116,8 +166,23 @@ const PublicForm = () => {
         );
       }
       default: {
-        const type = { email: "email", phone: "tel", number: "number", date: "date", file_link: "url" }[f.type] || "text";
-        return <input type={type} className={input} value={value || ""} required={f.required} onChange={(e) => set(f.key, e.target.value)} />;
+        const type =
+          {
+            email: "email",
+            phone: "tel",
+            number: "number",
+            date: "date",
+            file_link: "url",
+          }[f.type] || "text";
+        return (
+          <input
+            type={type}
+            className={input}
+            value={value || ""}
+            required={f.required}
+            onChange={(e) => set(f.key, e.target.value)}
+          />
+        );
       }
     }
   };
@@ -134,9 +199,14 @@ const PublicForm = () => {
     return (
       <div className="mx-auto max-w-lg px-4 py-24 text-center">
         <h1 className="text-2xl font-bold text-gray-900">
-          {state === "closed" ? t("forms.closed", "This form is closed") : t("forms.missing", "This form is not available")}
+          {state === "closed"
+            ? t("forms.closed", "This form is closed")
+            : t("forms.missing", "This form is not available")}
         </h1>
-        <Link to="/" className="mt-6 inline-block text-blue-600 hover:underline">
+        <Link
+          to="/"
+          className="mt-6 inline-block text-blue-600 hover:underline"
+        >
           {t("forms.home", "Back to the home page")}
         </Link>
       </div>
@@ -147,7 +217,9 @@ const PublicForm = () => {
     return (
       <div className="mx-auto max-w-lg px-4 py-24 text-center">
         <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
-        <h1 className="mt-4 text-2xl font-bold text-gray-900">{t("forms.thanks", "Thank you")}</h1>
+        <h1 className="mt-4 text-2xl font-bold text-gray-900">
+          {t("forms.thanks", "Thank you")}
+        </h1>
         {thanks && <p className="mt-2 text-gray-600">{thanks}</p>}
       </div>
     );
@@ -160,13 +232,19 @@ const PublicForm = () => {
       <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-200 sm:p-8">
         <h1 className="text-2xl font-bold text-gray-900">{form.title}</h1>
         {form.description && (
-          <RichTextDisplay content={form.description} textClassName="mt-3 text-gray-600" />
+          <RichTextDisplay
+            content={form.description}
+            textClassName="mt-3 text-gray-600"
+          />
         )}
 
         {membersOnly ? (
           <div className="mt-8 rounded-xl bg-blue-50 p-4 text-sm text-blue-800">
             {t("forms.signIn", "Please sign in to fill in this form.")}{" "}
-            <Link to={`/login?next=${encodeURIComponent(`/forms/${slug}`)}`} className="font-semibold underline">
+            <Link
+              to={`/login?next=${encodeURIComponent(`/forms/${slug}`)}`}
+              className="font-semibold underline"
+            >
               {t("forms.signInLink", "Sign in")}
             </Link>
           </div>
@@ -176,27 +254,47 @@ const PublicForm = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-gray-700">
                   {t("forms.name", "Your name")}
-                  <input className={`${input} mt-1`} value={name} onChange={(e) => setName(e.target.value)} />
+                  <input
+                    className={`${input} mt-1`}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </label>
                 <label className="block text-sm font-medium text-gray-700">
                   {t("forms.email", "Your email")}
-                  <input type="email" className={`${input} mt-1`} value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <input
+                    type="email"
+                    className={`${input} mt-1`}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </label>
               </div>
             )}
 
-            {(form.fields || []).map((f) => (
+            {(Array.isArray(form.fields)
+              ? form.fields
+              : typeof form.fields === "string"
+                ? JSON.parse(form.fields || "[]")
+                : []
+            ).map((f) => (
               <div key={f.key}>
                 <p className="mb-1.5 text-sm font-medium text-gray-800">
                   {f.label}
                   {f.required && <span className="ml-0.5 text-red-500">*</span>}
                 </p>
-                {f.help && <p className="mb-1.5 text-xs text-gray-500">{f.help}</p>}
+                {f.help && (
+                  <p className="mb-1.5 text-xs text-gray-500">{f.help}</p>
+                )}
                 {field(f)}
               </div>
             ))}
 
-            {error && <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+            {error && (
+              <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                {error}
+              </p>
+            )}
 
             <button
               type="submit"
