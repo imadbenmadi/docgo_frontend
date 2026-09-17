@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 import OrdersAPI from "../API/Orders";
+import OrderPrice from "../components/orders/OrderPrice";
 
 /**
  * Everything this person has ordered, and what to do about each one.
@@ -247,9 +248,12 @@ const MyOrders = () => {
                         {o.itemTitle || t("orders.itemGone", "This item")}
                       </h2>
                       <p className="mt-0.5 text-sm text-gray-500">
-                        {o.isFree
-                          ? t("orders.free", "Free")
-                          : `${Number(o.price).toLocaleString("fr-FR")} ${o.currency}`}
+                        <OrderPrice order={o} />
+                        {o.placedAt && (
+                          <span className="ml-2 text-xs text-gray-400">
+                            {new Date(o.placedAt).toLocaleDateString()}
+                          </span>
+                        )}
                       </p>
                     </div>
 

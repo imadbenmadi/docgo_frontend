@@ -1739,7 +1739,10 @@
       "rejected": "Refusée",
       "cancelled": "Annulée",
       "refunded": "Remboursée"
-    }
+    },
+    "coupon": "Coupon",
+    "historyTitle": "Vos commandes pour ce produit",
+    "manage": "Gérer dans Mes commandes"
   },
   "settings": {
     "changePassword": "Changer le mot de passe",

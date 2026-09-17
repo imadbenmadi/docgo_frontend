@@ -10,6 +10,7 @@ import {
   Star,
   Users,
 } from "lucide-react";
+import ProductOrderHistory from "../components/orders/ProductOrderHistory";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -957,6 +958,7 @@ export const ProgramDetails = () => {
             onSuccess={() => setTimeout(() => setShowContactForm(false), 2500)}
           />
         )}
+        <ProductOrderHistory itemType="program" itemId={programId} />
       </div>
     </>
   );

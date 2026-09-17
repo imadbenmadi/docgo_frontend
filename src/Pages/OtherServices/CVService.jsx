@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ProductOrderHistory from "../../components/orders/ProductOrderHistory";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FileText, Info, ShieldAlert } from "lucide-react";
@@ -35,6 +36,7 @@ export default function CVService() {
   const [isSaving, setIsSaving] = useState(false);
   const [content, setContent] = useState("");
   const [hasExistingApp, setHasExistingApp] = useState(false);
+  const [historyKey, setHistoryKey] = useState(0);
 
   const isDashboardRoute = location.pathname
     .toLowerCase()
@@ -162,6 +164,7 @@ export default function CVService() {
       }
 
       await fetchData();
+      setHistoryKey((k) => k + 1);
 
       // A paid service waits for its receipt: go straight to paying.
       if (placed.order?.nextStep === "send_receipt") {
@@ -567,6 +570,7 @@ export default function CVService() {
         </div>
       </div>
       {/* A question about this service, with its id already attached. */}
+      <ProductOrderHistory itemType="cv" itemId={serviceId} refreshKey={historyKey} />
       <AskQuestion context="cv" subjectType="cv" subjectId={serviceId} />
     </div>
   );

@@ -13,6 +13,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import ProductOrderHistory from "../components/orders/ProductOrderHistory";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -813,6 +814,7 @@ export const Course = () => {
             </div>
           </div>
         )}
+        <ProductOrderHistory itemType="course" itemId={courseId} />
       </div>
     </>
   );

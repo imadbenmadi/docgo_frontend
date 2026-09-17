@@ -1824,7 +1824,10 @@
       "rejected": "Rejected",
       "cancelled": "Cancelled",
       "refunded": "Refunded"
-    }
+    },
+    "coupon": "Coupon",
+    "historyTitle": "Your orders for this",
+    "manage": "Manage in My orders"
   },
   "cvListPage": {
     "back": "Back to Services",

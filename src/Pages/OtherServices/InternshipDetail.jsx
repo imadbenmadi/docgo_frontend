@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import ProductOrderHistory from "../../components/orders/ProductOrderHistory";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../utils/apiClient";
 import OrdersAPI from "../../API/Orders";
@@ -44,6 +45,7 @@ export default function InternshipDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [content, setContent] = useState("");
+  const [historyKey, setHistoryKey] = useState(0);
   const [hasApplied, setHasApplied] = useState(false);
   const [myApplication, setMyApplication] = useState(null);
   const [isCheckingApplication, setIsCheckingApplication] = useState(false);
@@ -176,6 +178,7 @@ export default function InternshipDetail() {
       const mine = await loadMyOrder(id);
       setMyApplication(mine);
       setHasApplied(isOpen(mine));
+      setHistoryKey((k) => k + 1);
 
       // A paid internship waits for its receipt: go straight to paying.
       if (placed.order?.nextStep === "send_receipt") {
@@ -615,6 +618,7 @@ export default function InternshipDetail() {
           </div>
         )}
       </div>
+      <ProductOrderHistory itemType="internship" itemId={id} refreshKey={historyKey} />
       <AskQuestion context="internship" subjectType="internship" subjectId={id} />
     </div>
   );

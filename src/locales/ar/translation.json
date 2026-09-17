@@ -1747,7 +1747,10 @@
       "rejected": "مرفوض",
       "cancelled": "ملغى",
       "refunded": "مُسترجع"
-    }
+    },
+    "coupon": "قسيمة",
+    "historyTitle": "طلباتك لهذا العنصر",
+    "manage": "إدارة في طلباتي"
   },
   "settings": {
     "changePassword": "تغيير كلمة المرور",
