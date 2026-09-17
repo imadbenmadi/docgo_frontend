@@ -89,6 +89,43 @@ const humanSize = (bytes) => {
   return `${(bytes / 1024 / 1024).toFixed(1)} Mo`;
 };
 
+/**
+ * Fetch a file as a blob.
+ *
+ * Course media (/media/stream/...) may live on Bunny: the stream endpoint
+ * answers with a 302 to a signed CDN URL, and Bunny replies with
+ * Access-Control-Allow-Origin: *. A request sent with credentials - which the
+ * API client always is - may not accept a wildcard origin, so the browser
+ * throws the file away. For those paths the file is fetched in two steps:
+ * ask the API for a signed URL (with the session), then fetch that URL with
+ * no credentials. The URL carries its own short-lived token, so nothing is
+ * lost by leaving the cookie behind.
+ *
+ * Everything else - ZIP files, admin endpoints - is served from our own disk
+ * and goes through the API client as before.
+ */
+const fetchBlob = async (path) => {
+  if (path.startsWith("/media/stream/")) {
+    const { data } = await apiClient.get(
+      path.replace("/media/stream/", "/media/signed-url/"),
+    );
+    if (!data?.url) {
+      const err = new Error("No URL for this file");
+      err.response = { status: 404 };
+      throw err;
+    }
+    const res = await fetch(data.url, { credentials: "omit" });
+    if (!res.ok) {
+      const err = new Error(`HTTP ${res.status}`);
+      err.response = { status: res.status };
+      throw err;
+    }
+    return res.blob();
+  }
+  const res = await apiClient.get(path, { responseType: "blob" });
+  return res.data;
+};
+
 function FilePreview({
   path,
   name = "",
@@ -135,10 +172,8 @@ function FilePreview({
 
       setState("loading");
       try {
-        const res = await apiClient.get(path, { responseType: "blob" });
+        const blob = await fetchBlob(path);
         if (cancelled) return;
-
-        const blob = res.data;
 
         if (kind === "text") {
           setTextBody(await blob.text());
