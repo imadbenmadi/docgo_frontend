@@ -1,5 +1,10 @@
 import { lazy } from "react";
-import { createBrowserRouter, Navigate, redirect } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  redirect,
+  useParams,
+} from "react-router-dom";
 import App from "./App";
 import ProtectedRoute from "./ProtectedRoute";
 import { getApiBaseUrl } from "./utils/apiBaseUrl";
@@ -27,20 +32,16 @@ const PaymentSuccessPage = lazy(() => import("./Pages/PaymentSuccessPage"));
 const ProgramDetails = lazy(() => import("./Pages/ProgramDetails").then((m) => ({ default: m.ProgramDetails })));
 const Programs = lazy(() => import("./Pages/Programs").then((m) => ({ default: m.Programs })));
 import { CourseDetails } from "./components/course/CourseDetails";
-import AllContentVideosCourse from "./components/course/courseVideosContent/AllContentVideosCourse";
-import CourseVideosContent from "./components/course/courseVideosContent/CourseVideosContent";
 const Certificate = lazy(() => import("./Pages/Certificate"));
 const VerifyCertificate = lazy(() => import("./Pages/VerifyCertificate"));
 const Course = lazy(() => import("./Pages/Course"));
 const CourseResources = lazy(() => import("./Pages/CourseResources"));
-const CourseVideos = lazy(() => import("./Pages/CourseVideos"));
 const CourseSections = lazy(() => import("./Pages/CourseSections"));
 const CourseExploreZip = lazy(() => import("./Pages/CourseExploreZip"));
 const UserDashboard = lazy(() => import("./Pages/Dashboard/UserDashboard"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 const EditProfile = lazy(() => import("./Pages/Profile/EditProfile"));
 const Profile = lazy(() => import("./Pages/Profile/Profile"));
-const QuizContent = lazy(() => import("./Pages/QuizContent"));
 const UserMessages_Default = lazy(() => import("./Pages/Dashboard/Messages/Default"));
 const UserMessages = lazy(() => import("./Pages/Dashboard/Messages/UserMessages"));
 const UserMessages_new = lazy(() => import("./Pages/Dashboard/Messages/UserMessages_new"));
@@ -113,6 +114,12 @@ const protectedLoader = async ({ request }) => {
     return redirect(`/login?next=${encodeURIComponent(next)}`);
   }
   return null;
+};
+
+/** Old /Courses/:id/videos links, kept alive by pointing at the sections. */
+const LegacyVideosRedirect = () => {
+  const { courseId } = useParams();
+  return <Navigate to={`/Courses/${courseId}/watch`} replace />;
 };
 
 const Routers = createBrowserRouter([
@@ -278,31 +285,17 @@ const Routers = createBrowserRouter([
         loader: protectedLoader,
         element: <CourseExploreZip />,
       },
+      // The flat per-course video list is gone; everything lives in
+      // sections now. Old links land on the section player.
       {
         path: "Courses/:courseId/videos",
         caseSensitive: false,
-        element: <AllContentVideosCourse />,
-        children: [
-          {
-            index: true,
-            element: <CourseVideosContent />,
-          },
-          {
-            path: ":videoId",
-            caseSensitive: false,
-            element: <CourseVideosContent />,
-          },
-          {
-            path: "quiz",
-            caseSensitive: false,
-            element: <QuizContent />,
-          },
-          {
-            path: "certificate",
-            caseSensitive: false,
-            element: <Certificate />,
-          },
-        ],
+        element: <LegacyVideosRedirect />,
+      },
+      {
+        path: "Courses/:courseId/videos/*",
+        caseSensitive: false,
+        element: <LegacyVideosRedirect />,
       },
       {
         path: "profile",
