@@ -20,7 +20,6 @@ import { useAppContext } from "../AppContext";
 import { useProgram } from "../hooks/useProgram";
 import MainLoading from "../MainLoading";
 import apiClient from "../utils/apiClient";
-import { formatEuro } from "../utils/money";
 import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { useEffect } from "react";
@@ -664,11 +663,6 @@ export const ProgramDetails = () => {
                     ) : (
                       <div className="text-3xl font-bold text-gray-900">
                         {formatCurrency(programPrice, currency)}
-                        {formatEuro(programPrice, currency, i18n.language) && (
-                          <div className="mt-1 text-sm font-normal text-gray-500">
-                            {formatEuro(programPrice, currency, i18n.language)}
-                          </div>
-                        )}
                       </div>
                     )}
                   </div>

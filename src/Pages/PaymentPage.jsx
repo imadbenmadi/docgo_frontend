@@ -13,7 +13,7 @@ import CCPPayment from "../components/Payment/CCPPayment";
 import PaymentMethodSelector from "../components/Payment/PaymentMethodSelector";
 import MainLoading from "../MainLoading";
 import apiClient from "../utils/apiClient";
-import { formatEuro, formatPrice } from "../utils/money";
+import { formatPrice } from "../utils/money";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
 import AskQuestion from "../components/contact/AskQuestion";
@@ -909,11 +909,6 @@ const PaymentPage = () => {
                           {/* What that is worth in euros. The transfer is in
                               dinars - this is only so a reader abroad knows
                               what they are being asked for. */}
-                          {formatEuro(totalPrice, currency, i18n.language) && (
-                            <span className="text-xs font-normal text-gray-500">
-                              {formatEuro(totalPrice, currency, i18n.language)}
-                            </span>
-                          )}
                         </span>
                       </div>
                     </div>

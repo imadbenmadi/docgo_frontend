@@ -37,7 +37,7 @@ import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisp
 import { useTranslation } from "react-i18next";
 import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
 import FavoriteHeart from "../../components/Common/FavoriteHeart";
-import { formatEuro, formatPrice } from "../../utils/money";
+import { formatPrice } from "../../utils/money";
 import AskQuestion from "../../components/contact/AskQuestion";
 
 export default function InternshipDetail() {
@@ -352,19 +352,6 @@ export default function InternshipDetail() {
                       internship.price,
                       internship.currency || "DZD",
                       i18n.language,
-                    )}
-                    {formatEuro(
-                      internship.price,
-                      internship.currency || "DZD",
-                      i18n.language,
-                    ) && (
-                      <span className="ms-2 text-xs font-normal text-gray-500">
-                        {formatEuro(
-                          internship.price,
-                          internship.currency || "DZD",
-                          i18n.language,
-                        )}
-                      </span>
                     )}
                   </>
                 ) : (

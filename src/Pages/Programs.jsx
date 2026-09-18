@@ -975,7 +975,7 @@ export function Programs() {
                       <>
                         {t("Showing", "Showing") || "Showing"} {programs.length}{" "}
                         {t("of", "of") || "of"} {pagination.totalPrograms}{" "}
-                        programs
+                        {t("pluralLabel", "programs")}
                       </>
                     )}
                   </p>

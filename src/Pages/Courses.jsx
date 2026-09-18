@@ -676,7 +676,7 @@ export default function Courses() {
                     filters.featured ||
                     filters.certificate ? (
                       <>
-                        {courses.length} {t("course", "course") || "course"}
+                        {courses.length} {t("course.one", "course")}
                         {courses.length !== 1 ? "s" : ""}{" "}
                         {t("found", "found") || "found"}
                         {filters.search && (

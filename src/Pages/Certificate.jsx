@@ -286,7 +286,17 @@ export default function Certificate() {
       const qrPromises = [];
 
       objects.forEach((obj) => {
-        const ct = obj.get("customType");
+        // Templates written before the designer named these fields in camel
+        // case, so both spellings are accepted here.
+        const LEGACY = {
+          studentName: "STUDENT_NAME",
+          courseTitle: "COURSE_TITLE",
+          issueDate: "ISSUE_DATE",
+          verificationUrl: "VERIFICATION_URL",
+          qrCode: "QR_CODE",
+        };
+        const raw = obj.get("customType");
+        const ct = LEGACY[raw] || raw;
         if (!ct) return;
 
         if (ct === "STUDENT_NAME") {

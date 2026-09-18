@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ContactForm from "../components/contact/ContactForm";
-import { formatEuro, formatPrice } from "../utils/money";
+import { formatPrice } from "../utils/money";
 import apiClient from "../services/apiClient";
 
 const PaymentSuccessPage = () => {
@@ -174,11 +174,6 @@ const PaymentSuccessPage = () => {
                 </h4>
                 <p className="text-sm text-gray-600">
                   {formatPrice(paymentData.amount, "DZD", i18n.language)}
-                  {formatEuro(paymentData.amount, "DZD", i18n.language) && (
-                    <span className="ms-2 text-xs text-gray-500">
-                      {formatEuro(paymentData.amount, "DZD", i18n.language)}
-                    </span>
-                  )}
                 </p>
               </div>
             </div>

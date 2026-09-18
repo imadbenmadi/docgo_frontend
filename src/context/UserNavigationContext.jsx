@@ -21,28 +21,30 @@ export const UserNavigationProvider = ({ children }) => {
   // Route to page title mapping - memoized
   const titleMapping = useMemo(
     () => ({
-      "/": "healthpathglobal - Home",
-      "/home": "healthpathglobal - Home",
+      "/": "healthpathglobal - Accueil",
+      "/home": "healthpathglobal - Accueil",
       "/programs": "healthpathglobal - Explorer les études à l’étranger",
       "/courses": "healthpathglobal - Parcourir l'apprentissage",
       "/other-services": "healthpathglobal - Services",
-      "/other-services/cv": "healthpathglobal - CV Service",
-      "/other-services/internships": "healthpathglobal - Internships",
+      "/other-services/cv": "healthpathglobal - Service CV",
+      "/other-services/internships": "healthpathglobal - Stages",
       "/other-services/my-applications":
-        "healthpathglobal - My Service Applications",
-      "/faq": "healthpathglobal - Frequently Asked Questions",
-      "/favorites": "healthpathglobal - My Favorites",
+        "healthpathglobal - Mes demandes de services",
+      "/faq": "healthpathglobal - Questions fréquentes",
+      "/favorites": "healthpathglobal - Mes favoris",
+      "/dashboard/favorites": "healthpathglobal - Mes favoris",
+      "/dashboard/meetings": "healthpathglobal - Réunions",
       "/notifications": "healthpathglobal - Notifications",
-      "/myapplications": "healthpathglobal - My Applications",
-      "/my-applications": "healthpathglobal - My Applications",
-      "/profile": "healthpathglobal - My Profile",
-      "/profile/edit": "healthpathglobal - Edit Profile",
-      "/dashboard": "healthpathglobal - Dashboard",
-      "/dashboard/my-learning": "healthpathglobal - My Learning",
+      "/myapplications": "healthpathglobal - Mes demandes",
+      "/my-applications": "healthpathglobal - Mes demandes",
+      "/profile": "healthpathglobal - Mon profil",
+      "/profile/edit": "healthpathglobal - Modifier mon profil",
+      "/dashboard": "healthpathglobal - Mon espace",
+      "/dashboard/my-learning": "healthpathglobal - Mon apprentissage",
       "/dashboard/my-programs": "healthpathglobal - Mes études à l’étranger",
-      "/dashboard/cv": "healthpathglobal - CV Service",
-      "/dashboard/internships": "healthpathglobal - Internships",
-      "/dashboard/my-orders": "healthpathglobal - My Orders",
+      "/dashboard/cv": "healthpathglobal - Service CV",
+      "/dashboard/internships": "healthpathglobal - Stages",
+      "/dashboard/my-orders": "healthpathglobal - Mes commandes",
     }),
     [],
   );
@@ -63,28 +65,28 @@ export const UserNavigationProvider = ({ children }) => {
     if (currentPath.startsWith("/courses/")) {
       if (currentPath.includes("/watch")) {
         if (currentPath.includes("/quiz")) {
-          const title = "healthpathglobal - Course Quiz";
+          const title = "healthpathglobal - Quiz du cours";
           setPageTitle(title);
           document.title = title;
         } else if (currentPath.includes("/certificate")) {
-          const title = "healthpathglobal - Certificate";
+          const title = "healthpathglobal - Certificat";
           setPageTitle(title);
           document.title = title;
         } else if (currentPath.includes("/resources")) {
-          const title = "healthpathglobal - Course Resources";
+          const title = "healthpathglobal - Ressources du cours";
           setPageTitle(title);
           document.title = title;
         } else {
-          const title = "healthpathglobal - Watching Course";
+          const title = "healthpathglobal - Cours en cours";
           setPageTitle(title);
           document.title = title;
         }
       } else if (currentPath.includes("/videos")) {
-        const title = "healthpathglobal - Course Content";
+        const title = "healthpathglobal - Contenu du cours";
         setPageTitle(title);
         document.title = title;
       } else {
-        const title = "healthpathglobal - Course Details";
+        const title = "healthpathglobal - Détails du cours";
         setPageTitle(title);
         document.title = title;
       }
@@ -101,7 +103,7 @@ export const UserNavigationProvider = ({ children }) => {
 
     // Handle dashboard internship details
     if (currentPath.startsWith("/dashboard/internships/")) {
-      const title = "healthpathglobal - Internship Details";
+      const title = "healthpathglobal - Détails du stage";
       setPageTitle(title);
       document.title = title;
       return;
@@ -110,11 +112,11 @@ export const UserNavigationProvider = ({ children }) => {
     // Handle payment pages
     if (currentPath.startsWith("/payment/")) {
       if (currentPath.includes("/success")) {
-        const title = "healthpathglobal - Payment Successful";
+        const title = "healthpathglobal - Paiement réussi";
         setPageTitle(title);
         document.title = title;
       } else {
-        const title = "healthpathglobal - Payment";
+        const title = "healthpathglobal - Paiement";
         setPageTitle(title);
         document.title = title;
       }
@@ -123,7 +125,7 @@ export const UserNavigationProvider = ({ children }) => {
 
     // Handle search
     if (currentPath.startsWith("/search")) {
-      const title = "healthpathglobal - Search Results";
+      const title = "healthpathglobal - Résultats de recherche";
       setPageTitle(title);
       document.title = title;
       return;
@@ -133,17 +135,19 @@ export const UserNavigationProvider = ({ children }) => {
     if (currentPath.startsWith("/dashboard/")) {
       const pathSegment = currentPath.split("/")[2];
       const dashboardTitles = {
-        messages: "healthpathglobal - Dashboard - Messages",
-        applications: "healthpathglobal - Dashboard - My Applications",
-        certificates: "healthpathglobal - Dashboard - My Certificates",
-        favorites: "healthpathglobal - Dashboard - My Favorites",
-        notifications: "healthpathglobal - Dashboard - Notifications",
-        settings: "healthpathglobal - Dashboard - Settings",
-        "my-learning": "healthpathglobal - My Learning",
+        messages: "healthpathglobal - Espace - Messages",
+        applications: "healthpathglobal - Espace - Mes demandes",
+        certificates: "healthpathglobal - Espace - Mes certificats",
+        favorites: "healthpathglobal - Espace - Mes favoris",
+        notifications: "healthpathglobal - Espace - Notifications",
+        settings: "healthpathglobal - Espace - Paramètres",
+        "my-learning": "healthpathglobal - Mon apprentissage",
         "my-programs": "healthpathglobal - Mes études à l’étranger",
+        meetings: "healthpathglobal - Réunions",
+        "my-orders": "healthpathglobal - Mes commandes",
       };
       const title =
-        dashboardTitles[pathSegment] || "healthpathglobal - Dashboard";
+        dashboardTitles[pathSegment] || "healthpathglobal - Mon espace";
       setPageTitle(title);
       document.title = title;
       return;

@@ -14,7 +14,6 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useFavorite } from "../../hooks/useFavorite";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
-import { formatEuro } from "../../utils/money";
 
 // Individual list-row item - mirrors CourseCard logic in a horizontal layout
 function CourseListItem({ course }) {
@@ -48,12 +47,6 @@ function CourseListItem({ course }) {
       ? discountPrice === 0
       : price === 0 || !price;
 
-  const euroLine = formatEuro(
-    discountPrice !== undefined && discountPrice !== null
-      ? discountPrice
-      : price,
-    currency,
-  );
 
   const formatPrice = (p) => {
     if (!p || p === 0) return t("free", "Free") || "Free";
@@ -146,7 +139,7 @@ function CourseListItem({ course }) {
             {/* {course.certificate && (
               <span className="bg-purple-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
                 <Award className="w-2.5 h-2.5" />
-                {t("certificate", "Certificate") || "Cert"}
+                {t("certificate.badge", "Certificate") || "Cert"}
               </span>
             )} */}
           </div>
@@ -243,11 +236,6 @@ function CourseListItem({ course }) {
                 </span>
               )}
               {/* The euro indication, for a reader outside Algeria. */}
-              {euroLine && (
-                <span className="text-xs font-normal text-gray-500">
-                  {euroLine}
-                </span>
-              )}
               {enrollmentLabel && (
                 <span
                   className={`text-xs font-medium px-2 py-0.5 rounded-full border mt-1 ${enrollmentColor}`}

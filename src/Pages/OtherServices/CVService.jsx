@@ -26,7 +26,7 @@ import { useAppContext } from "../../AppContext";
 import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisplay";
 import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
 import FavoriteHeart from "../../components/Common/FavoriteHeart";
-import { formatEuro, formatPrice } from "../../utils/money";
+import { formatPrice } from "../../utils/money";
 import AskQuestion from "../../components/contact/AskQuestion";
 
 export default function CVService() {
@@ -260,19 +260,6 @@ export default function CVService() {
                         cvService.price,
                         cvService.currency || "DZD",
                         i18n.language,
-                      )}
-                      {formatEuro(
-                        cvService.price,
-                        cvService.currency || "DZD",
-                        i18n.language,
-                      ) && (
-                        <span className="ms-2 text-sm font-normal text-gray-500">
-                          {formatEuro(
-                            cvService.price,
-                            cvService.currency || "DZD",
-                            i18n.language,
-                          )}
-                        </span>
                       )}
                     </span>
                   )}
