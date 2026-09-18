@@ -5,6 +5,7 @@ import EnrolledProgramsSection from "./EnrolledProgramsSection";
 import PendingApplicationsSection from "./PendingApplicationsSection";
 import Stats from "./Stats";
 import UserDriveLinkDisplay from "../UserDriveLinkDisplay";
+import NextMeetingBanner from "./NextMeetingBanner";
 
 const DashboardOverview = ({
   user,
@@ -21,6 +22,9 @@ const DashboardOverview = ({
   const apiBase = import.meta.env.VITE_API_URL || "";
   return (
     <div className="md:container  mx-auto   ">
+      {/* A meeting happens at a time, so it is announced, not listed. */}
+      <NextMeetingBanner t={t} />
+
       {/* Welcome Section and Quick Actions - Flexed horizontally */}
       <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 mb-6 sm:mb-8 items-start">
         {/* Welcome Section */}

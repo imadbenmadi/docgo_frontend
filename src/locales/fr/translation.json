@@ -2293,10 +2293,23 @@
   "meetings": {
     "notOpen": "Cette réunion n'a pas encore commencé.",
     "title": "Réunions à venir",
-    "subtitle": "Les séances en direct des cours auxquels vous êtes inscrit.",
+    "subtitle": "Les séances en direct de vos cours et de vos programmes.",
     "empty": "Aucune réunion programmée pour le moment.",
     "session": "Séance",
     "cancelled": "Annulée",
-    "join": "Rejoindre"
+    "join": "Rejoindre",
+    "live": "En direct",
+    "next": "Prochaine réunion",
+    "seeAll": "Mes réunions",
+    "openItem": "Voir le cours",
+    "notYet": "Pas encore ouverte",
+    "opensSoon": "Le lien s'ouvre 15 minutes avant le début.",
+    "joinFailed": "Impossible d'ouvrir la réunion.",
+    "now": "maintenant",
+    "inMinutes": "dans {{count}} min",
+    "inHours": "dans {{count}} h",
+    "inDays": "dans {{count}} jour(s)",
+    "openCourse": "Voir le cours",
+    "openProgram": "Voir le programme"
   }
 }

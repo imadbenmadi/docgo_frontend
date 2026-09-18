@@ -2301,10 +2301,23 @@
   "meetings": {
     "notOpen": "This meeting is not open yet.",
     "title": "Réunions à venir",
-    "subtitle": "Les séances en direct des cours auxquels vous êtes inscrit.",
+    "subtitle": "The live sessions of your courses and programmes.",
     "empty": "Aucune réunion programmée pour le moment.",
     "session": "Séance",
     "cancelled": "Annulée",
-    "join": "Rejoindre"
+    "join": "Rejoindre",
+    "live": "Live",
+    "next": "Next meeting",
+    "seeAll": "My meetings",
+    "openItem": "Open",
+    "notYet": "Not open yet",
+    "opensSoon": "The link opens 15 minutes before the start.",
+    "joinFailed": "Could not open the meeting.",
+    "now": "now",
+    "inMinutes": "in {{count}} min",
+    "inHours": "in {{count}} h",
+    "inDays": "in {{count}} day(s)",
+    "openCourse": "Open the course",
+    "openProgram": "Open the programme"
   }
 }
