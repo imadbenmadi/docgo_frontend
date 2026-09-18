@@ -268,7 +268,8 @@ export default function Certificate() {
     });
     fabricInstanceRef.current = canvas;
 
-    const { studentName, courseName, verificationUrl } = certificateData;
+    const { studentName, courseName, verificationUrl, certificateId } =
+      certificateData;
     const issueDate = new Date().toLocaleDateString("fr-FR");
 
     canvas.loadFromJSON(certTemplate.fabricJson, () => {
@@ -307,6 +308,8 @@ export default function Certificate() {
           obj.set({ text: issueDate });
         } else if (ct === "VERIFICATION_URL") {
           obj.set({ text: verificationUrl || "" });
+        } else if (ct === "CERTIFICATE_ID") {
+          obj.set({ text: certificateId || "" });
         } else if (ct === "QR_CODE") {
           const qrUrl = qrCanvasRef.current?.toDataURL?.("image/png");
           if (qrUrl) {
