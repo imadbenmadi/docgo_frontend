@@ -45,6 +45,7 @@ const UserMessages_Default = lazy(() => import("./Pages/Dashboard/Messages/Defau
 const UserMessages = lazy(() => import("./Pages/Dashboard/Messages/UserMessages"));
 const UserMessages_new = lazy(() => import("./Pages/Dashboard/Messages/UserMessages_new"));
 const UserCertificates = lazy(() => import("./Pages/Dashboard/UserCertificates"));
+const UserMeetings = lazy(() => import("./Pages/Dashboard/UserMeetings"));
 const UserFavorites = lazy(() => import("./Pages/Dashboard/UserFavorites"));
 const UserNotifications = lazy(() => import("./Pages/Dashboard/UserNotifications"));
 const UserSettings = lazy(() => import("./Pages/Dashboard/UserSettings"));
@@ -432,6 +433,11 @@ const Routers = createBrowserRouter([
             path: "internships/:id",
             caseSensitive: false,
             element: <InternshipDetail />,
+          },
+          {
+            path: "meetings",
+            caseSensitive: false,
+            element: <UserMeetings />,
           },
           {
             path: "certificates",

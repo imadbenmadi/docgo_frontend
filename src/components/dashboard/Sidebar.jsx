@@ -10,6 +10,7 @@ import {
   UserIcon,
   CogIcon,
   TrophyIcon,
+  VideoCameraIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
@@ -125,6 +126,13 @@ const UserSidebar = ({ isOpen, onClose }) => {
       name: t("dashboard.sidebar.internships", "Internships"),
       icon: AcademicCapIcon,
       path: "/dashboard/internships",
+      badge: null,
+    },
+    {
+      id: "meetings",
+      name: t("dashboard.sidebar.meetings", "Réunions"),
+      icon: VideoCameraIcon,
+      path: "/dashboard/meetings",
       badge: null,
     },
     {

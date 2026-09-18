@@ -34,6 +34,7 @@ import ImageWithFallback from "../components/Common/ImageWithFallback";
 import VideoPlayer from "../components/Common/VideoPlayer";
 import CoursePaymentButton from "../components/PaymentHistory/CoursePaymentButton";
 import reviewsAPI from "../API/Reviews";
+import { useFavorite } from "../hooks/useFavorite";
 
 export const ProgramDetails = () => {
   const { t, i18n } = useTranslation("", { keyPrefix: "programs" });
@@ -45,7 +46,6 @@ export const ProgramDetails = () => {
 
   const [showVideo, setShowVideo] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const {
@@ -65,6 +65,11 @@ export const ProgramDetails = () => {
     hasData,
     paymentStatus,
   } = useProgram(programId);
+
+  const { isFavorited: isFavorite, toggleFavorite } = useFavorite(
+    programId,
+    "program",
+  );
   const [applied, setApplied] = useState(hasApplied);
   const [programReviews, setProgramReviews] = useState([]);
   const [userProgramReview, setUserProgramReview] = useState(null);
@@ -172,10 +177,18 @@ export const ProgramDetails = () => {
     }
   };
 
-  const handleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  // The heart used to be local state only, so nothing was ever saved.
+  const handleFavorite = async () => {
+    const wasFavorite = isFavorite;
+    await toggleFavorite({
+      id: programId,
+      title: programData?.Title || programData?.title,
+      Image: programData?.Image,
+      Price: programData?.Price,
+      discountPrice: programData?.discountPrice,
+    });
     toast.success(
-      isFavorite
+      wasFavorite
         ? tGlobal("common.removedFromFavorites")
         : tGlobal("common.addedToFavorites"),
     );

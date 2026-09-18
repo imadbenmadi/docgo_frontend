@@ -37,6 +37,7 @@ import CourseReviews from "../components/course/components/CourseReviews";
 import CourseSmallCard from "../components/course/components/CourseSmallCard";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
 import RichTextDisplay from "../components/Common/RichTextEditor/RichTextDisplay";
+import { useFavorite } from "../hooks/useFavorite";
 
 export const Course = () => {
   const { t, i18n } = useTranslation();
@@ -48,7 +49,6 @@ export const Course = () => {
   const [showIntroVideo, setShowIntroVideo] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const {
     courseData,
@@ -66,6 +66,11 @@ export const Course = () => {
     hasData,
     paymentStatus, // Add payment status
   } = useCourse(courseId);
+
+  const { isFavorited: isFavorite, toggleFavorite } = useFavorite(
+    courseId,
+    "course",
+  );
 
   const formatCurrency = (amount) => {
     if (!amount || parseFloat(amount) === 0) return t("Free", "Free") || "Free";
@@ -104,10 +109,18 @@ export const Course = () => {
     }
   };
 
-  const handleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  // The heart used to be local state only, so nothing was ever saved.
+  const handleFavorite = async () => {
+    const wasFavorite = isFavorite;
+    await toggleFavorite({
+      id: courseId,
+      title: courseData?.Title || courseData?.title,
+      Image: courseData?.Image,
+      Price: courseData?.Price,
+      discountPrice: courseData?.discountPrice,
+    });
     toast.success(
-      isFavorite
+      wasFavorite
         ? t("Removed from favorites", "Removed from favorites") ||
             "Removed from favorites"
         : t("Added to favorites", "Added to favorites") || "Added to favorites",
