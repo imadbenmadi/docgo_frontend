@@ -272,7 +272,41 @@ export default function Certificate() {
       certificateData;
     const issueDate = new Date().toLocaleDateString("fr-FR");
 
+    // The designer stores the background as { backgroundImage: { src } } and
+    // paints it itself; fabric only restores a background it serialised, so
+    // the picture has to be put back by hand or the preview comes out blank
+    // while the PDF has it.
+    const storedJson = (() => {
+      try {
+        return typeof certTemplate.fabricJson === "string"
+          ? JSON.parse(certTemplate.fabricJson)
+          : certTemplate.fabricJson;
+      } catch {
+        return null;
+      }
+    })();
+
     canvas.loadFromJSON(certTemplate.fabricJson, () => {
+      const bgSrc = storedJson?.backgroundImage?.src;
+      if (storedJson?.backgroundColor) {
+        canvas.setBackgroundColor(storedJson.backgroundColor, () => {});
+      }
+      if (bgSrc) {
+        fabric.Image.fromURL(
+          bgSrc,
+          (img) => {
+            img.set({
+              scaleX: fw / (img.width || fw),
+              scaleY: fh / (img.height || fh),
+              originX: "left",
+              originY: "top",
+            });
+            canvas.setBackgroundImage(img, () => canvas.renderAll());
+          },
+          { crossOrigin: "anonymous" },
+        );
+      }
+
       const objects = canvas.getObjects();
 
       // Make all objects non-interactive
