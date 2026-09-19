@@ -14,6 +14,21 @@ import RichTextDisplay from "../components/Common/RichTextEditor/RichTextDisplay
 const input =
   "w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100";
 
+/** What each kind of answer may weigh. The server enforces the same numbers;
+ *  these are here so the limit is visible while typing, not after sending. */
+const LIMITS = {
+  textarea: 5000,
+  text: 500,
+  email: 200,
+  phone: 40,
+  number: 40,
+  date: 40,
+  file_link: 500,
+  default: 500,
+};
+
+const limitOf = (f) => LIMITS[f?.type] || LIMITS.default;
+
 const optionsOf = (f) =>
   (Array.isArray(f.options) ? f.options : String(f.options || "").split("\n"))
     .map((o) => (typeof o === "string" ? o : o?.label || o?.value || ""))
@@ -79,13 +94,19 @@ const PublicForm = () => {
     switch (f.type) {
       case "textarea":
         return (
-          <textarea
-            rows={4}
-            className={input}
-            value={value || ""}
-            required={f.required}
-            onChange={(e) => set(f.key, e.target.value)}
-          />
+          <>
+            <textarea
+              rows={4}
+              maxLength={limitOf(f)}
+              className={input}
+              value={value || ""}
+              required={f.required}
+              onChange={(e) => set(f.key, e.target.value)}
+            />
+            <p className="mt-1 text-right text-xs text-gray-400">
+              {(value || "").length} / {limitOf(f)}
+            </p>
+          </>
         );
       case "select":
         return (
@@ -177,6 +198,7 @@ const PublicForm = () => {
         return (
           <input
             type={type}
+            maxLength={limitOf(f)}
             className={input}
             value={value || ""}
             required={f.required}
@@ -255,6 +277,7 @@ const PublicForm = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   {t("forms.name", "Your name")}
                   <input
+                    maxLength={120}
                     className={`${input} mt-1`}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -264,6 +287,7 @@ const PublicForm = () => {
                   {t("forms.email", "Your email")}
                   <input
                     type="email"
+                    maxLength={200}
                     className={`${input} mt-1`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
