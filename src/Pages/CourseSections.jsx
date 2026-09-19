@@ -943,13 +943,18 @@ function CourseSupportWidget({ courseId, currentItem, user }) {
       const email = user?.email || "";
       const itemLabel = currentItem?.title ? ` — ${currentItem.title}` : "";
 
+      // A problem report is a ticket, not a message: subjectType "bug" is what
+      // files it in the IT queue instead of the contact inbox, and the course
+      // it was reported from rides along as the subject.
       const res = await apiClient.post("/contact/auth-user", {
         name,
         email,
+        title: `Problème signalé sur un cours${itemLabel}`,
         message: `[Course Issue${itemLabel}]\n${message}`,
         messagePlain: `[Course Issue${itemLabel}]\n${message}`,
         context: "course",
-        courseId,
+        subjectType: "bug",
+        subjectId: courseId,
         priority: "high",
       });
       if (res.status === 201 || res.data?.success) {
