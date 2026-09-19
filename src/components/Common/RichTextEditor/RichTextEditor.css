@@ -297,3 +297,9 @@
 .fullscreen-modal {
     z-index: 9999;
 }
+
+/* The editor is a form field: it needs the same breathing room under it as
+   the text it produces. */
+.rich-text-editor-wrapper {
+    margin-bottom: 20px;
+}
