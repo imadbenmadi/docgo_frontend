@@ -143,8 +143,11 @@ const RichTextEditor = ({
                         theme={theme}
                         modules={modules}
                         formats={formats}
+                        // `height` sizes the writing area; the toolbar adds
+                        // its own on top. Sizing the whole control to it made
+                        // the text overflow onto the next field.
                         style={{
-                            height: readOnly ? "auto" : height,
+                            height: "auto",
                             minHeight: readOnly ? "auto" : height,
                         }}
                     />
