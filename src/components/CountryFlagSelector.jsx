@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import ReactFlagsSelect from "react-flags-select";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // Inline imports to work around Rollup resolution issue
@@ -102,6 +101,33 @@ const getCountryDisplayName = (countryName, language = "fr") => {
  * @param {string[]} countries - Array of French country names to show
  * @param {object} props - Additional props to pass to ReactFlagsSelect
  */
+/**
+ * Pick one country from the list the admin chose.
+ *
+ * This used to hand the names to react-flags-select after filtering them
+ * through COUNTRY_CODE_MAP - a table of 32 countries. The admin can select
+ * around 200, so everything outside those 32 was dropped on the way to the
+ * page and the dropdown came up empty. A country the admin offers is now
+ * always listed; the flag is a nicety, and its absence hides nothing.
+ */
+const flagOf = (code) =>
+  code && code.length === 2
+    ? String.fromCodePoint(
+        ...[...code.toUpperCase()].map((c) => 127397 + c.charCodeAt(0)),
+      )
+    : "\u{1F3F3}";
+
+// A stored name can be bilingual ("Algérie / الجزائر"); the code table is
+// keyed on the French half.
+const codeOf = (country) =>
+  COUNTRY_CODE_MAP[String(country || "").split("/")[0].trim()];
+
+const fold = (text) =>
+  String(text || "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
+
 const CountryFlagSelector = ({
   value,
   onChange,
@@ -112,138 +138,97 @@ const CountryFlagSelector = ({
   showLabel = true,
   label = "Country",
   required = false,
-  ...props
 }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
-  // Convert French country names to ISO codes for the component
-  const countryCodesArray = useMemo(() => {
-    if (!countries || countries.length === 0) return [];
-    return countries
-      .filter((c) => COUNTRY_CODE_MAP[c])
-      .map((c) => COUNTRY_CODE_MAP[c]);
-  }, [countries]);
+  const lang = i18n.language?.split("-")[0] || "fr";
+  const shown = useMemo(() => {
+    const list = countries || [];
+    if (!query) return list;
+    return list.filter(
+      (c) =>
+        fold(c).includes(fold(query)) ||
+        fold(getCountryDisplayName(c, lang)).includes(fold(query)),
+    );
+  }, [countries, query, lang]);
 
-  // Get current ISO code from French name
-  const currentCode = value ? getCountryCode(value) : "";
-
-  // Handle change - convert ISO code back to French name
-  const handleChange = (code) => {
-    const frenchName = getCountryName(code);
-    onChange(frenchName);
+  const close = () => {
+    setOpen(false);
+    setQuery("");
   };
 
-  // Get display text in current language
-  const displayName = value
-    ? getCountryDisplayName(value, i18n.language?.split("-")[0] || "fr")
-    : placeholder;
-
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
+    <div className={`relative flex flex-col gap-2 ${className}`}>
       {showLabel && (
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {/* {label} */}
+          {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
-      <div className="react-flags-select-wrapper">
-        <ReactFlagsSelect
-          selected={currentCode}
-          onSelect={handleChange}
-          countries={countryCodesArray}
-          customLabels={{
-            ...Object.entries(COUNTRY_CODE_MAP).reduce((acc, [name, code]) => {
-              const displayText = getCountryDisplayName(
-                name,
-                i18n.language?.split("-")[0] || "fr",
-              );
-              acc[code] = displayText;
-              return acc;
-            }, {}),
-          }}
-          placeholder={displayName}
-          disabled={disabled}
-          showOptionLabel={true}
-          showSelectedLabel={true}
-          {...props}
-        />
-      </div>
-      <style>{`
-        .react-flags-select-wrapper {
-          width: 100%;
-        }
 
-        .react-flags-select {
-          width: 100%;
-          padding: 0.5rem 0.75rem;
-          border: 1px solid #d1d5db;
-          border-radius: 0.375rem;
-          background-color: white;
-          color: #111827;
-          font-size: 0.875rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-3 text-left text-sm text-gray-900 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-gray-50"
+      >
+        <span className={value ? "" : "text-gray-400"}>
+          {value ? (
+            <>
+              <span className="mr-2">{flagOf(codeOf(value))}</span>
+              {getCountryDisplayName(value, lang)}
+            </>
+          ) : (
+            placeholder
+          )}
+        </span>
+        <span className="ml-2 text-gray-400">&#9662;</span>
+      </button>
 
-        .react-flags-select:hover:not(:disabled) {
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-        }
-
-        .react-flags-select:focus-visible {
-          outline: 2px solid transparent;
-          outline-offset: 2px;
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .react-flags-select:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-          background-color: #f3f4f6;
-        }
-
-        .react-flags-select-dropdown {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background: white;
-          border: 1px solid #d1d5db;
-          border-radius: 0.375rem;
-          max-height: 300px;
-          overflow-y: auto;
-          z-index: 50;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          margin-top: 0.25rem;
-        }
-
-        .react-flags-select-dropdown-item {
-          padding: 0.5rem 0.75rem;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          transition: background-color 0.15s ease;
-        }
-
-        .react-flags-select-dropdown-item:hover {
-          background-color: #f3f4f6;
-        }
-
-        .react-flags-select-dropdown-item.selected {
-          background-color: #eff6ff;
-          color: #1e40af;
-          font-weight: 500;
-        }
-
-        .react-flags-select .flag {
-          width: 1.25rem;
-          height: 0.75rem;
-          margin-right: 0.5rem;
-          border-radius: 0.125rem;
-        }
-      `}</style>
+      {open && (
+        <>
+          {/* Clicking anywhere else closes it, without a document listener. */}
+          <div className="fixed inset-0 z-10" onClick={close} />
+          <div className="absolute left-0 right-0 top-full z-20 mt-1 rounded-lg border border-gray-200 bg-white shadow-lg">
+            <div className="border-b border-gray-100 p-2">
+              <input
+                autoFocus
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t("register.searchCountry", "Rechercher un pays…")}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+            <div className="max-h-64 overflow-y-auto">
+              {!shown.length && (
+                <p className="px-4 py-6 text-center text-sm text-gray-400">
+                  {t("register.noCountryMatch", "Aucun pays ne correspond.")}
+                </p>
+              )}
+              {shown.map((country) => (
+                <button
+                  key={country}
+                  type="button"
+                  onClick={() => {
+                    onChange(country);
+                    close();
+                  }}
+                  className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                    country === value ? "bg-blue-50 font-medium" : ""
+                  }`}
+                >
+                  <span className="text-lg leading-none">
+                    {flagOf(codeOf(country))}
+                  </span>
+                  <span>{getCountryDisplayName(country, lang)}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
