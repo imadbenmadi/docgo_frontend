@@ -307,6 +307,25 @@ export default function Certificate() {
         );
       }
 
+      // A template that came from the default design starts with an opaque
+      // rectangle the size of the page. Harmless on its own, fatal once a
+      // background image is chosen: the rectangle is painted over it, and the
+      // certificate comes out blank white with the text on top. When there is
+      // a background, that covering rectangle goes.
+      if (bgSrc) {
+        for (const o of canvas.getObjects()) {
+          const type = String(o.type || "").toLowerCase();
+          if (type !== "rect") continue;
+          const w = (o.width || 0) * (o.scaleX || 1);
+          const h = (o.height || 0) * (o.scaleY || 1);
+          const opaque =
+            o.fill &&
+            o.fill !== "transparent" &&
+            !String(o.fill).startsWith("rgba(0,0,0,0");
+          if (opaque && w >= fw * 0.98 && h >= fh * 0.98) canvas.remove(o);
+        }
+      }
+
       const objects = canvas.getObjects();
 
       // Make all objects non-interactive
