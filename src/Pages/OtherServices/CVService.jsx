@@ -27,7 +27,6 @@ import RichTextDisplay from "../../components/Common/RichTextEditor/RichTextDisp
 import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
 import FavoriteHeart from "../../components/Common/FavoriteHeart";
 import { formatPrice } from "../../utils/money";
-import AskQuestion from "../../components/contact/AskQuestion";
 
 export default function CVService() {
   const navigate = useNavigate();
@@ -563,7 +562,6 @@ export default function CVService() {
       </div>
       {/* A question about this service, with its id already attached. */}
       <ProductOrderHistory itemType="cv" itemId={serviceId} refreshKey={historyKey} />
-      <AskQuestion context="cv" subjectType="cv" subjectId={serviceId} />
     </div>
   );
 }

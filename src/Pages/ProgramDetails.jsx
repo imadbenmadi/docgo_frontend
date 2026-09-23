@@ -24,7 +24,6 @@ import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { useEffect } from "react";
 import { buildApiUrl, introMediaUrl } from "../utils/apiBaseUrl";
-import ContactForm from "../components/contact/ContactForm";
 // Import component parts
 import ProgramContent from "../components/Program/ProgramContent";
 import ProgramFAQSection from "../components/Program/ProgramFAQSection";
@@ -44,7 +43,6 @@ export const ProgramDetails = () => {
   const location = useLocation();
 
   const [showVideo, setShowVideo] = useState(false);
-  const [showContactForm, setShowContactForm] = useState(false);
   const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const {
@@ -388,13 +386,6 @@ export const ProgramDetails = () => {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setShowContactForm(!showContactForm)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  {t("Contact", "Contact") || "Contact"}
-                </button>
                 <button
                   onClick={handleShare}
                   className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
@@ -930,41 +921,11 @@ export const ProgramDetails = () => {
                     </div>
                   )}
                 </div>
-
-                {/* Contact Section */}
-                <div className="border-t pt-6 mt-6">
-                  <h4 className="font-semibold text-gray-900 mb-4">
-                    {t(
-                      "Questions about this program?",
-                      "Questions about this program?",
-                    ) || "Questions about this program?"}
-                  </h4>
-                  <button
-                    onClick={() => setShowContactForm(true)}
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-                  >
-                    <MessageSquare size={18} />
-                    {t("Contact Us", "Contact Us") || "Contact Us"}
-                  </button>
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Contact Form Modal */}
-        {/* The shared form, like everywhere else. This page kept its own
-            copy with no ticket type, no priority and no screenshot. */}
-        {showContactForm && (
-          <ContactForm
-            context="program"
-            programId={programId}
-            subjectType="program"
-            subjectId={programId}
-            title={t("Contact about this program", "Une question ?")}
-            onSuccess={() => setTimeout(() => setShowContactForm(false), 2500)}
-          />
-        )}
         <ProductOrderHistory itemType="program" itemId={programId} />
       </div>
     </>

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import AskQuestion from "../components/contact/AskQuestion";
 import {
   Mail,
   Phone,
@@ -753,11 +752,6 @@ export default function ProgramApplicationStatus() {
       </div>
       {/* Someone watching their application sit at "under review" has more
           questions than anyone, so the way to ask is on this page too. */}
-      <AskQuestion
-        context="enrolment"
-        subjectType="program"
-        subjectId={programId}
-      />
     </div>
   );
 }

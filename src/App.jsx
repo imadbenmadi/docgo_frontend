@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 import { Outlet, useLocation } from "react-router-dom";
+import PageHelp from "./components/contact/PageHelp";
 import Footer from "./LandingPage/Layout/Footer";
 import Reveal from "./components/Reveal";
 import Navigation from "./components/Navbar/Navigation";
@@ -237,6 +238,9 @@ function App() {
         <div>
           <Outlet />
         </div>
+        {/* One way to write in, on every page, knowing where it was sent
+            from. The per-page forms it replaces all did the same thing. */}
+        <PageHelp />
         {!shouldHideNavAndFooter && (
           <Reveal>
             <Footer contactInfo={contactInfo} branding={siteSettings} />

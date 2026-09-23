@@ -16,7 +16,6 @@ import apiClient from "../utils/apiClient";
 import { formatPrice } from "../utils/money";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
-import AskQuestion from "../components/contact/AskQuestion";
 const PaymentPage = () => {
   const { t, i18n } = useTranslation();
   const params = useParams();
@@ -564,11 +563,6 @@ const PaymentPage = () => {
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center p-4">
         {/* Something went wrong paying - this is exactly when someone needs
             to be able to ask, rather than give up and leave. */}
-        <AskQuestion
-          context="payment"
-          subjectType="payment"
-          subjectId={params?.id || null}
-        />
         <div className="max-w-lg mx-auto">
           <div className="bg-white rounded-xl shadow-lg p-8 text-center border border-red-100">
             {/* Error Icon */}
@@ -639,11 +633,6 @@ const PaymentPage = () => {
   } else {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AskQuestion
-          context="payment"
-          subjectType="payment"
-          subjectId={itemData?.id || params?.id || null}
-        />
         {/* Header */}
         <div className="bg-white shadow-sm">
           <div className="max-w-4xl mx-auto px-4 py-6">

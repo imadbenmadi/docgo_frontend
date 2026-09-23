@@ -26,7 +26,6 @@ import apiClient from "../utils/apiClient";
 import Seo from "../components/SEO/Seo";
 import { getApiErrorMessage } from "../utils/apiErrorTranslate";
 import { buildApiUrl, getApiBaseUrl, introMediaUrl } from "../utils/apiBaseUrl";
-import ContactForm from "../components/contact/ContactForm";
 
 // Import component parts
 import VideoPlayer from "../components/Common/VideoPlayer";
@@ -47,7 +46,6 @@ export const Course = () => {
   const [showVideo, setShowVideo] = useState(false);
   const [showIntroVideo, setShowIntroVideo] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
-  const [showContactForm, setShowContactForm] = useState(false);
 
   const {
     courseData,
@@ -407,13 +405,6 @@ export const Course = () => {
               </div>
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setShowContactForm(!showContactForm)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  {t("Contact", "Contact") || "Contact"}
-                </button>
-                <button
                   onClick={handleShare}
                   className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                 >
@@ -709,23 +700,6 @@ export const Course = () => {
             {/* Right Column - Sidebar */}
             <div className="lg:col-span-1 space-y-4 lg:space-y-6 order-1 lg:order-2">
               {/* Contact Form */}
-              {/* The same form every other page uses.
-                  This page had its own copy - no ticket type, no priority and
-                  no screenshot - so a problem reported from a course page
-                  arrived with less on it than one reported from anywhere
-                  else, and could not open a help desk ticket at all. */}
-              {showContactForm && (
-                <ContactForm
-                  context="course"
-                  courseId={courseId}
-                  subjectType="course"
-                  subjectId={courseId}
-                  title={t("Contact for this course", "Une question ?")}
-                  onSuccess={() =>
-                    setTimeout(() => setShowContactForm(false), 2500)
-                  }
-                />
-              )}
 
               {/* Course Card */}
               <div id="course-enrollment-card" className="lg:sticky lg:top-6">
@@ -746,31 +720,6 @@ export const Course = () => {
               </div>
 
               {/* Info Card */}
-              {!showContactForm && (
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-                  <div className="text-center">
-                    <Mail className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                    <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                      {t(
-                        "Questions about this course?",
-                        "Questions about this course?",
-                      ) || "Questions about this course?"}
-                    </h3>
-                    <p className="text-blue-700 text-sm mb-4">
-                      {t(
-                        "Click the Contact button to get in touch with us",
-                        "Click the Contact button to get in touch with us",
-                      ) || "Click the Contact button to get in touch with us"}
-                    </p>
-                    <button
-                      onClick={() => setShowContactForm(true)}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-block"
-                    >
-                      {t("Contact Us", "Contact Us") || "Contact Us"}
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

@@ -38,7 +38,6 @@ import { useTranslation } from "react-i18next";
 import { buildApiUrl, introMediaUrl } from "../../utils/apiBaseUrl";
 import FavoriteHeart from "../../components/Common/FavoriteHeart";
 import { formatPrice } from "../../utils/money";
-import AskQuestion from "../../components/contact/AskQuestion";
 
 export default function InternshipDetail() {
   const navigate = useNavigate();
@@ -613,7 +612,6 @@ export default function InternshipDetail() {
         )}
       </div>
       <ProductOrderHistory itemType="internship" itemId={id} refreshKey={historyKey} />
-      <AskQuestion context="internship" subjectType="internship" subjectId={id} />
     </div>
   );
 }

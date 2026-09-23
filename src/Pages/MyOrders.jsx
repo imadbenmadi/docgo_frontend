@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import AskQuestion from "../components/contact/AskQuestion";
 import { useTranslation } from "react-i18next";
 import {
   AlertCircle,
@@ -350,7 +349,6 @@ const MyOrders = () => {
           </p>
         )}
       </div>
-      <AskQuestion context="payment" subjectType="payment" />
     </div>
   );
 };
