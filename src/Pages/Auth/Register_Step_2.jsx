@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import InlineLoading from "../../InlineLoading";
+import SearchableSelect from "../../components/SearchableSelect";
 import apiClient from "../../utils/apiClient";
 import CountryFlagSelector from "../../components/CountryFlagSelector";
 import { BILINGUAL_COUNTRIES } from "../../utils/countryCodeMap";
@@ -155,26 +156,16 @@ const Register_Sterp_2 = ({
             ) || "In which field do you want to pursue your studies?"}
           </label>
           {userSpecialties && userSpecialties.length > 0 ? (
-            <select
-              name="studyDomain"
+            <SearchableSelect
               value={formData.studyDomain}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-              style={{
-                direction: i18n.language === "ar" ? "rtl" : "ltr",
-                textAlign: i18n.language === "ar" ? "right" : "left",
-              }}
-            >
-              <option value="">
-                {t("register.selectField", "Select Study Domain") ||
-                  "Select Study Domain"}
-              </option>
-              {userSpecialties.map((field) => (
-                <option key={field} value={field}>
-                  {getLocalizedOption(field)}
-                </option>
-              ))}
-            </select>
+              onChange={(domain) => handleSelectChange("studyDomain", domain)}
+              options={userSpecialties}
+              renderOption={getLocalizedOption}
+              placeholder={
+                t("register.selectField", "Select Study Domain") ||
+                "Select Study Domain"
+              }
+            />
           ) : (
             <div className="w-full px-4 py-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 text-sm">
               {t(
