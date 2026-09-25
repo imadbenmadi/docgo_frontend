@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 import { BriefcaseBusiness, FileText } from "lucide-react";
 import apiClient from "../../utils/apiClient";
 import { buildApiUrl } from "../../utils/apiBaseUrl";
+import { formatPrice } from "../../utils/money";
 
 export default function OtherServices() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [cvService, setCVService] = useState(null);
   const [internshipCount, setInternshipCount] = useState(0);
@@ -83,13 +84,16 @@ export default function OtherServices() {
             </div>
 
             <div className="p-5 flex flex-col flex-1">
+              {/* The card names the offering, not a service inside it. It
+                  used to read `cvService.title`, and the endpoint behind it
+                  returned whichever service had been edited last — so editing
+                  a service called "Relecture express" renamed the card for
+                  the whole CV offering. */}
               <h2 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                {cvService?.title ||
-                  t(
-                    "otherServicesPage.cvCard.titleFallback",
-                    "Professional CV Creation",
-                  ) ||
-                  "Professional CV Creation"}
+                {t(
+                  "otherServicesPage.cvCard.titleFallback",
+                  "Professional CV Creation",
+                ) || "Professional CV Creation"}
               </h2>
               <p className="text-sm text-gray-600 mb-4">
                 {t(
@@ -100,6 +104,20 @@ export default function OtherServices() {
               </p>
 
               <div className="flex-1" />
+              {cvService?.count > 0 && (
+                <p className="mb-3 text-sm text-gray-500">
+                  {t("otherServicesPage.cvCard.count", "{{count}} services", {
+                    count: cvService.count,
+                  })}
+                  {cvService.fromPrice
+                    ? ` · ${t("otherServicesPage.cvCard.from", "from")} ${formatPrice(
+                        cvService.fromPrice,
+                        cvService.currency || "DZD",
+                        i18n.language,
+                      )}`
+                    : ""}
+                </p>
+              )}
               <button className="w-full px-4 py-2 rounded-xl font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">
                 {t("otherServicesPage.cvCard.cta", "Get Started") ||
                   "Get Started"}{" "}

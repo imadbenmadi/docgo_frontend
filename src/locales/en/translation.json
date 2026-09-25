@@ -1652,7 +1652,9 @@
       "alt": "CV Service",
       "titleFallback": "Professional CV Creation",
       "description": "Get your professional CV created by experts. Perfect for job seekers looking to make a great first impression.",
-      "cta": "Get Started"
+      "cta": "Get Started",
+      "count": "{{count}} services",
+      "from": "from"
     },
     "internshipsCard": {
       "title": "International Internships",

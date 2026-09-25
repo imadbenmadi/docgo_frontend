@@ -1643,7 +1643,9 @@
       "alt": "Service CV",
       "titleFallback": "Création de CV professionnel",
       "description": "Faites créer votre CV professionnel par des experts. Parfait pour les candidats souhaitant faire une excellente première impression.",
-      "cta": "Commencer"
+      "cta": "Commencer",
+      "count": "{{count}} services",
+      "from": "à partir de"
     },
     "internshipsCard": {
       "title": "Stages internationaux",
