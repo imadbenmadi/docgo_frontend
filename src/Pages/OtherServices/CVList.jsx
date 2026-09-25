@@ -13,6 +13,8 @@ export default function CVList() {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [price, setPrice] = useState("all");
+  const [sort, setSort] = useState("default");
 
   const isDashboardRoute = location.pathname
     .toLowerCase()
@@ -20,35 +22,48 @@ export default function CVList() {
   const servicesHomePath = isDashboardRoute ? "/dashboard" : "/other-services";
   const cvListPath = isDashboardRoute ? "/dashboard/cv" : "/other-services/cv";
 
+  // The search runs on the server, which ignores case and accents and still
+  // finds a title that was mistyped by a letter. Filtering here with
+  // `includes` meant "redaction" found nothing when the service was called
+  // "Rédaction". Typing is debounced so a word costs one request, not eight.
   useEffect(() => {
     let cancelled = false;
-
-    const fetchServices = async () => {
+    const timer = setTimeout(async () => {
       try {
         setIsLoading(true);
-        const res = await apiClient.get("/other-services/cv-services");
+        const res = await apiClient.get("/other-services/cv-services", {
+          params: { search: query.trim() || undefined },
+        });
         if (!cancelled) setServices(res.data?.data || []);
       } catch {
         if (!cancelled) setServices([]);
       } finally {
         if (!cancelled) setIsLoading(false);
       }
-    };
+    }, query ? 300 : 0);
 
-    fetchServices();
     return () => {
       cancelled = true;
+      clearTimeout(timer);
     };
-  }, []);
+  }, [query]);
 
-  const needle = query.trim().toLowerCase();
-  const visible = needle
-    ? services.filter((s) =>
-        `${s.title || ""} ${s.description || ""}`
-          .toLowerCase()
-          .includes(needle),
-      )
-    : services;
+  const amountOf = (s) => Number(s?.price ?? s?.estimatedPrice ?? 0);
+  const isFree = (s) => s?.isPaid === false || !(amountOf(s) > 0);
+
+  const visible = services
+    .filter((s) =>
+      price === "free" ? isFree(s) : price === "paid" ? !isFree(s) : true,
+    )
+    // Only when asked: the default order is the one the server ranked, which
+    // with a search term means best match first.
+    .sort((a, b) =>
+      sort === "priceAsc"
+        ? amountOf(a) - amountOf(b)
+        : sort === "priceDesc"
+          ? amountOf(b) - amountOf(a)
+          : 0,
+    );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -73,8 +88,8 @@ export default function CVList() {
           </p>
         </div>
 
-        {services.length > 1 && (
-          <div className="mb-6 relative max-w-md">
+        <div className="mb-6 flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1 max-w-md">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -86,7 +101,41 @@ export default function CVList() {
               className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-        )}
+
+          <select
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="all">
+              {t("cvListPage.priceAll", "All prices") || "All prices"}
+            </option>
+            <option value="free">
+              {t("cvListPage.free", "Free") || "Free"}
+            </option>
+            <option value="paid">
+              {t("cvListPage.paid", "Paid") || "Paid"}
+            </option>
+          </select>
+
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="default">
+              {t("cvListPage.sortDefault", "Recommended") || "Recommended"}
+            </option>
+            <option value="priceAsc">
+              {t("cvListPage.sortPriceAsc", "Price: low to high") ||
+                "Price: low to high"}
+            </option>
+            <option value="priceDesc">
+              {t("cvListPage.sortPriceDesc", "Price: high to low") ||
+                "Price: high to low"}
+            </option>
+          </select>
+        </div>
 
         {isLoading ? (
           <div className="text-center py-12 text-gray-600">
@@ -96,8 +145,11 @@ export default function CVList() {
         ) : visible.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
             <p className="text-gray-600 text-lg">
-              {t("cvListPage.empty", "No CV services are available yet.") ||
-                "No CV services are available yet."}
+              {query || price !== "all"
+                ? t("cvListPage.noMatch", "No service matches that search.") ||
+                  "No service matches that search."
+                : t("cvListPage.empty", "No CV services are available yet.") ||
+                  "No CV services are available yet."}
             </p>
           </div>
         ) : (

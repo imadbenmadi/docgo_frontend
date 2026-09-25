@@ -1770,7 +1770,13 @@
     "search": "Rechercher un service",
     "subtitle": "Choisissez le service qui correspond à votre besoin, notre équipe s'occupe du reste.",
     "title": "Services CV",
-    "view": "Voir les détails"
+    "view": "Voir les détails",
+    "priceAll": "Tous les prix",
+    "paid": "Payant",
+    "sortDefault": "Recommandé",
+    "sortPriceAsc": "Prix : croissant",
+    "sortPriceDesc": "Prix : décroissant",
+    "noMatch": "Aucun service ne correspond à cette recherche."
   },
   "enrolledProgram": {
     "followUs": "Suivez-nous",
